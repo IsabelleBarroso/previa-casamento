@@ -128,13 +128,6 @@ table.res th:first-child{text-align:left}
 table.res td{padding:8px 0;border-top:1px solid var(--linha);text-align:right;font-variant-numeric:tabular-nums}
 table.res td:first-child{text-align:left;font-weight:500}
 
-.aviso-versao{margin:14px 16px 0;background:var(--carta);border:1px solid var(--linha);border-left:3px solid var(--ouro);border-radius:12px;padding:13px 14px}
-.aviso-versao .aviso-topo{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.aviso-versao .aviso-tit{font-weight:600;font-size:14px}
-.aviso-versao .aviso-sub{font-size:11.5px;color:var(--cinza);margin-top:1px}
-.aviso-versao button{border:0;background:transparent;color:var(--cinza);font-size:20px;line-height:1;cursor:pointer;padding:0 4px;flex:none}
-.aviso-versao ul{margin:9px 0 0;padding-left:18px;font-size:12.5px;color:var(--cinza);line-height:1.55}
-
 nav{position:fixed;bottom:0;left:0;right:0;max-width:470px;margin:0 auto;background:var(--carta);border-top:1px solid var(--linha);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:20}
 nav button{flex:1;border:0;background:transparent;padding:13px 2px 15px;cursor:pointer;font-family:var(--texto);font-size:11px;font-weight:600;color:var(--cinza);position:relative}
 nav button[aria-current="true"]{color:var(--tinta)}
@@ -208,25 +201,13 @@ const SALA = "casamento";   // nó onde os dados ficam guardados
 /* ========================================================== */
 
 /* ==================== CONSTANTES ==================== */
-const VERSAO = '1.0';
-const NOVIDADES = [
-  { v:'1.0', data:'03/08/2026', itens:[
-      'Primeira versão do aplicativo',
-      'Controle de gastos com filtros por dia, mês e ano',
-      'Compras parceladas distribuídas automaticamente pelos meses',
-      'Gráficos dos últimos 6 meses, formas de pagamento e categorias',
-      'Lista de convidados com lado, grupo e acompanhantes',
-      'Cotações por categoria com opção de marcar a escolhida',
-      'Total do casamento com orçamento e registro de pagamentos',
-      'Tudo salva sozinho na nuvem'
-    ] }
-];
+const VERSAO = '1.1';
 const CHAVE = 'app-casamento-v1';
 const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 const M3=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 const FORMAS={credito:'Crédito',debito:'Débito',pix:'Pix',dinheiro:'Dinheiro'};
 const COR_FORMA={credito:'#B4566A',debito:'#1D4A3E',pix:'#BE8724',dinheiro:'#6E7C74'};
-const CATS=['Mercado','Alimentação','Transporte','Casa','Saúde','Lazer','Vestuário','Educação','Beleza','Outros'];
+const CATS_PADRAO=['Mercado','Alimentação','Transporte','Casa','Saúde','Lazer','Vestuário','Educação','Beleza','Outros'];
 const CATS_CASAMENTO=['Espaço / Local','Igreja','Buffet','Banda / DJ','Fotografia e vídeo','Decoração e flores','Vestido e traje','Bolo e doces','Convites','Cerimonial','Bebidas','Lembrancinhas'];
 
 /* ==================== ESTADO ==================== */
@@ -237,6 +218,7 @@ function estadoInicial(){
     noivos:'Felipe & Gabriela',
     dataCasamento:'',
     orcamento:0,
+    catsGasto:CATS_PADRAO.slice(),
     gastos:[],
     parcelasPagas:[],
     convidados:[],
@@ -340,6 +322,8 @@ function normalizar(v){
   r.categorias=(Array.isArray(v.categorias)&&v.categorias.length)?v.categorias:catsPadrao;
   r.categorias.forEach(c=>{ if(!Array.isArray(c.cotacoes)) c.cotacoes=[]; });
   r.parcelasPagas=Array.isArray(v.parcelasPagas)?v.parcelasPagas:[];
+  r.catsGasto=(Array.isArray(v.catsGasto)&&v.catsGasto.length)?v.catsGasto:CATS_PADRAO.slice();
+  r.gastos.forEach(g=>{ if(g.cat && r.catsGasto.indexOf(g.cat)<0) r.catsGasto.push(g.cat); });
   return r;
 }
 
@@ -499,8 +483,16 @@ function formGasto(){
       <div class="campo"><label>Data</label><input id="gData" type="date" value="${hojeISO()}"></div>
     </div>
     <div class="dupla">
-      <div class="campo"><label>Categoria</label><select id="gCat">${CATS.map(c=>`<option>${c}</option>`).join('')}</select></div>
+      <div class="campo"><label>Categoria</label>
+        <select id="gCat" onchange="trocarCat(this)">
+          ${D.catsGasto.map(c=>`<option>${esc(c)}</option>`).join('')}
+          <option value="__nova">+ Criar categoria...</option>
+        </select></div>
       <div class="campo"><label>Pagamento</label><select id="gForma">${Object.keys(FORMAS).map(f=>`<option value="${f}">${FORMAS[f]}</option>`).join('')}</select></div>
+    </div>
+    <div class="campo" id="campoNovaCat" style="display:none">
+      <label>Nome da nova categoria</label>
+      <input id="gCatNova" placeholder="Ex.: Pet, Farmácia, Presentes">
     </div>
     <div class="dupla">
       <div class="campo"><label>Forma</label><select id="gParc" onchange="document.getElementById('gN').disabled=this.value==='vista'">
@@ -509,6 +501,12 @@ function formGasto(){
     </div>
     <button class="btn" onclick="addGasto()">Lançar gasto</button>
   </div>`;
+}
+function trocarCat(sel){
+  const campo=document.getElementById('campoNovaCat');
+  const nova=sel.value==='__nova';
+  campo.style.display=nova?'block':'none';
+  if(nova) document.getElementById('gCatNova').focus();
 }
 
 function listaParcelas(){
@@ -789,8 +787,18 @@ function addGasto(){
   if(!d) return toast('Escreva a descrição');
   if(!(v>0)) return toast('Informe um valor válido');
   if(!dt) return toast('Escolha a data');
+
+  let cat=document.getElementById('gCat').value;
+  if(cat==='__nova'){
+    cat=document.getElementById('gCatNova').value.trim();
+    if(!cat) return toast('Dê um nome à nova categoria');
+    if(D.catsGasto.some(c=>c.toLowerCase()===cat.toLowerCase()))
+      cat=D.catsGasto.find(c=>c.toLowerCase()===cat.toLowerCase());
+    else D.catsGasto.push(cat);
+  }
+
   const parc=document.getElementById('gParc').value==='parcelado';
-  D.gastos.push({id:novoId(),desc:d,valor:v,data:dt,cat:document.getElementById('gCat').value,
+  D.gastos.push({id:novoId(),desc:d,valor:v,data:dt,cat:cat,
     forma:document.getElementById('gForma').value,parcelado:parc,
     parcelas:parc?Math.min(Math.max(2,+document.getElementById('gN').value||2),60):1});
   salvar(); render(); toast('Gasto lançado');
@@ -887,21 +895,27 @@ function abrirAjustes(){
       <input type="file" id="arqImp" accept="application/json" style="display:none" onchange="importar(this)">
     </div>
 
-    <div class="secao-titulo">Novidades</div>
-    ${NOVIDADES.map((n,i)=>`
-      <details class="cat" ${i===0?'open':''}>
-        <summary>
-          <span class="seta">›</span>
-          <span class="cnome">Versão ${n.v}${i===0?' <span class="tag ok" style="margin-left:5px">atual</span>':''}
-            <div style="font-size:11.5px;font-weight:400;color:var(--cinza);margin-top:1px">${n.data}</div>
-          </span>
-        </summary>
-        <div class="cot">
-          <ul style="margin:0;padding-left:18px;font-size:13px;color:var(--cinza);line-height:1.6">
-            ${n.itens.map(t=>`<li>${esc(t)}</li>`).join('')}
-          </ul>
-        </div>
-      </details>`).join('')}
+    <div class="secao-titulo">Categorias de gastos</div>
+    <div class="cartao">
+      <div style="font-size:12.5px;color:var(--cinza);margin-bottom:12px">
+        Também dá para criar categoria na hora de lançar um gasto, escolhendo "+ Criar categoria" na lista.
+      </div>
+      ${D.catsGasto.map((c,i)=>{
+        const usos=D.gastos.filter(g=>g.cat===c).length;
+        return `<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--linha)">
+          <div style="flex:1;min-width:0">
+            <div style="font-weight:500;font-size:13.5px">${esc(c)}</div>
+            <div style="font-size:11.5px;color:var(--cinza)">${usos?usos+' lançamento(s)':'sem uso'}</div>
+          </div>
+          <button class="apagar" onclick="apagarCatGasto(${i})">Excluir</button>
+        </div>`;
+      }).join('')}
+      <div class="campo" style="margin:14px 0 0">
+        <label>Nova categoria</label>
+        <input id="novaCatGasto" placeholder="Ex.: Pet, Farmácia, Presentes">
+      </div>
+      <button class="btn claro" onclick="addCatGasto()">Criar categoria</button>
+    </div>
 
     <div class="secao-titulo">Zona de risco</div>
     <div class="cartao">
@@ -948,27 +962,23 @@ function apagarTudo(){
   D=estadoInicial(); salvar(); render(); fecharAjustes(); toast('Tudo apagado');
 }
 
-/* ==================== VERSÃO ==================== */
-function checarVersao(){
-  let anterior=null;
-  try{ anterior=localStorage.getItem(CHAVE+'-versao'); }catch(e){}
-  try{ localStorage.setItem(CHAVE+'-versao', VERSAO); }catch(e){}
-  if(anterior && anterior!==VERSAO) mostrarNovidade();
+function addCatGasto(){
+  const el=document.getElementById('novaCatGasto'), n=el.value.trim();
+  if(!n) return toast('Dê um nome à categoria');
+  if(D.catsGasto.some(c=>c.toLowerCase()===n.toLowerCase())) return toast('Essa categoria já existe');
+  D.catsGasto.push(n); salvar(); abrirAjustes(); toast('Categoria criada');
 }
-function mostrarNovidade(){
-  const n=NOVIDADES[0];
-  const el=document.createElement('div');
-  el.className='aviso-versao';
-  el.innerHTML=`
-    <div class="aviso-topo">
-      <div>
-        <div class="aviso-tit">Aplicativo atualizado</div>
-        <div class="aviso-sub">Versão ${n.v} · seus dados continuam aqui</div>
-      </div>
-      <button onclick="this.closest('.aviso-versao').remove()" aria-label="Fechar">×</button>
-    </div>
-    <ul>${n.itens.slice(0,4).map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`;
-  document.getElementById('shell').insertBefore(el, document.getElementById('tela'));
+function apagarCatGasto(i){
+  const nome=D.catsGasto[i];
+  if(nome===undefined) return;
+  if(D.catsGasto.length<=1) return toast('Deixe ao menos uma categoria');
+  const usos=D.gastos.filter(g=>g.cat===nome).length;
+  const aviso=usos
+    ? 'A categoria "'+nome+'" tem '+usos+' lançamento(s). Eles continuam com esse nome, mas ela sai da lista. Continuar?'
+    : 'Excluir a categoria "'+nome+'"?';
+  if(!confirm(aviso)) return;
+  D.catsGasto.splice(i,1);
+  salvar(); abrirAjustes(); render();
 }
 
 /* ==================== INFRA ==================== */
@@ -1016,7 +1026,6 @@ function ir(a){ UI.aba=a; render(); window.scrollTo(0,0); }
 const salvo=lerLocal();
 if(salvo && salvo.versao) D=normalizar(salvo);
 render();
-checarVersao();
 carregarFirebase();
 
 if('serviceWorker' in navigator){
