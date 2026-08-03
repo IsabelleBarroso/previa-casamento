@@ -18,7 +18,7 @@
 :root{
   --tinta:#12322A; --tinta2:#1D4A3E; --vinho:#3B1B27;
   --papel:#F2EEE4; --carta:#FFFFFF;
-  --rosa:#B4566A; --ouro:#BE8724; --cinza:#6E7C74;
+  --rosa:#B4566A; --ouro:#BE8724; --cinza:#6E7C74; --verde:#2E7D52;
   --linha:rgba(18,50,42,.13);
   --display:'Fraunces',Georgia,serif;
   --texto:'Inter',system-ui,-apple-system,sans-serif;
@@ -89,6 +89,43 @@ main{padding:16px 16px 8px}
 .apagar{border:0;background:transparent;color:var(--cinza);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--texto);padding:7px 8px;border-radius:8px;margin-left:auto}
 .apagar:hover{color:var(--rosa);background:rgba(180,86,106,.1)}
 
+.form.edicao{border:1px solid var(--tinta2);border-left:3px solid var(--tinta2);border-style:solid}
+.edit-tit{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta2);font-weight:600;margin-bottom:12px}
+.lapis{border:0;background:transparent;color:var(--cinza);font-size:15px;padding:4px 6px;border-radius:8px;cursor:pointer;flex:none}
+.lapis:hover{background:rgba(29,74,62,.1);color:var(--tinta)}
+
+.catbox{border-top:1px solid var(--linha)}
+.catbox:first-child{border-top:0}
+.catbox>summary{list-style:none;cursor:pointer;padding:11px 0}
+.catbox>summary::-webkit-details-marker{display:none}
+.catlin{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:5px;align-items:baseline;gap:8px}
+.catlin .nm{display:flex;align-items:center;gap:7px;min-width:0}
+.catlin .sta{color:var(--cinza);font-size:11px;transition:transform .18s;flex:none}
+.catbox[open] .sta{transform:rotate(90deg)}
+.catlin b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.catlin .pc{font-size:11px;color:var(--cinza);font-weight:400;margin-left:4px}
+.mensal{padding:4px 0 12px 16px}
+.mlin{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--cinza);margin-bottom:5px}
+.mlin .mn{width:26px;flex:none}
+.mlin .mt{flex:1;height:6px;background:rgba(18,50,42,.07);border-radius:99px;overflow:hidden}
+.mlin .mt i{display:block;height:100%;background:var(--ouro);border-radius:99px}
+.mlin .mv{width:78px;text-align:right;font-variant-numeric:tabular-nums;flex:none}
+
+.saldo{background:var(--carta);border:1px solid var(--linha);border-radius:14px;padding:16px;margin-bottom:11px}
+.barra2{display:flex;height:10px;border-radius:99px;overflow:hidden;background:rgba(18,50,42,.08);margin:14px 0 12px}
+.barra2 i{display:block;height:100%}
+.fluxo{display:flex;gap:12px}
+.fluxo>div{flex:1}
+.fluxo .rt{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--cinza);font-weight:600;display:flex;align-items:center;gap:5px}
+.fluxo .vl{font-family:var(--display);font-size:19px;font-variant-numeric:tabular-nums;margin-top:3px}
+.pt{width:8px;height:8px;border-radius:99px;display:inline-block;flex:none}
+.linha-item .valor.ent{color:var(--verde)}
+.tag.rec{background:rgba(46,125,82,.13);color:var(--verde)}
+.form.entrada{border-color:rgba(46,125,82,.4)}
+.form.entrada.edicao-g{border:1px solid var(--verde);border-left:3px solid var(--verde);border-style:solid}
+.btn.verde{background:var(--verde);color:#fff}
+.chip.verde[aria-pressed="true"]{background:var(--verde);border-color:var(--verde)}
+
 .cats-chips{display:flex;flex-wrap:wrap;gap:7px}
 .cat-chip{display:inline-flex;align-items:center;gap:3px;background:var(--papel);border:1px solid var(--linha);border-radius:99px;padding:6px 6px 6px 13px;font-size:13px;font-weight:500}
 .cat-chip button{border:0;background:transparent;color:var(--cinza);font-size:16px;line-height:1;cursor:pointer;padding:2px 5px;border-radius:99px;font-family:var(--texto)}
@@ -133,9 +170,11 @@ table.res td{padding:8px 0;border-top:1px solid var(--linha);text-align:right;fo
 table.res td:first-child{text-align:left;font-weight:500}
 
 nav{position:fixed;bottom:0;left:0;right:0;max-width:470px;margin:0 auto;background:var(--carta);border-top:1px solid var(--linha);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:20}
-nav button{flex:1;border:0;background:transparent;padding:13px 2px 15px;cursor:pointer;font-family:var(--texto);font-size:11px;font-weight:600;color:var(--cinza);position:relative}
+nav button{flex:1;border:0;background:transparent;padding:13px 1px 15px;cursor:pointer;font-family:var(--texto);font-size:10.5px;font-weight:600;color:var(--cinza);position:relative}
 nav button[aria-current="true"]{color:var(--tinta)}
-nav button[aria-current="true"]::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:26px;height:2px;background:var(--tinta);border-radius:0 0 3px 3px}
+nav button[aria-current="true"]::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:24px;height:2px;background:var(--tinta);border-radius:0 0 3px 3px}
+nav button.gan[aria-current="true"]{color:var(--verde)}
+nav button.gan[aria-current="true"]::before{background:var(--verde)}
 nav button.cas[aria-current="true"]{color:var(--vinho)}
 nav button.cas[aria-current="true"]::before{background:var(--rosa)}
 nav .divisor{width:1px;background:var(--linha);margin:12px 0}
@@ -205,13 +244,15 @@ const SALA = "casamento";   // nó onde os dados ficam guardados
 /* ========================================================== */
 
 /* ==================== CONSTANTES ==================== */
-const VERSAO = '1.1';
+const VERSAO = '1.3';
 const CHAVE = 'app-casamento-v1';
 const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 const M3=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 const FORMAS={credito:'Crédito',debito:'Débito',pix:'Pix',dinheiro:'Dinheiro'};
 const COR_FORMA={credito:'#B4566A',debito:'#1D4A3E',pix:'#BE8724',dinheiro:'#6E7C74'};
 const CATS_PADRAO=['Mercado','Alimentação','Transporte','Casa','Saúde','Lazer','Vestuário','Educação','Beleza','Outros'];
+const FONTES_PADRAO=['Salário','Honorários','Freelance','13º / Férias','Outros'];
+const ONDE={conta:'Conta',pix:'Pix',dinheiro:'Dinheiro'};
 const CATS_CASAMENTO=['Espaço / Local','Igreja','Buffet','Banda / DJ','Fotografia e vídeo','Decoração e flores','Vestido e traje','Bolo e doces','Convites','Cerimonial','Bebidas','Lembrancinhas'];
 
 /* ==================== ESTADO ==================== */
@@ -223,15 +264,17 @@ function estadoInicial(){
     dataCasamento:'',
     orcamento:0,
     catsGasto:CATS_PADRAO.slice(),
+    fontes:FONTES_PADRAO.slice(),
     gastos:[],
+    ganhos:[],
     parcelasPagas:[],
     convidados:[],
     categorias:CATS_CASAMENTO.map((n,i)=>({id:1000+i,nome:n,cotacoes:[]}))
   };
 }
 let D = estadoInicial();
-const UI = { aba:'inicio', subCas:'convidados', filtroGasto:'mes', filtroCot:'todas',
-             mesRef:null, catAberta:null };
+const UI = { aba:'inicio', subCas:'convidados', filtroGasto:'mes', filtroGanho:'mes', filtroCot:'todas',
+             mesRef:null, catAberta:null, editando:null, editandoG:null, vistaGraf:'mes', anoRef:null };
 let seq = Date.now()%1000000;
 const novoId = () => ++seq;
 
@@ -240,6 +283,7 @@ const agora = () => new Date();
 const chaveMes = d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
 const hojeISO = () => { const d=agora(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
 UI.mesRef = chaveMes(agora());
+UI.anoRef = agora().getFullYear();
 
 const R$ = v => (Number(v)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const curto = v => 'R$ '+Math.round(Number(v)||0).toLocaleString('pt-BR');
@@ -328,6 +372,9 @@ function normalizar(v){
   r.parcelasPagas=Array.isArray(v.parcelasPagas)?v.parcelasPagas:[];
   r.catsGasto=(Array.isArray(v.catsGasto)&&v.catsGasto.length)?v.catsGasto:CATS_PADRAO.slice();
   r.gastos.forEach(g=>{ if(g.cat && r.catsGasto.indexOf(g.cat)<0) r.catsGasto.push(g.cat); });
+  r.ganhos=Array.isArray(v.ganhos)?v.ganhos:[];
+  r.fontes=(Array.isArray(v.fontes)&&v.fontes.length)?v.fontes:FONTES_PADRAO.slice();
+  r.ganhos.forEach(g=>{ if(g.fonte && r.fontes.indexOf(g.fonte)<0) r.fontes.push(g.fonte); });
   return r;
 }
 
@@ -373,6 +420,37 @@ function itensDoMes(k){
 }
 const fluxoMes = k => itensDoMes(k).reduce((s,i)=>s+i.valor,0);
 
+function itensGanhoMes(k){
+  const out=[];
+  (D.ganhos||[]).forEach(g=>{
+    if(!g.repete){ if((g.data||'').slice(0,7)===k) out.push({g,valor:g.valor}); }
+    else {
+      const p=g.data.split('-').map(Number), n=g.vezes||12;
+      for(let i=0;i<n;i++){
+        const ult=new Date(p[0],p[1]+i,0).getDate();
+        const dt=new Date(p[0],p[1]-1+i,Math.min(p[2],ult));
+        if(chaveMes(dt)===k){ out.push({g,valor:g.valor}); break; }
+      }
+    }
+  });
+  return out;
+}
+const entradasMes = k => itensGanhoMes(k).reduce((s,i)=>s+i.valor,0);
+
+function mesesDoAno(a){ const r=[]; for(let m=1;m<=12;m++) r.push(a+'-'+String(m).padStart(2,'0')); return r; }
+function agregaAno(a,fn,campo){
+  const tot={},mensal={};
+  mesesDoAno(a).forEach((k,mi)=>{
+    fn(k).forEach(i=>{
+      const c=i.g[campo]||'Outros';
+      tot[c]=(tot[c]||0)+i.valor;
+      mensal[c]=mensal[c]||Array(12).fill(0);
+      mensal[c][mi]+=i.valor;
+    });
+  });
+  return {tot,mensal};
+}
+
 function totaisCasamento(){
   let contratado=0,pago=0;
   D.categorias.forEach(c=>{ const e=c.cotacoes.find(q=>q.escolhida); if(e){ contratado+=e.valor; pago+=(e.pago||0); } });
@@ -395,19 +473,43 @@ function telaInicio(){
   const proximas=abertas.filter(x=>x.dt>=hoje).slice(0,3);
   const diasNoMes=new Date(+p[0],+p[1],0).getDate();
 
-  if(!D.gastos.length){
+  if(!D.gastos.length && !(D.ganhos||[]).length){
     return `<div class="vazio" style="padding:40px 20px">
       <div style="font-family:var(--display);font-size:19px;color:var(--tinta);margin-bottom:6px">Tudo pronto para começar</div>
-      Lance o primeiro gasto na aba <b>Gastos</b> e este resumo se monta sozinho.
+      Lance um gasto ou um recebimento e este resumo se monta sozinho.
     </div>
-    <button class="btn" onclick="ir('gastos')">Lançar primeiro gasto</button>`;
+    <div class="dupla">
+      <button class="btn claro" onclick="ir('gastos')">Lançar gasto</button>
+      <button class="btn verde" onclick="ir('ganhos')">Lançar recebimento</button>
+    </div>`;
   }
+
+  const ent=entradasMes(k), saldo=ent-totalMes;
+  const larg=Math.max(ent,totalMes)||1;
 
   return `
   <div class="secao-titulo">${rotuloMes(k)}</div>
+  <div class="saldo">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px">
+      <div><span class="rot">${saldo>=0?'Sobrou no mês':'Faltou no mês'}</span>
+        <b class="val" style="color:${saldo>=0?'var(--verde)':'var(--rosa)'}">${R$(Math.abs(saldo))}</b></div>
+      ${ent?`<div style="text-align:right"><span class="rot">do que entrou</span>
+        <b class="val" style="font-size:17px;color:var(--cinza)">${((saldo/ent)*100).toFixed(0)}%</b></div>`:''}
+    </div>
+    <div class="barra2">
+      <i style="width:${(ent/larg)*50}%;background:var(--verde)"></i>
+      <i style="width:${Math.max(100-(ent/larg)*50-(totalMes/larg)*50,0)}%;background:transparent"></i>
+      <i style="width:${(totalMes/larg)*50}%;background:var(--rosa)"></i>
+    </div>
+    <div class="fluxo">
+      <div><div class="rt"><em class="pt" style="background:var(--verde)"></em>Entrou</div><div class="vl">${R$(ent)}</div></div>
+      <div style="text-align:right"><div class="rt" style="justify-content:flex-end"><em class="pt" style="background:var(--rosa)"></em>Saiu</div><div class="vl">${R$(totalMes)}</div></div>
+    </div>
+  </div>
+
   <div class="cartao">
     <div class="topo">
-      <div><span class="rot">Gasto no mês</span><b class="val">${R$(totalMes)}</b></div>
+      <div><span class="rot">Gasto no mês</span><b class="val" style="font-size:21px">${R$(totalMes)}</b></div>
       ${totalAnt?`<div style="text-align:right"><span class="rot">vs. mês anterior</span>
         <b class="val" style="font-size:17px;color:${dif>0?'var(--rosa)':'var(--tinta2)'}">${dif>0?'+':''}${dif.toFixed(0)}%</b></div>`:''}
     </div>
@@ -421,6 +523,14 @@ function telaInicio(){
     <div class="mini"><div class="rot">Lançamentos</div><div class="num">${itens.length}</div><div class="pe">no mês</div></div>
     <div class="mini"><div class="rot">Média por dia</div><div class="num">${R$(totalMes/diasNoMes)}</div><div class="pe">no mês</div></div>
   </div>
+
+  ${itensGanhoMes(k).length?`<div class="secao-titulo">Entrou este mês</div>
+    ${itensGanhoMes(k).map(i=>`
+    <div class="linha-item">
+      <div class="corpo"><div class="nome">${esc(i.g.desc)}</div>
+      <div class="sub"><span class="tag rec">${esc(i.g.fonte)}</span>${i.g.repete?' · todo mês':''}</div></div>
+      <div class="valor ent">${R$(i.valor)}</div>
+    </div>`).join('')}`:''}
 
   <div class="secao-titulo">Próximas parcelas</div>
   ${proximas.length?proximas.map(x=>`
@@ -455,13 +565,16 @@ function telaGastos(){
       </div>
       <div style="font-size:12px;color:var(--cinza)">Valor cheio das compras do período. Compras parceladas aparecem mês a mês na aba <b>Parcelas</b>.</div>
     </div>`
-    + formGasto()
+    + (UI.editando===null?formGasto():'')
     + `<div class="secao-titulo">Lançamentos</div>`
-    + (lista.length?lista.map(g=>`
+    + (lista.length?lista.map(g=> UI.editando===g.id ? formEdicao(g) : `
       <div class="linha-item">
-        <div class="corpo"><div class="nome">${esc(g.desc)}</div>
-        <div class="sub">${dataBR(g.data)} · ${FORMAS[g.forma]} · ${g.parcelado?g.parcelas+'x de '+R$(g.valor/g.parcelas):'à vista'} <span class="tag">${esc(g.cat)}</span></div></div>
+        <div class="corpo" onclick="editarGasto(${g.id})" style="cursor:pointer">
+          <div class="nome">${esc(g.desc)}</div>
+          <div class="sub">${dataBR(g.data)} · ${FORMAS[g.forma]} · ${g.parcelado?g.parcelas+'x de '+R$(g.valor/g.parcelas):'à vista'} <span class="tag">${esc(g.cat)}</span></div>
+        </div>
         <div class="valor">${R$(g.valor)}</div>
+        <button class="lapis" onclick="editarGasto(${g.id})" aria-label="Editar">✎</button>
         <button class="x" onclick="apagarGasto(${g.id})" aria-label="Excluir">×</button>
       </div>`).join('')
       :'<div class="vazio">Nada lançado neste período ainda.</div>');
@@ -479,30 +592,64 @@ function mudarMes(n){
   UI.mesRef=chaveMes(d); render();
 }
 
-function formGasto(){
-  return `<div class="form">
-    <div class="campo"><label>Descrição</label><input id="gDesc" placeholder="No que gastou"></div>
+function camposGasto(g,p){
+  const v=g||{desc:'',valor:'',data:hojeISO(),cat:D.catsGasto[0],forma:'credito',parcelado:false,parcelas:2};
+  return `
+    <div class="campo"><label>Descrição</label><input id="${p}Desc" value="${esc(v.desc)}" placeholder="No que gastou"></div>
     <div class="dupla">
-      <div class="campo"><label>Valor total</label><input id="gValor" type="number" inputmode="decimal" placeholder="0,00"></div>
-      <div class="campo"><label>Data</label><input id="gData" type="date" value="${hojeISO()}"></div>
+      <div class="campo"><label>Valor total</label><input id="${p}Valor" type="number" inputmode="decimal" value="${v.valor}" placeholder="0,00"></div>
+      <div class="campo"><label>Data</label><input id="${p}Data" type="date" value="${v.data}"></div>
     </div>
     <div class="dupla">
       <div class="campo"><label>Categoria</label>
-        <select id="gCat" onchange="trocarCat(this)">
-          ${D.catsGasto.map(c=>`<option>${esc(c)}</option>`).join('')}
+        <select id="${p}Cat" onchange="trocarCat(this,'${p}')">
+          ${D.catsGasto.map(c=>`<option ${c===v.cat?'selected':''}>${esc(c)}</option>`).join('')}
+          ${(v.cat&&D.catsGasto.indexOf(v.cat)<0)?`<option selected>${esc(v.cat)}</option>`:''}
           <option value="__nova">+ Criar categoria...</option>
         </select></div>
-      <div class="campo"><label>Pagamento</label><select id="gForma">${Object.keys(FORMAS).map(f=>`<option value="${f}">${FORMAS[f]}</option>`).join('')}</select></div>
+      <div class="campo"><label>Pagamento</label><select id="${p}Forma">
+        ${Object.keys(FORMAS).map(f=>`<option value="${f}" ${f===v.forma?'selected':''}>${FORMAS[f]}</option>`).join('')}</select></div>
     </div>
-    <div class="campo" id="campoNovaCat" style="display:none">
+    <div class="campo" id="${p}CampoNova" style="display:none">
       <label>Nome da nova categoria</label>
-      <input id="gCatNova" placeholder="Ex.: Pet, Farmácia, Presentes">
+      <input id="${p}CatNova" placeholder="Ex.: Pet, Farmácia, Presentes">
     </div>
     <div class="dupla">
-      <div class="campo"><label>Forma</label><select id="gParc" onchange="document.getElementById('gN').disabled=this.value==='vista'">
-        <option value="vista">À vista</option><option value="parcelado">Parcelado</option></select></div>
-      <div class="campo"><label>Nº de parcelas</label><input id="gN" type="number" min="2" max="60" value="2" disabled></div>
-    </div>
+      <div class="campo"><label>Forma</label><select id="${p}Parc" onchange="document.getElementById('${p}N').disabled=this.value==='vista'">
+        <option value="vista" ${!v.parcelado?'selected':''}>À vista</option>
+        <option value="parcelado" ${v.parcelado?'selected':''}>Parcelado</option></select></div>
+      <div class="campo"><label>Nº de parcelas</label>
+        <input id="${p}N" type="number" min="2" max="60" value="${v.parcelas||2}" ${!v.parcelado?'disabled':''}></div>
+    </div>`;
+}
+
+function lerCamposGasto(p){
+  const parc=document.getElementById(p+'Parc').value==='parcelado';
+  let cat=document.getElementById(p+'Cat').value;
+  if(cat==='__nova'){
+    cat=document.getElementById(p+'CatNova').value.trim();
+    if(!cat) return {erro:'Dê um nome à nova categoria'};
+    const existe=D.catsGasto.find(c=>c.toLowerCase()===cat.toLowerCase());
+    if(existe) cat=existe; else D.catsGasto.push(cat);
+  }
+  const d={
+    desc:document.getElementById(p+'Desc').value.trim(),
+    valor:parseFloat(document.getElementById(p+'Valor').value),
+    data:document.getElementById(p+'Data').value,
+    cat:cat,
+    forma:document.getElementById(p+'Forma').value,
+    parcelado:parc,
+    parcelas:parc?Math.min(Math.max(2,+document.getElementById(p+'N').value||2),60):1
+  };
+  if(!d.desc) return {erro:'Escreva a descrição'};
+  if(!(d.valor>0)) return {erro:'Informe um valor válido'};
+  if(!d.data) return {erro:'Escolha a data'};
+  return d;
+}
+
+function formGasto(){
+  return `<div class="form">
+    ${camposGasto(null,'g')}
     <button class="btn" onclick="addGasto()">Lançar gasto</button>
   </div>
   <details class="cat" style="margin-bottom:14px">
@@ -526,11 +673,22 @@ function formGasto(){
     </div>
   </details>`;
 }
-function trocarCat(sel){
-  const campo=document.getElementById('campoNovaCat');
+
+function formEdicao(g){
+  return `<div class="form edicao">
+    <div class="edit-tit">Editando lançamento</div>
+    ${camposGasto(g,'e')}
+    <div class="dupla" style="margin-top:2px">
+      <button class="btn claro" onclick="UI.editando=null;render()">Cancelar</button>
+      <button class="btn" onclick="salvarEdicao(${g.id})">Salvar</button>
+    </div>
+  </div>`;
+}
+function trocarCat(sel,p){
+  const campo=document.getElementById(p+'CampoNova');
   const nova=sel.value==='__nova';
   campo.style.display=nova?'block':'none';
-  if(nova) document.getElementById('gCatNova').focus();
+  if(nova) document.getElementById(p+'CatNova').focus();
 }
 
 function listaParcelas(){
@@ -557,19 +715,27 @@ function listaParcelas(){
 }
 
 function telaGrafico(){
-  if(!D.gastos.length) return '<div class="vazio" style="padding:40px 20px">Os gráficos aparecem assim que houver gastos lançados.</div>';
+  if(!D.gastos.length && !(D.ganhos||[]).length)
+    return '<div class="vazio" style="padding:40px 20px">Os gráficos aparecem assim que houver lançamentos.</div>';
+  return `<div class="chips">
+    <button class="chip" aria-pressed="${UI.vistaGraf==='mes'}" onclick="UI.vistaGraf='mes';render()">Por mês</button>
+    <button class="chip" aria-pressed="${UI.vistaGraf==='ano'}" onclick="UI.vistaGraf='ano';render()">Por ano</button>
+  </div>` + (UI.vistaGraf==='ano'?grafAno():grafMes());
+}
 
+function grafMes(){
   const base=agora(); const chaves=[];
   for(let i=5;i>=0;i--){ const d=new Date(base.getFullYear(),base.getMonth()-i,1); chaves.push({k:chaveMes(d),r:M3[d.getMonth()]}); }
-  const vals=chaves.map(c=>fluxoMes(c.k));
-  const maxV=Math.max.apply(null,vals.concat([1]));
-  const W=340,bw=34,gap=(W-chaves.length*bw)/(chaves.length+1);
+  const ents=chaves.map(c=>entradasMes(c.k)), sais=chaves.map(c=>fluxoMes(c.k));
+  const maxV=Math.max.apply(null,ents.concat(sais).concat([1]));
+  const W=340,bw=13,esp=4,grupo=bw*2+esp,gap=(W-6*grupo)/7;
   const atualK=chaveMes(base);
   const barras=chaves.map((c,i)=>{
-    const h=Math.max((vals[i]/maxV)*105,3), x=gap+i*(bw+gap), y=118-h, at=c.k===atualK;
-    return `<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="5" fill="${at?'#12322A':'rgba(18,50,42,.22)'}"></rect>
-      <text x="${x+bw/2}" y="${y-6}" text-anchor="middle" font-size="9.5" font-family="Inter" fill="#6E7C74">${vals[i]?(Math.round(vals[i]/100)/10)+'k':''}</text>
-      <text x="${x+bw/2}" y="134" text-anchor="middle" font-size="11" font-family="Inter" font-weight="${at?600:400}" fill="${at?'#12322A':'#6E7C74'}">${c.r}</text>`;
+    const x=gap+i*(grupo+gap), at=c.k===atualK;
+    const he=Math.max((ents[i]/maxV)*100,2), hs=Math.max((sais[i]/maxV)*100,2);
+    return `<rect x="${x}" y="${118-he}" width="${bw}" height="${he}" rx="3" fill="#2E7D52"></rect>
+      <rect x="${x+bw+esp}" y="${118-hs}" width="${bw}" height="${hs}" rx="3" fill="#B4566A"></rect>
+      <text x="${x+grupo/2}" y="134" text-anchor="middle" font-size="10.5" font-family="Inter" font-weight="${at?600:400}" fill="${at?'#12322A':'#6E7C74'}">${c.r}</text>`;
   }).join('');
 
   const itens=itensDoMes(atualK);
@@ -586,14 +752,26 @@ function telaGrafico(){
   const ord=Object.keys(porCat).map(c=>[c,porCat[c]]).sort((a,b)=>b[1]-a[1]);
   const maxC=ord.length?ord[0][1]:1;
 
+  const porFonte={}; itensGanhoMes(atualK).forEach(i=>porFonte[i.g.fonte]=(porFonte[i.g.fonte]||0)+i.valor);
+  const ordF=Object.keys(porFonte).map(c=>[c,porFonte[c]]).sort((a,b)=>b[1]-a[1]);
+  const maxF=ordF.length?ordF[0][1]:1;
+  const entA=entradasMes(atualK), saiA=fluxoMes(atualK);
+
   return `
-  <div class="secao-titulo">Últimos 6 meses</div>
+  <div class="secao-titulo">Entrou × saiu — últimos 6 meses</div>
   <div class="cartao">
-    <svg viewBox="0 0 ${W} 150" width="100%" role="img" aria-label="Gastos dos últimos seis meses">${barras}</svg>
-    <div style="font-size:12px;color:var(--cinza);border-top:1px solid var(--linha);padding-top:10px">
-      Média mensal <b style="color:var(--tinta)">${R$(vals.reduce((s,v)=>s+v,0)/vals.length)}</b>
+    <svg viewBox="0 0 ${W} 145" width="100%" role="img" aria-label="Entradas e saídas dos últimos seis meses">${barras}</svg>
+    <div class="fluxo" style="border-top:1px solid var(--linha);padding-top:11px">
+      <div><div class="rt"><em class="pt" style="background:var(--verde)"></em>Entrou este mês</div><div class="vl">${R$(entA)}</div></div>
+      <div style="text-align:right"><div class="rt" style="justify-content:flex-end"><em class="pt" style="background:var(--rosa)"></em>Saiu</div><div class="vl">${R$(saiA)}</div></div>
     </div>
   </div>
+
+  ${ordF.length?`<div class="secao-titulo">De onde veio o dinheiro</div>
+  <div class="cartao">
+    ${ordF.map(a=>`<div class="hbar"><div class="l"><span>${esc(a[0])}</span><b>${R$(a[1])}</b></div>
+      <div class="t"><i style="width:${(a[1]/maxF)*100}%;background:var(--verde)"></i></div></div>`).join('')}
+  </div>`:''}
 
   <div class="secao-titulo">Como você pagou este mês</div>
   <div class="cartao" style="display:flex;gap:14px;align-items:center">
@@ -614,6 +792,244 @@ function telaGrafico(){
       <div class="t"><i style="width:${(a[1]/maxC)*100}%;background:var(--tinta2)"></i></div></div>`).join('')
       :'<div class="vazio" style="margin:0">Sem gastos neste mês.</div>'}
   </div>`;
+}
+
+
+function grafAno(){
+  const a=UI.anoRef, meses=mesesDoAno(a);
+  const ents=meses.map(entradasMes), sais=meses.map(fluxoMes);
+  const totE=ents.reduce((s,v)=>s+v,0), totS=sais.reduce((s,v)=>s+v,0), saldo=totE-totS;
+  const maxV=Math.max.apply(null,ents.concat(sais).concat([1]));
+  const W=340,bw=9,esp=3,grupo=bw*2+esp,gap=(W-12*grupo)/13;
+  const barras=meses.map((k,i)=>{
+    const x=gap+i*(grupo+gap);
+    const he=Math.max((ents[i]/maxV)*98,1.5), hs=Math.max((sais[i]/maxV)*98,1.5);
+    return `<rect x="${x}" y="${112-he}" width="${bw}" height="${he}" rx="2.5" fill="#2E7D52"></rect>
+      <rect x="${x+bw+esp}" y="${112-hs}" width="${bw}" height="${hs}" rx="2.5" fill="#B4566A"></rect>
+      <text x="${x+grupo/2}" y="128" text-anchor="middle" font-size="8.5" font-family="Inter" fill="#6E7C74">${M3[i][0].toUpperCase()}</text>`;
+  }).join('');
+
+  const cg=agregaAno(a,itensDoMes,'cat'), cr=agregaAno(a,itensGanhoMes,'fonte');
+  const ordG=Object.keys(cg.tot).map(c=>[c,cg.tot[c]]).sort((x,y)=>y[1]-x[1]);
+  const ordR=Object.keys(cr.tot).map(c=>[c,cr.tot[c]]).sort((x,y)=>y[1]-x[1]);
+  const maxG=ordG.length?ordG[0][1]:1, maxR=ordR.length?ordR[0][1]:1;
+
+  const bloco=(ord,dados,max,total,cor)=>ord.map(x=>`
+    <details class="catbox">
+      <summary>
+        <div class="catlin"><span class="nm"><span class="sta">›</span>${esc(x[0])}</span>
+        <b>${R$(x[1])}<span class="pc">${total?((x[1]/total)*100).toFixed(0):0}%</span></b></div>
+        <div class="hbar" style="margin:0"><div class="t"><i style="width:${(x[1]/max)*100}%;background:${cor}"></i></div></div>
+      </summary>
+      <div class="mensal">${dados.mensal[x[0]].map((mv,mi)=>mv>0?`
+        <div class="mlin"><span class="mn">${M3[mi]}</span>
+        <span class="mt"><i style="width:${(mv/Math.max.apply(null,dados.mensal[x[0]]))*100}%;background:${cor}"></i></span>
+        <span class="mv">${R$(mv)}</span></div>`:'').join('')}</div>
+    </details>`).join('');
+
+  const rodape=t=>`<div style="display:flex;justify-content:space-between;padding-top:12px;border-top:1px solid var(--linha);font-weight:600;margin-top:4px">
+    <span>Total</span><span style="font-family:var(--display);font-variant-numeric:tabular-nums">${R$(t)}</span></div>`;
+
+  return `
+  <div class="navmes">
+    <button onclick="UI.anoRef--;render()" aria-label="Ano anterior">‹</button>
+    <span>${a}</span>
+    <button onclick="UI.anoRef++;render()" aria-label="Próximo ano">›</button>
+  </div>
+  <div class="saldo">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px">
+      <div><span class="rot">${saldo>=0?'Sobrou em':'Faltou em'} ${a}</span>
+        <b class="val" style="color:${saldo>=0?'var(--verde)':'var(--rosa)'}">${R$(Math.abs(saldo))}</b></div>
+      ${totE?`<div style="text-align:right"><span class="rot">do que entrou</span>
+        <b class="val" style="font-size:17px;color:var(--cinza)">${((saldo/totE)*100).toFixed(0)}%</b></div>`:''}
+    </div>
+    <svg viewBox="0 0 ${W} 138" width="100%" style="margin-top:10px" role="img" aria-label="Entradas e saídas mês a mês">${barras}</svg>
+    <div class="fluxo" style="border-top:1px solid var(--linha);padding-top:11px">
+      <div><div class="rt"><em class="pt" style="background:var(--verde)"></em>Entrou no ano</div><div class="vl">${R$(totE)}</div></div>
+      <div style="text-align:right"><div class="rt" style="justify-content:flex-end"><em class="pt" style="background:var(--rosa)"></em>Saiu</div><div class="vl">${R$(totS)}</div></div>
+    </div>
+  </div>
+
+  <div class="secao-titulo">Recebimentos por fonte no ano</div>
+  <div class="cartao">${ordR.length?bloco(ordR,cr,maxR,totE,'var(--verde)')+rodape(totE)
+    :'<div class="vazio" style="margin:0">Sem recebimentos neste ano.</div>'}</div>
+
+  <div class="secao-titulo">Gastos por categoria no ano</div>
+  <div class="cartao">${ordG.length?bloco(ordG,cg,maxG,totS,'var(--rosa)')+rodape(totS)
+    :'<div class="vazio" style="margin:0">Sem gastos neste ano.</div>'}</div>`;
+}
+
+/* ==================== RECEBIMENTOS ==================== */
+function telaGanhos(){
+  const f=UI.filtroGanho, hj=hojeISO(), ano=UI.mesRef.slice(0,4);
+  let lista, total, rotulo;
+  if(f==='mes'){
+    lista=itensGanhoMes(UI.mesRef).map(i=>i.g);
+    total=entradasMes(UI.mesRef); rotulo='no mês';
+  } else if(f==='ano'){
+    const vistos={}; lista=[];
+    mesesDoAno(+ano).forEach(k=>itensGanhoMes(k).forEach(i=>{ if(!vistos[i.g.id]){vistos[i.g.id]=1;lista.push(i.g);} }));
+    total=mesesDoAno(+ano).reduce((s,k)=>s+entradasMes(k),0); rotulo='no ano';
+  } else {
+    lista=(D.ganhos||[]).filter(g=>g.data===hj);
+    total=lista.reduce((s,g)=>s+g.valor,0); rotulo='hoje';
+  }
+  lista=lista.slice().sort((a,b)=>(b.data||'').localeCompare(a.data||''));
+
+  return `<div class="chips">
+    ${[['dia','Hoje'],['mes','Mês'],['ano','Ano']].map(a=>
+      `<button class="chip verde" aria-pressed="${f===a[0]}" onclick="UI.filtroGanho='${a[0]}';render()">${a[1]}</button>`).join('')}
+  </div>`
+  + (f==='mes'?navMes():'')
+  + `<div class="cartao">
+    <div class="topo">
+      <div><span class="rot">Total recebido ${rotulo}</span><b class="val" style="color:var(--verde)">${R$(total)}</b></div>
+      <div style="text-align:right"><span class="rot">Itens</span><b class="val" style="font-size:17px;color:var(--cinza)">${lista.length}</b></div>
+    </div>
+    <div style="font-size:12px;color:var(--cinza)">Recebimentos marcados como <b>todo mês</b> aparecem sozinhos nos meses seguintes.</div>
+  </div>`
+  + (UI.editandoG===null?formGanho():'')
+  + `<div class="secao-titulo">Recebimentos</div>`
+  + (lista.length?lista.map(g=> UI.editandoG===g.id ? formEdicaoGanho(g) : `
+    <div class="linha-item">
+      <div class="corpo" onclick="editarGanho(${g.id})" style="cursor:pointer">
+        <div class="nome">${esc(g.desc)}</div>
+        <div class="sub">${dataBR(g.data)} · ${ONDE[g.onde]||'Conta'}${g.repete?' · repete '+(g.vezes||12)+'x':''} <span class="tag rec">${esc(g.fonte)}</span></div>
+      </div>
+      <div class="valor ent">${R$(g.valor)}</div>
+      <button class="lapis" onclick="editarGanho(${g.id})" aria-label="Editar">✎</button>
+      <button class="x" onclick="apagarGanho(${g.id})" aria-label="Excluir">×</button>
+    </div>`).join('')
+    :'<div class="vazio">Nenhum recebimento neste período.</div>');
+}
+
+function camposGanho(g,p){
+  const v=g||{desc:'',valor:'',data:hojeISO(),fonte:D.fontes[0],onde:'conta',repete:false,vezes:12};
+  return `
+    <div class="campo"><label>Descrição</label><input id="${p}Desc" value="${esc(v.desc)}" placeholder="Ex.: Salário, honorários do cliente X"></div>
+    <div class="dupla">
+      <div class="campo"><label>Valor</label><input id="${p}Valor" type="number" inputmode="decimal" value="${v.valor}" placeholder="0,00"></div>
+      <div class="campo"><label>Data</label><input id="${p}Data" type="date" value="${v.data}"></div>
+    </div>
+    <div class="dupla">
+      <div class="campo"><label>Fonte</label>
+        <select id="${p}Fonte" onchange="trocarFonte(this,'${p}')">
+          ${D.fontes.map(f=>`<option ${f===v.fonte?'selected':''}>${esc(f)}</option>`).join('')}
+          ${(v.fonte&&D.fontes.indexOf(v.fonte)<0)?`<option selected>${esc(v.fonte)}</option>`:''}
+          <option value="__nova">+ Criar fonte...</option>
+        </select></div>
+      <div class="campo"><label>Recebido em</label><select id="${p}Onde">
+        ${Object.keys(ONDE).map(o=>`<option value="${o}" ${o===v.onde?'selected':''}>${ONDE[o]}</option>`).join('')}</select></div>
+    </div>
+    <div class="campo" id="${p}CampoNovaF" style="display:none">
+      <label>Nome da nova fonte</label>
+      <input id="${p}FonteNova" placeholder="Ex.: Aluguel, Comissão">
+    </div>
+    <div class="dupla">
+      <div class="campo"><label>Frequência</label><select id="${p}Rep" onchange="document.getElementById('${p}Vezes').disabled=this.value==='unico'">
+        <option value="unico" ${!v.repete?'selected':''}>Uma vez</option>
+        <option value="mensal" ${v.repete?'selected':''}>Todo mês</option></select></div>
+      <div class="campo"><label>Por quantos meses</label>
+        <input id="${p}Vezes" type="number" min="2" max="60" value="${v.vezes||12}" ${!v.repete?'disabled':''}></div>
+    </div>`;
+}
+
+function trocarFonte(sel,p){
+  const campo=document.getElementById(p+'CampoNovaF');
+  const nova=sel.value==='__nova';
+  campo.style.display=nova?'block':'none';
+  if(nova) document.getElementById(p+'FonteNova').focus();
+}
+
+function lerGanho(p){
+  const rep=document.getElementById(p+'Rep').value==='mensal';
+  let fonte=document.getElementById(p+'Fonte').value;
+  if(fonte==='__nova'){
+    fonte=document.getElementById(p+'FonteNova').value.trim();
+    if(!fonte) return {erro:'Dê um nome à nova fonte'};
+    const existe=D.fontes.find(f=>f.toLowerCase()===fonte.toLowerCase());
+    if(existe) fonte=existe; else D.fontes.push(fonte);
+  }
+  const d={
+    desc:document.getElementById(p+'Desc').value.trim(),
+    valor:parseFloat(document.getElementById(p+'Valor').value),
+    data:document.getElementById(p+'Data').value,
+    fonte:fonte,
+    onde:document.getElementById(p+'Onde').value,
+    repete:rep,
+    vezes:rep?Math.min(Math.max(2,+document.getElementById(p+'Vezes').value||12),60):1
+  };
+  if(!d.desc) return {erro:'Escreva a descrição'};
+  if(!(d.valor>0)) return {erro:'Informe um valor válido'};
+  if(!d.data) return {erro:'Escolha a data'};
+  return d;
+}
+
+function formGanho(){
+  return `<div class="form entrada">
+    ${camposGanho(null,'r')}
+    <button class="btn verde" onclick="addGanho()">Lançar recebimento</button>
+  </div>
+  <details class="cat" style="margin-bottom:14px">
+    <summary><span class="seta">›</span><span class="cnome">Fontes</span><span class="tag">${D.fontes.length}</span></summary>
+    <div class="cot">
+      <div class="cats-chips">
+        ${D.fontes.map((f,i)=>`<span class="cat-chip">${esc(f)}
+          <button onclick="apagarFonte(${i})" aria-label="Excluir ${esc(f)}">×</button></span>`).join('')}
+      </div>
+      <div class="campo" style="margin:14px 0 0"><label>Nova fonte</label>
+        <input id="novaFonte" placeholder="Ex.: Aluguel, Comissão"></div>
+      <button class="btn claro" onclick="addFonte()">Criar fonte</button>
+    </div>
+  </details>`;
+}
+
+function formEdicaoGanho(g){
+  return `<div class="form entrada edicao-g">
+    <div class="edit-tit" style="color:var(--verde)">Editando recebimento</div>
+    ${camposGanho(g,'q')}
+    <div class="dupla" style="margin-top:2px">
+      <button class="btn claro" onclick="UI.editandoG=null;render()">Cancelar</button>
+      <button class="btn verde" onclick="salvarGanho(${g.id})">Salvar</button>
+    </div>
+  </div>`;
+}
+
+function addGanho(){
+  const d=lerGanho('r');
+  if(d.erro) return toast(d.erro);
+  D.ganhos.push(Object.assign({id:novoId()},d));
+  salvar(); render(); toast('Recebimento lançado');
+}
+function editarGanho(id){ UI.editandoG=id; render(); }
+function salvarGanho(id){
+  const d=lerGanho('q');
+  if(d.erro) return toast(d.erro);
+  const g=D.ganhos.find(x=>x.id===id);
+  if(!g){ UI.editandoG=null; return render(); }
+  Object.assign(g,d);
+  UI.editandoG=null; salvar(); render(); toast('Recebimento atualizado');
+}
+function apagarGanho(id){
+  if(!confirm('Excluir este recebimento?')) return;
+  D.ganhos=D.ganhos.filter(g=>g.id!==id); salvar(); render();
+}
+function addFonte(){
+  const n=document.getElementById('novaFonte').value.trim();
+  if(!n) return toast('Dê um nome à fonte');
+  if(D.fontes.some(f=>f.toLowerCase()===n.toLowerCase())) return toast('Essa fonte já existe');
+  D.fontes.push(n); salvar(); render(); toast('Fonte criada');
+}
+function apagarFonte(i){
+  const nome=D.fontes[i];
+  if(nome===undefined) return;
+  if(D.fontes.length<=1) return toast('Deixe ao menos uma fonte');
+  const usos=(D.ganhos||[]).filter(g=>g.fonte===nome).length;
+  const aviso=usos
+    ? 'A fonte "'+nome+'" tem '+usos+' recebimento(s). Eles continuam com esse nome, mas ela sai da lista. Continuar?'
+    : 'Excluir a fonte "'+nome+'"?';
+  if(!confirm(aviso)) return;
+  D.fontes.splice(i,1); salvar(); render();
 }
 
 /* ==================== TELAS: CASAMENTO ==================== */
@@ -805,27 +1221,22 @@ function subTotal(){
 
 /* ==================== AÇÕES ==================== */
 function addGasto(){
-  const d=document.getElementById('gDesc').value.trim();
-  const v=parseFloat(document.getElementById('gValor').value);
-  const dt=document.getElementById('gData').value;
-  if(!d) return toast('Escreva a descrição');
-  if(!(v>0)) return toast('Informe um valor válido');
-  if(!dt) return toast('Escolha a data');
-
-  let cat=document.getElementById('gCat').value;
-  if(cat==='__nova'){
-    cat=document.getElementById('gCatNova').value.trim();
-    if(!cat) return toast('Dê um nome à nova categoria');
-    if(D.catsGasto.some(c=>c.toLowerCase()===cat.toLowerCase()))
-      cat=D.catsGasto.find(c=>c.toLowerCase()===cat.toLowerCase());
-    else D.catsGasto.push(cat);
-  }
-
-  const parc=document.getElementById('gParc').value==='parcelado';
-  D.gastos.push({id:novoId(),desc:d,valor:v,data:dt,cat:cat,
-    forma:document.getElementById('gForma').value,parcelado:parc,
-    parcelas:parc?Math.min(Math.max(2,+document.getElementById('gN').value||2),60):1});
+  const d=lerCamposGasto('g');
+  if(d.erro) return toast(d.erro);
+  D.gastos.push(Object.assign({id:novoId()},d));
   salvar(); render(); toast('Gasto lançado');
+}
+function editarGasto(id){ UI.editando=id; render(); }
+function salvarEdicao(id){
+  const d=lerCamposGasto('e');
+  if(d.erro) return toast(d.erro);
+  const g=D.gastos.find(x=>x.id===id);
+  if(!g) { UI.editando=null; return render(); }
+  const antes=g.parcelas;
+  Object.assign(g,d);
+  if(antes!==g.parcelas || !g.parcelado)
+    D.parcelasPagas=(D.parcelasPagas||[]).filter(k=>k.split('-')[0]!=String(id));
+  UI.editando=null; salvar(); render(); toast('Lançamento atualizado');
 }
 function apagarGasto(id){
   if(!confirm('Excluir este lançamento?')) return;
@@ -948,13 +1359,14 @@ function toast(msg){
 }
 
 const ABAS=[['inicio','Início',telaInicio],['gastos','Gastos',telaGastos],
+            ['ganhos','Ganhos',telaGanhos],
             ['grafico','Gráfico',telaGrafico],['casamento','Casamento',telaCasamento]];
 
 function render(){
   const aba=ABAS.find(a=>a[0]===UI.aba)||ABAS[0];
   document.getElementById('tela').innerHTML=aba[2]();
   document.getElementById('nav').innerHTML=
-    ABAS.slice(0,3).map(a=>`<button aria-current="${a[0]===UI.aba}" onclick="ir('${a[0]}')">${a[1]}</button>`).join('')
+    ABAS.slice(0,4).map(a=>`<button class="${a[0]==='ganhos'?'gan':''}" aria-current="${a[0]===UI.aba}" onclick="ir('${a[0]}')">${a[1]}</button>`).join('')
     +'<div class="divisor"></div>'
     +`<button class="cas" aria-current="${UI.aba==='casamento'}" onclick="ir('casamento')">Casamento</button>`;
 
@@ -974,11 +1386,18 @@ function render(){
         : dias===0 ? 'é o grande dia' : 'casamento em '+(+p[2])+'/'+p[1]+'/'+p[0];
     } else { num.textContent='—'; txt.textContent='defina a data em ⚙ Ajustes'; }
   } else {
-    num.textContent=R$(fluxoMes(chaveMes(agora())));
-    txt.textContent='gastos de '+MESES[agora().getMonth()];
+    const k=chaveMes(agora());
+    const ent=entradasMes(k), sai=fluxoMes(k), saldo=ent-sai;
+    if(ent){
+      num.textContent=R$(Math.abs(saldo));
+      txt.textContent=(saldo>=0?'sobrou em ':'faltou em ')+MESES[agora().getMonth()];
+    } else {
+      num.textContent=R$(sai);
+      txt.textContent='gastos de '+MESES[agora().getMonth()];
+    }
   }
 }
-function ir(a){ UI.aba=a; render(); window.scrollTo(0,0); }
+function ir(a){ UI.aba=a; UI.editando=null; UI.editandoG=null; render(); window.scrollTo(0,0); }
 
 /* boot */
 const salvo=lerLocal();
