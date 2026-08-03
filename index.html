@@ -89,6 +89,11 @@ main{padding:16px 16px 8px}
 .apagar{border:0;background:transparent;color:var(--cinza);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--texto);padding:7px 8px;border-radius:8px;margin-left:auto}
 .apagar:hover{color:var(--rosa);background:rgba(180,86,106,.1)}
 
+.cats-chips{display:flex;flex-wrap:wrap;gap:7px}
+.cat-chip{display:inline-flex;align-items:center;gap:3px;background:var(--papel);border:1px solid var(--linha);border-radius:99px;padding:6px 6px 6px 13px;font-size:13px;font-weight:500}
+.cat-chip button{border:0;background:transparent;color:var(--cinza);font-size:16px;line-height:1;cursor:pointer;padding:2px 5px;border-radius:99px;font-family:var(--texto)}
+.cat-chip button:hover{background:rgba(180,86,106,.14);color:var(--rosa)}
+
 .form{background:var(--carta);border:1px dashed rgba(18,50,42,.25);border-radius:14px;padding:14px;margin-bottom:14px}
 label{display:block;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--cinza);font-weight:600;margin:0 0 5px}
 input,select,textarea{width:100%;padding:10px 11px;border:1px solid var(--linha);border-radius:10px;font-family:var(--texto);font-size:16px;color:var(--tinta);background:var(--papel)}
@@ -98,7 +103,6 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--tinta2);outline-
 .btn{width:100%;padding:13px;border:0;border-radius:10px;background:var(--tinta);color:var(--papel);font-family:var(--texto);font-size:14px;font-weight:600;cursor:pointer}
 .btn.claro{background:transparent;color:var(--tinta);border:1px solid var(--linha)}
 .btn.rosa{background:var(--vinho)}
-.btn.perigo{background:transparent;color:var(--rosa);border:1px solid rgba(180,86,106,.4)}
 
 .chips{display:flex;gap:7px;margin-bottom:13px;flex-wrap:wrap}
 .chip{border:1px solid var(--linha);background:transparent;color:var(--cinza);padding:7px 13px;border-radius:99px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--texto)}
@@ -500,7 +504,27 @@ function formGasto(){
       <div class="campo"><label>Nº de parcelas</label><input id="gN" type="number" min="2" max="60" value="2" disabled></div>
     </div>
     <button class="btn" onclick="addGasto()">Lançar gasto</button>
-  </div>`;
+  </div>
+  <details class="cat" style="margin-bottom:14px">
+    <summary>
+      <span class="seta">›</span>
+      <span class="cnome">Categorias</span>
+      <span class="tag">${D.catsGasto.length}</span>
+    </summary>
+    <div class="cot">
+      <div class="cats-chips">
+        ${D.catsGasto.map((c,i)=>`
+          <span class="cat-chip">${esc(c)}
+            <button onclick="apagarCatGasto(${i})" aria-label="Excluir ${esc(c)}">×</button>
+          </span>`).join('')}
+      </div>
+      <div class="campo" style="margin:14px 0 0">
+        <label>Nova categoria</label>
+        <input id="novaCatGasto" placeholder="Ex.: Pet, Farmácia, Presentes">
+      </div>
+      <button class="btn claro" onclick="addCatGasto()">Criar categoria</button>
+    </div>
+  </details>`;
 }
 function trocarCat(sel){
   const campo=document.getElementById('campoNovaCat');
@@ -883,47 +907,7 @@ function abrirAjustes(){
       <button class="btn rosa" onclick="salvarAjustes()">Salvar</button>
     </div>
 
-    <div class="secao-titulo">Backup</div>
-    <div class="cartao">
-      <div style="font-size:12.5px;color:var(--cinza);margin-bottom:11px">
-        ${configOk()
-          ? 'Tudo é salvo sozinho na nuvem — não precisa fazer nada. Este backup é só uma cópia extra, se quiser guardar.'
-          : 'Baixe um arquivo com tudo o que está no app, para guardar ou passar para outro aparelho.'}
-      </div>
-      <button class="btn claro" onclick="exportar()" style="margin-bottom:8px">Baixar backup</button>
-      <button class="btn claro" onclick="document.getElementById('arqImp').click()">Restaurar de um arquivo</button>
-      <input type="file" id="arqImp" accept="application/json" style="display:none" onchange="importar(this)">
-    </div>
-
-    <div class="secao-titulo">Categorias de gastos</div>
-    <div class="cartao">
-      <div style="font-size:12.5px;color:var(--cinza);margin-bottom:12px">
-        Também dá para criar categoria na hora de lançar um gasto, escolhendo "+ Criar categoria" na lista.
-      </div>
-      ${D.catsGasto.map((c,i)=>{
-        const usos=D.gastos.filter(g=>g.cat===c).length;
-        return `<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--linha)">
-          <div style="flex:1;min-width:0">
-            <div style="font-weight:500;font-size:13.5px">${esc(c)}</div>
-            <div style="font-size:11.5px;color:var(--cinza)">${usos?usos+' lançamento(s)':'sem uso'}</div>
-          </div>
-          <button class="apagar" onclick="apagarCatGasto(${i})">Excluir</button>
-        </div>`;
-      }).join('')}
-      <div class="campo" style="margin:14px 0 0">
-        <label>Nova categoria</label>
-        <input id="novaCatGasto" placeholder="Ex.: Pet, Farmácia, Presentes">
-      </div>
-      <button class="btn claro" onclick="addCatGasto()">Criar categoria</button>
-    </div>
-
-    <div class="secao-titulo">Zona de risco</div>
-    <div class="cartao">
-      <div style="font-size:12.5px;color:var(--cinza);margin-bottom:11px">Apaga gastos, convidados e cotações${configOk()?', inclusive na nuvem':''}. Não tem volta.</div>
-      <button class="btn perigo" onclick="apagarTudo()">Apagar todos os dados</button>
-    </div>
-
-    <div style="text-align:center;font-size:11px;color:var(--cinza);margin-top:16px">
+    <div style="text-align:center;font-size:11px;color:var(--cinza);margin-top:18px">
       Nosso Casamento · versão ${VERSAO}
     </div>
     <button class="btn claro" style="margin-top:12px" onclick="fecharAjustes()">Fechar</button>`;
@@ -936,37 +920,12 @@ function salvarAjustes(){
   D.orcamento=+document.getElementById('aOrc').value||0;
   salvar(); render(); fecharAjustes(); toast('Ajustes salvos');
 }
-function exportar(){
-  const blob=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='backup-casamento-'+hojeISO()+'.json';
-  a.click(); URL.revokeObjectURL(a.href); toast('Backup baixado');
-}
-function importar(input){
-  const f=input.files[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=()=>{
-    try{
-      const v=JSON.parse(r.result);
-      if(!v || !v.versao) throw 0;
-      if(!confirm('Isto substitui os dados atuais. Continuar?')) return;
-      D=normalizar(v); salvar(); render(); fecharAjustes(); toast('Backup restaurado');
-    }catch(e){ toast('Arquivo inválido'); }
-  };
-  r.readAsText(f); input.value='';
-}
-function apagarTudo(){
-  if(!confirm('Apagar TODOS os dados do app? Isto não tem volta.')) return;
-  if(!confirm('Tem certeza mesmo? Baixe um backup antes, se quiser guardar.')) return;
-  D=estadoInicial(); salvar(); render(); fecharAjustes(); toast('Tudo apagado');
-}
 
 function addCatGasto(){
-  const el=document.getElementById('novaCatGasto'), n=el.value.trim();
+  const n=document.getElementById('novaCatGasto').value.trim();
   if(!n) return toast('Dê um nome à categoria');
   if(D.catsGasto.some(c=>c.toLowerCase()===n.toLowerCase())) return toast('Essa categoria já existe');
-  D.catsGasto.push(n); salvar(); abrirAjustes(); toast('Categoria criada');
+  D.catsGasto.push(n); salvar(); render(); toast('Categoria criada');
 }
 function apagarCatGasto(i){
   const nome=D.catsGasto[i];
@@ -977,8 +936,7 @@ function apagarCatGasto(i){
     ? 'A categoria "'+nome+'" tem '+usos+' lançamento(s). Eles continuam com esse nome, mas ela sai da lista. Continuar?'
     : 'Excluir a categoria "'+nome+'"?';
   if(!confirm(aviso)) return;
-  D.catsGasto.splice(i,1);
-  salvar(); abrirAjustes(); render();
+  D.catsGasto.splice(i,1); salvar(); render();
 }
 
 /* ==================== INFRA ==================== */
