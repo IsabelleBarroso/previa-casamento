@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#12322A">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Nosso Casamento">
-<title>Nosso Casamento</title>
+<meta name="apple-mobile-web-app-title" content="G">
+<title>Felipe & Gabriela</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +31,8 @@ body{background:var(--tinta);font-family:var(--texto);color:var(--tinta);font-si
 header{background:var(--tinta);color:var(--papel);padding:calc(18px + env(safe-area-inset-top)) 20px 20px;transition:background .2s}
 header.casamento{background:var(--vinho)}
 .cab-topo{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.eyebrow{font-size:10.5px;letter-spacing:.19em;text-transform:uppercase;color:rgba(242,238,228,.6);margin:0 0 6px;font-weight:500}
+.eyebrow{font-size:10.5px;letter-spacing:.19em;text-transform:uppercase;color:rgba(242,238,228,.6);margin:0 0 6px;font-weight:500;display:flex;align-items:center;gap:8px}
+.eyebrow .ver{letter-spacing:.04em;text-transform:none;font-size:10px;color:rgba(242,238,228,.42);padding-left:8px;border-left:1px solid rgba(242,238,228,.2)}
 header h1{font-family:var(--display);font-weight:500;font-size:26px;margin:0;letter-spacing:-.01em}
 .ajustes-btn{background:rgba(242,238,228,.12);border:0;color:var(--papel);width:34px;height:34px;border-radius:99px;font-size:16px;cursor:pointer;flex:none}
 .headline{margin-top:13px;border-top:1px solid rgba(242,238,228,.18);padding-top:12px;display:flex;align-items:baseline;gap:9px}
@@ -127,6 +128,13 @@ table.res th:first-child{text-align:left}
 table.res td{padding:8px 0;border-top:1px solid var(--linha);text-align:right;font-variant-numeric:tabular-nums}
 table.res td:first-child{text-align:left;font-weight:500}
 
+.aviso-versao{margin:14px 16px 0;background:var(--carta);border:1px solid var(--linha);border-left:3px solid var(--ouro);border-radius:12px;padding:13px 14px}
+.aviso-versao .aviso-topo{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.aviso-versao .aviso-tit{font-weight:600;font-size:14px}
+.aviso-versao .aviso-sub{font-size:11.5px;color:var(--cinza);margin-top:1px}
+.aviso-versao button{border:0;background:transparent;color:var(--cinza);font-size:20px;line-height:1;cursor:pointer;padding:0 4px;flex:none}
+.aviso-versao ul{margin:9px 0 0;padding-left:18px;font-size:12.5px;color:var(--cinza);line-height:1.55}
+
 nav{position:fixed;bottom:0;left:0;right:0;max-width:470px;margin:0 auto;background:var(--carta);border-top:1px solid var(--linha);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:20}
 nav button{flex:1;border:0;background:transparent;padding:13px 2px 15px;cursor:pointer;font-family:var(--texto);font-size:11px;font-weight:600;color:var(--cinza);position:relative}
 nav button[aria-current="true"]{color:var(--tinta)}
@@ -162,7 +170,7 @@ nav .divisor{width:1px;background:var(--linha);margin:12px 0}
   <header id="cab">
     <div class="cab-topo">
       <div>
-        <p class="eyebrow" id="eyebrow"></p>
+        <p class="eyebrow"><span id="eyebrow"></span><span class="ver">v<span id="verNum"></span></span></p>
         <h1 id="titulo"></h1>
       </div>
       <div style="display:flex;align-items:center;gap:8px;flex:none">
@@ -201,6 +209,18 @@ const SALA = "casamento";   // nó onde os dados ficam guardados
 
 /* ==================== CONSTANTES ==================== */
 const VERSAO = '1.0';
+const NOVIDADES = [
+  { v:'1.0', data:'03/08/2026', itens:[
+      'Primeira versão do aplicativo',
+      'Controle de gastos com filtros por dia, mês e ano',
+      'Compras parceladas distribuídas automaticamente pelos meses',
+      'Gráficos dos últimos 6 meses, formas de pagamento e categorias',
+      'Lista de convidados com lado, grupo e acompanhantes',
+      'Cotações por categoria com opção de marcar a escolhida',
+      'Total do casamento com orçamento e registro de pagamentos',
+      'Tudo salva sozinho na nuvem'
+    ] }
+];
 const CHAVE = 'app-casamento-v1';
 const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 const M3=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
@@ -214,7 +234,7 @@ function estadoInicial(){
   return {
     versao:1,
     atualizadoEm:0,
-    noivos:'Nosso casamento',
+    noivos:'Felipe & Gabriela',
     dataCasamento:'',
     orcamento:0,
     gastos:[],
@@ -849,7 +869,7 @@ function abrirAjustes(){
 
     <div class="secao-titulo">O casamento</div>
     <div class="cartao">
-      <div class="campo"><label>Nome do casal</label><input id="aNoivos" value="${esc(D.noivos)}" placeholder="Ana & Rafael"></div>
+      <div class="campo"><label>Nome do casal</label><input id="aNoivos" value="${esc(D.noivos)}" placeholder="Felipe & Gabriela"></div>
       <div class="campo"><label>Data do casamento</label><input id="aData" type="date" value="${D.dataCasamento||''}"></div>
       <div class="campo"><label>Teto do orçamento</label><input id="aOrc" type="number" value="${D.orcamento||''}" placeholder="0,00"></div>
       <button class="btn rosa" onclick="salvarAjustes()">Salvar</button>
@@ -867,19 +887,37 @@ function abrirAjustes(){
       <input type="file" id="arqImp" accept="application/json" style="display:none" onchange="importar(this)">
     </div>
 
+    <div class="secao-titulo">Novidades</div>
+    ${NOVIDADES.map((n,i)=>`
+      <details class="cat" ${i===0?'open':''}>
+        <summary>
+          <span class="seta">›</span>
+          <span class="cnome">Versão ${n.v}${i===0?' <span class="tag ok" style="margin-left:5px">atual</span>':''}
+            <div style="font-size:11.5px;font-weight:400;color:var(--cinza);margin-top:1px">${n.data}</div>
+          </span>
+        </summary>
+        <div class="cot">
+          <ul style="margin:0;padding-left:18px;font-size:13px;color:var(--cinza);line-height:1.6">
+            ${n.itens.map(t=>`<li>${esc(t)}</li>`).join('')}
+          </ul>
+        </div>
+      </details>`).join('')}
+
     <div class="secao-titulo">Zona de risco</div>
     <div class="cartao">
       <div style="font-size:12.5px;color:var(--cinza);margin-bottom:11px">Apaga gastos, convidados e cotações${configOk()?', inclusive na nuvem':''}. Não tem volta.</div>
       <button class="btn perigo" onclick="apagarTudo()">Apagar todos os dados</button>
     </div>
 
-    <div style="text-align:center;font-size:11px;color:var(--cinza);margin-top:16px">versão ${VERSAO}</div>
+    <div style="text-align:center;font-size:11px;color:var(--cinza);margin-top:16px">
+      Nosso Casamento · versão ${VERSAO}
+    </div>
     <button class="btn claro" style="margin-top:12px" onclick="fecharAjustes()">Fechar</button>`;
   document.getElementById('modalAjustes').classList.add('on');
 }
 function fecharAjustes(){ document.getElementById('modalAjustes').classList.remove('on'); }
 function salvarAjustes(){
-  D.noivos=document.getElementById('aNoivos').value.trim()||'Nosso casamento';
+  D.noivos=document.getElementById('aNoivos').value.trim()||'Felipe & Gabriela';
   D.dataCasamento=document.getElementById('aData').value;
   D.orcamento=+document.getElementById('aOrc').value||0;
   salvar(); render(); fecharAjustes(); toast('Ajustes salvos');
@@ -910,6 +948,29 @@ function apagarTudo(){
   D=estadoInicial(); salvar(); render(); fecharAjustes(); toast('Tudo apagado');
 }
 
+/* ==================== VERSÃO ==================== */
+function checarVersao(){
+  let anterior=null;
+  try{ anterior=localStorage.getItem(CHAVE+'-versao'); }catch(e){}
+  try{ localStorage.setItem(CHAVE+'-versao', VERSAO); }catch(e){}
+  if(anterior && anterior!==VERSAO) mostrarNovidade();
+}
+function mostrarNovidade(){
+  const n=NOVIDADES[0];
+  const el=document.createElement('div');
+  el.className='aviso-versao';
+  el.innerHTML=`
+    <div class="aviso-topo">
+      <div>
+        <div class="aviso-tit">Aplicativo atualizado</div>
+        <div class="aviso-sub">Versão ${n.v} · seus dados continuam aqui</div>
+      </div>
+      <button onclick="this.closest('.aviso-versao').remove()" aria-label="Fechar">×</button>
+    </div>
+    <ul>${n.itens.slice(0,4).map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`;
+  document.getElementById('shell').insertBefore(el, document.getElementById('tela'));
+}
+
 /* ==================== INFRA ==================== */
 let timerToast=null;
 function toast(msg){
@@ -932,6 +993,7 @@ function render(){
   const cas=UI.aba==='casamento';
   document.getElementById('cab').className=cas?'casamento':'';
   document.getElementById('eyebrow').textContent=cas?'Casamento':'Financeiro';
+  document.getElementById('verNum').textContent=VERSAO;
   document.getElementById('titulo').textContent=cas?D.noivos:'Minhas finanças';
   const num=document.getElementById('hNum'), txt=document.getElementById('hTxt');
   if(cas){
@@ -954,6 +1016,7 @@ function ir(a){ UI.aba=a; render(); window.scrollTo(0,0); }
 const salvo=lerLocal();
 if(salvo && salvo.versao) D=normalizar(salvo);
 render();
+checarVersao();
 carregarFirebase();
 
 if('serviceWorker' in navigator){
