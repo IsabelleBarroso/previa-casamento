@@ -126,6 +126,17 @@ main{padding:16px 16px 8px}
 .btn.verde{background:var(--verde);color:#fff}
 .chip.verde[aria-pressed="true"]{background:var(--verde);border-color:var(--verde)}
 
+.reparte{display:flex;border-top:1px solid var(--linha);margin-top:12px;padding-top:12px}
+.reparte>div{flex:1;text-align:center;border-left:1px solid var(--linha)}
+.reparte>div:first-child{border-left:0}
+.reparte .rr{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--cinza);font-weight:600}
+.reparte .vv{font-family:var(--display);font-size:15px;margin-top:3px;font-variant-numeric:tabular-nums}
+.linha-item.fx{border-left:3px solid var(--ouro)}
+.linha-item.pc{border-left:3px solid var(--rosa)}
+.tag.fixa{background:rgba(190,135,36,.16);color:#8A6212}
+.tag.parc{background:rgba(180,86,106,.13);color:var(--rosa)}
+.form.fixa-edit{border-style:solid;border-color:var(--ouro);border-left:3px solid var(--ouro)}
+.btn.ouro{background:var(--ouro);color:#fff}
 .cats-chips{display:flex;flex-wrap:wrap;gap:7px}
 .cat-chip{display:inline-flex;align-items:center;gap:3px;background:var(--papel);border:1px solid var(--linha);border-radius:99px;padding:6px 6px 6px 13px;font-size:13px;font-weight:500}
 .cat-chip button{border:0;background:transparent;color:var(--cinza);font-size:16px;line-height:1;cursor:pointer;padding:2px 5px;border-radius:99px;font-family:var(--texto)}
@@ -244,19 +255,39 @@ const SALA = "casamento";   // nó onde os dados ficam guardados
 /* ========================================================== */
 
 /* ==================== CONSTANTES ==================== */
-const VERSAO = '1.3';
+const VERSAO = '1.4';
 const CHAVE = 'app-casamento-v1';
 const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 const M3=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
-const FORMAS={credito:'Crédito',debito:'Débito',pix:'Pix',dinheiro:'Dinheiro'};
-const COR_FORMA={credito:'#B4566A',debito:'#1D4A3E',pix:'#BE8724',dinheiro:'#6E7C74'};
-const CATS_PADRAO=['Mercado','Alimentação','Transporte','Casa','Saúde','Lazer','Vestuário','Educação','Beleza','Outros'];
+const FORMAS={credito:'Cartão',debito:'Débito',pix:'Pix',dinheiro:'Dinheiro',boleto:'Boleto',cheque:'Cheque'};
+const COR_FORMA={credito:'#B4566A',debito:'#1D4A3E',pix:'#BE8724',dinheiro:'#6E7C74',boleto:'#8A6212',cheque:'#4A6FA5'};
+const CATS_PADRAO=['Mercado','Alimentação','Assinaturas','Transporte','Casa','Saúde','Lazer','Vestuário','Educação','Beleza','Impostos','Outros'];
 const FONTES_PADRAO=['Salário','Honorários','Freelance','13º / Férias','Outros'];
 const ONDE={conta:'Conta',pix:'Pix',dinheiro:'Dinheiro'};
+const FIXAS_PADRAO=[
+  ['Apple','credito',5,'Assinaturas'],
+  ['Spotify','credito',8,'Assinaturas'],
+  ['Gran Curso','credito',10,'Educação'],
+  ['Disney','credito',12,'Assinaturas'],
+  ['Academia','cheque',5,'Saúde'],
+  ['Condomínio','pix',10,'Casa'],
+  ['Garagem','pix',10,'Casa'],
+  ['IPTU','pix',15,'Impostos'],
+  ['Futevôlei','credito',5,'Saúde'],
+  ['Professor futevôlei','pix',5,'Saúde'],
+  ['Consórcio','pix',20,'Casa'],
+  ['ChatGPT','credito',14,'Assinaturas'],
+  ['Claude','credito',14,'Assinaturas'],
+  ['JusBrasil','credito',18,'Educação'],
+  ['Contabilidade','pix',10,'Outros'],
+  ['Imposto de Renda','boleto',25,'Impostos'],
+  ['Simples Nacional','boleto',20,'Impostos']
+];
 const CATS_CASAMENTO=['Espaço / Local','Igreja','Buffet','Banda / DJ','Fotografia e vídeo','Decoração e flores','Vestido e traje','Bolo e doces','Convites','Cerimonial','Bebidas','Lembrancinhas'];
 
 /* ==================== ESTADO ==================== */
 function estadoInicial(){
+  const mesAtual=new Date().getFullYear()+'-'+String(new Date().getMonth()+1).padStart(2,'0');
   return {
     versao:1,
     atualizadoEm:0,
@@ -267,6 +298,8 @@ function estadoInicial(){
     fontes:FONTES_PADRAO.slice(),
     gastos:[],
     ganhos:[],
+    fixas:FIXAS_PADRAO.map((f,i)=>({id:2000+i,nome:f[0],valor:0,forma:f[1],dia:f[2],cat:f[3],inicio:mesAtual,ativa:true,ajustes:{}})),
+    fixasPagas:[],
     parcelasPagas:[],
     convidados:[],
     categorias:CATS_CASAMENTO.map((n,i)=>({id:1000+i,nome:n,cotacoes:[]}))
@@ -274,7 +307,7 @@ function estadoInicial(){
 }
 let D = estadoInicial();
 const UI = { aba:'inicio', subCas:'convidados', filtroGasto:'mes', filtroGanho:'mes', filtroCot:'todas',
-             mesRef:null, catAberta:null, editando:null, editandoG:null, vistaGraf:'mes', anoRef:null };
+             mesRef:null, catAberta:null, editando:null, editandoG:null, editandoF:null, vistaGraf:'mes', anoRef:null };
 let seq = Date.now()%1000000;
 const novoId = () => ++seq;
 
@@ -364,6 +397,7 @@ function iniciarFirebase(){
 function normalizar(v){
   const padrao=estadoInicial();
   const catsPadrao=padrao.categorias;
+  const padraoFixas=padrao.fixas;
   const r=Object.assign(padrao,v);
   r.gastos=Array.isArray(v.gastos)?v.gastos:[];
   r.convidados=Array.isArray(v.convidados)?v.convidados:[];
@@ -375,6 +409,10 @@ function normalizar(v){
   r.ganhos=Array.isArray(v.ganhos)?v.ganhos:[];
   r.fontes=(Array.isArray(v.fontes)&&v.fontes.length)?v.fontes:FONTES_PADRAO.slice();
   r.ganhos.forEach(g=>{ if(g.fonte && r.fontes.indexOf(g.fonte)<0) r.fontes.push(g.fonte); });
+  r.fixas=Array.isArray(v.fixas)?v.fixas:padraoFixas;
+  r.fixas.forEach(f=>{ if(!f.ajustes||typeof f.ajustes!=='object') f.ajustes={}; if(f.ativa===undefined) f.ativa=true; });
+  r.fixasPagas=Array.isArray(v.fixasPagas)?v.fixasPagas:[];
+  r.fixas.forEach(f=>{ if(f.cat && r.catsGasto.indexOf(f.cat)<0) r.catsGasto.push(f.cat); });
   return r;
 }
 
@@ -410,26 +448,41 @@ function parcelasDe(g){
 }
 const todasParcelas = () => D.gastos.filter(g=>g.parcelado).flatMap(parcelasDe).sort((a,b)=>a.dt-b.dt);
 
+const valorFixa=(f,k)=>(f.ajustes&&f.ajustes[k]!==undefined)?f.ajustes[k]:(f.valor||0);
+
 function itensDoMes(k){
   const out=[];
   D.gastos.forEach(g=>{
-    if(!g.parcelado){ if((g.data||'').slice(0,7)===k) out.push({g,valor:g.valor,rot:'à vista'}); }
-    else parcelasDe(g).forEach(p=>{ if(chaveMes(p.dt)===k) out.push({g,valor:p.valor,rot:'parcela '+p.n+'/'+p.de,pc:p}); });
+    if(!g.parcelado){
+      if((g.data||'').slice(0,7)===k)
+        out.push({tipo:'vista',g,id:g.id,valor:g.valor,forma:g.forma,cat:g.cat,desc:g.desc,data:g.data});
+    } else parcelasDe(g).forEach(p=>{
+      if(chaveMes(p.dt)===k)
+        out.push({tipo:'parcela',g,id:g.id,valor:p.valor,forma:g.forma,cat:g.cat,desc:g.desc,
+          data:k+'-'+String(p.dt.getDate()).padStart(2,'0'),n:p.n,de:p.de,chave:p.chave});
+    });
   });
-  return out;
+  (D.fixas||[]).forEach(f=>{
+    if(f.ativa===false) return;
+    if(f.inicio && k<f.inicio) return;
+    const v=valorFixa(f,k);
+    out.push({tipo:'fixa',f,id:f.id,valor:v,forma:f.forma,cat:f.cat,desc:f.nome,
+      data:k+'-'+String(f.dia||1).padStart(2,'0'),chave:f.id+'-'+k});
+  });
+  return out.sort((a,b)=>(a.data||'').localeCompare(b.data||''));
 }
 const fluxoMes = k => itensDoMes(k).reduce((s,i)=>s+i.valor,0);
 
 function itensGanhoMes(k){
   const out=[];
   (D.ganhos||[]).forEach(g=>{
-    if(!g.repete){ if((g.data||'').slice(0,7)===k) out.push({g,valor:g.valor}); }
+    if(!g.repete){ if((g.data||'').slice(0,7)===k) out.push({g,valor:g.valor,fonte:g.fonte}); }
     else {
       const p=g.data.split('-').map(Number), n=g.vezes||12;
       for(let i=0;i<n;i++){
         const ult=new Date(p[0],p[1]+i,0).getDate();
         const dt=new Date(p[0],p[1]-1+i,Math.min(p[2],ult));
-        if(chaveMes(dt)===k){ out.push({g,valor:g.valor}); break; }
+        if(chaveMes(dt)===k){ out.push({g,valor:g.valor,fonte:g.fonte}); break; }
       }
     }
   });
@@ -442,7 +495,7 @@ function agregaAno(a,fn,campo){
   const tot={},mensal={};
   mesesDoAno(a).forEach((k,mi)=>{
     fn(k).forEach(i=>{
-      const c=i.g[campo]||'Outros';
+      const c=i[campo]||'Outros';
       tot[c]=(tot[c]||0)+i.valor;
       mensal[c]=mensal[c]||Array(12).fill(0);
       mensal[c][mi]+=i.valor;
@@ -466,7 +519,7 @@ function telaInicio(){
   const totalMes=fluxoMes(k), totalAnt=fluxoMes(ant);
   const dif = totalAnt? ((totalMes-totalAnt)/totalAnt)*100 : 0;
   const itens=itensDoMes(k);
-  const porForma={}; itens.forEach(i=>porForma[i.g.forma]=(porForma[i.g.forma]||0)+i.valor);
+  const porForma={}; itens.forEach(i=>porForma[i.forma]=(porForma[i.forma]||0)+i.valor);
   const pagas=pagasSet();
   const abertas=todasParcelas().filter(x=>!pagas.has(x.chave));
   const hoje=agora(); hoje.setHours(0,0,0,0);
@@ -544,40 +597,205 @@ function telaInicio(){
 }
 
 function chipsGastos(){
-  return `<div class="chips">${[['dia','Hoje'],['mes','Mês'],['ano','Ano'],['parcelas','Parcelas']].map(a=>
-    `<button class="chip" aria-pressed="${UI.filtroGasto===a[0]}" onclick="UI.filtroGasto='${a[0]}';render()">${a[1]}</button>`).join('')}</div>`;
+  return `<div class="chips">${[['dia','Hoje'],['mes','Mês'],['ano','Ano'],['parcelas','Parcelas'],['fixas','Fixas']].map(a=>
+    `<button class="chip" aria-pressed="${UI.filtroGasto===a[0]}" onclick="UI.filtroGasto='${a[0]}';UI.editandoF=null;render()">${a[1]}</button>`).join('')}</div>`;
+}
+
+function linhaItem(i,k){
+  if(i.tipo==='fixa'){
+    const pg=(D.fixasPagas||[]).indexOf(i.chave)>=0;
+    const semValor=!(i.valor>0);
+    return `<div class="linha-item fx" style="${pg?'opacity:.55':''}">
+      <button class="marca ${pg?'on':''}" onclick="toggleFixaPaga('${i.chave}')" aria-label="Marcar paga"></button>
+      <div class="corpo" onclick="editarFixa(${i.f.id})" style="cursor:pointer">
+        <div class="nome">${esc(i.desc)}</div>
+        <div class="sub">dia ${i.f.dia} · ${FORMAS[i.forma]} <span class="tag fixa">fixa</span>${(i.f.ajustes&&i.f.ajustes[k]!==undefined)?' <span class="tag">só este mês</span>':''}</div>
+      </div>
+      <div class="valor" style="${semValor?'color:var(--rosa);font-size:12px':''}">${semValor?'definir valor':R$(i.valor)}</div>
+      <button class="lapis" onclick="editarFixa(${i.f.id})" aria-label="Editar">✎</button>
+    </div>`;
+  }
+  const parc=i.tipo==='parcela';
+  return `<div class="linha-item ${parc?'pc':''}">
+    <div class="corpo" onclick="editarGasto(${i.id})" style="cursor:pointer">
+      <div class="nome">${esc(i.desc)}</div>
+      <div class="sub">${dataBR(i.data)} · ${FORMAS[i.forma]} ${parc?`<span class="tag parc">parcela ${i.n}/${i.de}</span>`:'<span class="tag">à vista</span>'} <span class="tag">${esc(i.cat)}</span></div>
+    </div>
+    <div class="valor">${R$(i.valor)}</div>
+    <button class="lapis" onclick="editarGasto(${i.id})" aria-label="Editar">✎</button>
+    <button class="x" onclick="apagarGasto(${i.id})" aria-label="Excluir">×</button>
+  </div>`;
+}
+
+function cartaoResumo(itens,k){
+  const total=itens.reduce((s,i)=>s+i.valor,0);
+  const pf={}; itens.forEach(i=>pf[i.forma]=(pf[i.forma]||0)+i.valor);
+  const soma=t=>itens.filter(i=>i.tipo===t).reduce((s,i)=>s+i.valor,0);
+  return `<div class="cartao">
+    <div class="topo">
+      <div><span class="rot">Saiu ${k?'no mês':'no período'}</span><b class="val">${R$(total)}</b></div>
+      <div style="text-align:right"><span class="rot">No cartão</span>
+        <b class="val" style="font-size:17px;color:var(--rosa)">${R$(pf.credito||0)}</b></div>
+    </div>
+    <div class="barra">${Object.keys(FORMAS).map(f=>`<i style="width:${((pf[f]||0)/(total||1))*100}%;background:${COR_FORMA[f]}"></i>`).join('')}</div>
+    <div class="legenda">${Object.keys(FORMAS).filter(f=>pf[f]).map(f=>`<div><em style="background:${COR_FORMA[f]}"></em>${FORMAS[f]} <b>${R$(pf[f])}</b></div>`).join('')}</div>
+    <div class="reparte">
+      <div><div class="rr">À vista</div><div class="vv">${R$(soma('vista'))}</div></div>
+      <div><div class="rr">Parcelas</div><div class="vv">${R$(soma('parcela'))}</div></div>
+      <div><div class="rr">Fixas</div><div class="vv">${R$(soma('fixa'))}</div></div>
+    </div>
+  </div>`;
 }
 
 function telaGastos(){
-  if(UI.filtroGasto==='parcelas') return chipsGastos()+listaParcelas()+formGasto();
+  const f=UI.filtroGasto;
+  if(f==='parcelas') return chipsGastos()+listaParcelas()+formGasto();
+  if(f==='fixas') return chipsGastos()+telaFixas();
 
-  const f=UI.filtroGasto, hj=hojeISO(), ano=UI.mesRef.slice(0,4);
-  const dentro = g => f==='dia' ? g.data===hj : f==='mes' ? (g.data||'').slice(0,7)===UI.mesRef : (g.data||'').slice(0,4)===ano;
-  const lista=D.gastos.filter(dentro).sort((a,b)=>(b.data||'').localeCompare(a.data||''));
-  const total=lista.reduce((s,g)=>s+g.valor,0);
+  if(f==='ano'){
+    const ano=+UI.mesRef.slice(0,4);
+    const meses=mesesDoAno(ano);
+    const todos=[]; meses.forEach(k=>itensDoMes(k).forEach(i=>todos.push(i)));
+    const totalAno=todos.reduce((s,i)=>s+i.valor,0);
+    return chipsGastos()
+      + `<div class="navmes">
+          <button onclick="mudarAnoGasto(-1)" aria-label="Ano anterior">‹</button>
+          <span>${ano}</span>
+          <button onclick="mudarAnoGasto(1)" aria-label="Próximo ano">›</button>
+        </div>`
+      + cartaoResumo(todos,false)
+      + `<div class="secao-titulo">Mês a mês</div>`
+      + meses.map((k,mi)=>{
+          const v=fluxoMes(k);
+          if(!v) return '';
+          return `<div class="linha-item" onclick="UI.mesRef='${k}';UI.filtroGasto='mes';render()" style="cursor:pointer">
+            <div class="corpo"><div class="nome">${MESES[mi]}</div>
+            <div class="sub">${itensDoMes(k).length} lançamento(s)</div></div>
+            <div class="valor">${R$(v)}</div>
+          </div>`;
+        }).join('')
+      + (UI.editando===null?formGasto():'');
+  }
+
+  const k = f==='dia' ? chaveMes(agora()) : UI.mesRef;
+  let itens = itensDoMes(k);
+  if(f==='dia'){ const hj=hojeISO(); itens=itens.filter(i=>i.data===hj); }
 
   return chipsGastos()
     + (f==='mes'?navMes():'')
-    + `<div class="cartao">
-      <div class="topo">
-        <div><span class="rot">Total lançado</span><b class="val">${R$(total)}</b></div>
-        <div style="text-align:right"><span class="rot">Itens</span><b class="val" style="font-size:17px;color:var(--cinza)">${lista.length}</b></div>
-      </div>
-      <div style="font-size:12px;color:var(--cinza)">Valor cheio das compras do período. Compras parceladas aparecem mês a mês na aba <b>Parcelas</b>.</div>
-    </div>`
+    + cartaoResumo(itens,f==='mes')
     + (UI.editando===null?formGasto():'')
-    + `<div class="secao-titulo">Lançamentos</div>`
-    + (lista.length?lista.map(g=> UI.editando===g.id ? formEdicao(g) : `
-      <div class="linha-item">
-        <div class="corpo" onclick="editarGasto(${g.id})" style="cursor:pointer">
-          <div class="nome">${esc(g.desc)}</div>
-          <div class="sub">${dataBR(g.data)} · ${FORMAS[g.forma]} · ${g.parcelado?g.parcelas+'x de '+R$(g.valor/g.parcelas):'à vista'} <span class="tag">${esc(g.cat)}</span></div>
+    + `<div class="secao-titulo">${f==='dia'?'Hoje':'Tudo que cai em '+rotuloMes(k).split(' de ')[0]}</div>`
+    + (itens.length
+        ? itens.map(i=> (i.tipo!=='fixa' && UI.editando===i.id) ? formEdicao(D.gastos.find(g=>g.id===i.id)) : linhaItem(i,k)).join('')
+        : '<div class="vazio">Nada neste período.</div>');
+}
+
+function mudarAnoGasto(n){
+  const p=UI.mesRef.split('-');
+  UI.mesRef=(+p[0]+n)+'-'+p[1]; render();
+}
+function toggleFixaPaga(c){
+  const s=new Set(D.fixasPagas||[]);
+  s.has(c)?s.delete(c):s.add(c);
+  D.fixasPagas=Array.from(s); salvar(); render();
+}
+
+/* ---------- contas fixas ---------- */
+function telaFixas(){
+  const ativas=(D.fixas||[]).filter(f=>f.ativa!==false);
+  const total=ativas.reduce((s,f)=>s+(f.valor||0),0);
+  const semValor=ativas.filter(f=>!(f.valor>0)).length;
+  const grupos={};
+  (D.fixas||[]).forEach(f=>{ (grupos[f.forma]=grupos[f.forma]||[]).push(f); });
+
+  return `<div class="cartao">
+    <div class="topo">
+      <div><span class="rot">Contas fixas por mês</span><b class="val">${R$(total)}</b></div>
+      <div style="text-align:right"><span class="rot">Ativas</span>
+        <b class="val" style="font-size:17px;color:var(--cinza)">${ativas.length}</b></div>
+    </div>
+    <div style="font-size:12.5px;color:var(--cinza)">Lançam sozinhas todo mês. O valor editado aqui vale para todos os meses; para mudar só um mês, abra a conta pela aba <b>Mês</b>.</div>
+    ${semValor?`<div style="margin-top:11px;font-size:12.5px;color:var(--rosa)">${semValor} conta(s) ainda sem valor — toque para preencher.</div>`:''}
+  </div>
+
+  ${UI.editandoF===null?`<button class="btn ouro" onclick="novaFixa()" style="margin-bottom:14px">+ Nova conta fixa</button>`:''}
+
+  ${Object.keys(grupos).map(fo=>`
+    <div class="secao-titulo">${FORMAS[fo]||fo} · ${R$(grupos[fo].filter(f=>f.ativa!==false).reduce((s,f)=>s+(f.valor||0),0))}</div>
+    ${grupos[fo].map(f=> UI.editandoF===f.id ? formFixa(f) : `
+      <div class="linha-item fx" style="${f.ativa===false?'opacity:.45':''}">
+        <div class="corpo" onclick="editarFixa(${f.id})" style="cursor:pointer">
+          <div class="nome">${esc(f.nome)}</div>
+          <div class="sub">dia ${f.dia} · ${esc(f.cat)}${f.ativa===false?' · pausada':''}</div>
         </div>
-        <div class="valor">${R$(g.valor)}</div>
-        <button class="lapis" onclick="editarGasto(${g.id})" aria-label="Editar">✎</button>
-        <button class="x" onclick="apagarGasto(${g.id})" aria-label="Excluir">×</button>
-      </div>`).join('')
-      :'<div class="vazio">Nada lançado neste período ainda.</div>');
+        <div class="valor" style="${!(f.valor>0)?'color:var(--rosa);font-size:12px':''}">${(f.valor>0)?R$(f.valor):'definir valor'}</div>
+        <button class="lapis" onclick="editarFixa(${f.id})" aria-label="Editar">✎</button>
+        <button class="x" onclick="apagarFixa(${f.id})" aria-label="Excluir">×</button>
+      </div>`).join('')}
+  `).join('')}`;
+}
+
+function formFixa(f){
+  const aj=(f.ajustes&&f.ajustes[UI.mesRef]!==undefined)?f.ajustes[UI.mesRef]:'';
+  return `<div class="form fixa-edit">
+    <div class="edit-tit" style="color:#8A6212">${f.nome?'Editando conta fixa':'Nova conta fixa'}</div>
+    <div class="campo"><label>Nome</label><input id="fNome" value="${esc(f.nome)}" placeholder="Ex.: Spotify"></div>
+    <div class="dupla">
+      <div class="campo"><label>Valor por mês</label><input id="fValor" type="number" inputmode="decimal" value="${f.valor||''}" placeholder="0,00"></div>
+      <div class="campo"><label>Dia do vencimento</label><input id="fDia" type="number" min="1" max="31" value="${f.dia||10}"></div>
+    </div>
+    <div class="dupla">
+      <div class="campo"><label>Pagamento</label><select id="fForma">
+        ${Object.keys(FORMAS).map(o=>`<option value="${o}" ${o===f.forma?'selected':''}>${FORMAS[o]}</option>`).join('')}</select></div>
+      <div class="campo"><label>Categoria</label><select id="fCat">
+        ${D.catsGasto.map(c=>`<option ${c===f.cat?'selected':''}>${esc(c)}</option>`).join('')}</select></div>
+    </div>
+    <div class="campo"><label>Situação</label><select id="fAtiva">
+      <option value="1" ${f.ativa!==false?'selected':''}>Ativa — lança todo mês</option>
+      <option value="0" ${f.ativa===false?'selected':''}>Pausada — não lança</option></select></div>
+    <div class="campo"><label>Valor só para ${rotuloMes(UI.mesRef)}</label>
+      <input id="fAjuste" type="number" inputmode="decimal" value="${aj}" placeholder="vazio = usa o valor normal"></div>
+    <div class="dupla" style="margin-top:2px">
+      <button class="btn claro" onclick="cancelarFixa(${f.id})">Cancelar</button>
+      <button class="btn ouro" onclick="salvarFixa(${f.id})">Salvar</button>
+    </div>
+  </div>`;
+}
+
+function novaFixa(){
+  const f={id:novoId(),nome:'',valor:0,forma:'pix',dia:10,cat:D.catsGasto[0],inicio:UI.mesRef,ativa:true,ajustes:{},nova:true};
+  D.fixas.push(f); UI.editandoF=f.id; UI.filtroGasto='fixas'; render(); window.scrollTo(0,0);
+}
+function editarFixa(id){ UI.editandoF=id; UI.filtroGasto='fixas'; render(); window.scrollTo(0,0); }
+function cancelarFixa(id){
+  const f=D.fixas.find(x=>x.id===id);
+  if(f&&f.nova) D.fixas=D.fixas.filter(x=>x.id!==id);
+  UI.editandoF=null; render();
+}
+function salvarFixa(id){
+  const f=D.fixas.find(x=>x.id===id);
+  if(!f){ UI.editandoF=null; return render(); }
+  const nome=document.getElementById('fNome').value.trim();
+  const v=parseFloat(document.getElementById('fValor').value);
+  if(!nome) return toast('Escreva o nome');
+  if(!(v>=0)) return toast('Informe o valor');
+  f.nome=nome; f.valor=v; delete f.nova;
+  f.dia=Math.min(Math.max(1,+document.getElementById('fDia').value||1),31);
+  f.forma=document.getElementById('fForma').value;
+  f.cat=document.getElementById('fCat').value;
+  f.ativa=document.getElementById('fAtiva').value==='1';
+  const aj=document.getElementById('fAjuste').value.trim();
+  f.ajustes=f.ajustes||{};
+  if(aj==='') delete f.ajustes[UI.mesRef]; else f.ajustes[UI.mesRef]=parseFloat(aj);
+  UI.editandoF=null; salvar(); render(); toast('Conta fixa salva');
+}
+function apagarFixa(id){
+  const f=D.fixas.find(x=>x.id===id);
+  if(!confirm('Excluir "'+f.nome+'"? Ela some de todos os meses.')) return;
+  D.fixas=D.fixas.filter(x=>x.id!==id);
+  D.fixasPagas=(D.fixasPagas||[]).filter(c=>c.split('-')[0]!=String(id));
+  UI.editandoF=null; salvar(); render();
 }
 
 function navMes(){
@@ -740,7 +958,7 @@ function grafMes(){
 
   const itens=itensDoMes(atualK);
   const tot=itens.reduce((s,i)=>s+i.valor,0)||1;
-  const porForma={}; itens.forEach(i=>porForma[i.g.forma]=(porForma[i.g.forma]||0)+i.valor);
+  const porForma={}; itens.forEach(i=>porForma[i.forma]=(porForma[i.forma]||0)+i.valor);
   const C=2*Math.PI*44; let off=0;
   const aneis=Object.keys(FORMAS).map(f=>{
     const len=((porForma[f]||0)/tot)*C;
@@ -748,11 +966,11 @@ function grafMes(){
     off+=len; return el;
   }).join('');
 
-  const porCat={}; itens.forEach(i=>porCat[i.g.cat]=(porCat[i.g.cat]||0)+i.valor);
+  const porCat={}; itens.forEach(i=>porCat[i.cat]=(porCat[i.cat]||0)+i.valor);
   const ord=Object.keys(porCat).map(c=>[c,porCat[c]]).sort((a,b)=>b[1]-a[1]);
   const maxC=ord.length?ord[0][1]:1;
 
-  const porFonte={}; itensGanhoMes(atualK).forEach(i=>porFonte[i.g.fonte]=(porFonte[i.g.fonte]||0)+i.valor);
+  const porFonte={}; itensGanhoMes(atualK).forEach(i=>porFonte[i.fonte]=(porFonte[i.fonte]||0)+i.valor);
   const ordF=Object.keys(porFonte).map(c=>[c,porFonte[c]]).sort((a,b)=>b[1]-a[1]);
   const maxF=ordF.length?ordF[0][1]:1;
   const entA=entradasMes(atualK), saiA=fluxoMes(atualK);
@@ -1397,7 +1615,7 @@ function render(){
     }
   }
 }
-function ir(a){ UI.aba=a; UI.editando=null; UI.editandoG=null; render(); window.scrollTo(0,0); }
+function ir(a){ UI.aba=a; UI.editando=null; UI.editandoG=null; UI.editandoF=null; render(); window.scrollTo(0,0); }
 
 /* boot */
 const salvo=lerLocal();
