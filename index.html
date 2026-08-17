@@ -59,7 +59,7 @@ main{padding:16px 16px 8px}
 .mini .num{font-family:var(--display);font-size:22px;font-weight:500;margin-top:4px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .mini .pe{font-size:11.5px;color:var(--cinza);margin-top:1px}
 
-.linha-item{background:var(--carta);border:1px solid var(--linha);border-radius:12px;padding:12px 13px;margin-bottom:8px;display:flex;gap:11px;align-items:center}
+.linha-item{background:var(--carta);border:1px solid var(--linha);border-radius:12px;padding:10px 8px 10px 12px;margin-bottom:7px;display:flex;gap:6px;align-items:center}
 .linha-item .corpo{flex:1;min-width:0}
 .linha-item .nome{font-weight:600;font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .linha-item .sub{font-size:12px;color:var(--cinza);margin-top:2px}
@@ -68,7 +68,7 @@ main{padding:16px 16px 8px}
 .tag{display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;padding:3px 7px;border-radius:6px;background:rgba(18,50,42,.07);color:var(--cinza)}
 .tag.noiva{background:rgba(180,86,106,.12);color:var(--rosa)}
 .tag.noivo{background:rgba(29,74,62,.12);color:var(--tinta2)}
-.tag.ok{background:rgba(190,135,36,.15);color:#8A6212}
+.tag.ok{background:rgba(46,125,82,.14);color:var(--verde)}
 
 .x{border:0;background:transparent;color:var(--cinza);font-size:20px;line-height:1;padding:4px 6px;border-radius:8px;cursor:pointer;flex:none}
 .x:hover{background:rgba(180,86,106,.12);color:var(--rosa)}
@@ -137,6 +137,31 @@ main{padding:16px 16px 8px}
 .tag.parc{background:rgba(180,86,106,.13);color:var(--rosa)}
 .form.fixa-edit{border-style:solid;border-color:var(--ouro);border-left:3px solid var(--ouro)}
 .btn.ouro{background:var(--ouro);color:#fff}
+.grade4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:7px;margin-bottom:12px}
+.grade4 .mini{padding:11px 5px;text-align:center;font-family:var(--texto);cursor:pointer;width:100%;display:block;transition:box-shadow .15s,background .15s}
+.grade4 .mini .num{font-family:var(--display);font-size:20px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.1}
+.grade4 .mini .pe{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza);font-weight:600;margin-top:4px}
+.grade4 .mini.sel{border-color:var(--vinho);background:rgba(59,27,39,.05);box-shadow:inset 0 0 0 1px var(--vinho)}
+.grade4 .mini.v.sel{border-color:var(--verde);background:rgba(46,125,82,.06);box-shadow:inset 0 0 0 1px var(--verde)}
+.grade4 .mini.o.sel{border-color:var(--ouro);background:rgba(190,135,36,.07);box-shadow:inset 0 0 0 1px var(--ouro)}
+.grade4 .mini.esp.sel{border-color:#4A6FA5;background:rgba(74,111,165,.08);box-shadow:inset 0 0 0 1px #4A6FA5}
+.busca{position:relative;margin-bottom:11px}
+.busca input{padding-left:34px}
+.busca .lupa{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--cinza);font-size:15px}
+.acoes{display:flex;align-items:center;gap:2px;flex:none}
+.st{border:0;background:transparent;color:#A9B2AD;width:29px;height:29px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.st:hover{background:rgba(18,50,42,.06);color:var(--cinza)}
+.st.confirmado.on{background:rgba(46,125,82,.14);color:var(--verde)}
+.st.recusou.on{background:rgba(180,86,106,.14);color:var(--rosa)}
+.st.espera.on{background:rgba(74,111,165,.16);color:#3B5C8A}
+.st.del:hover{background:rgba(180,86,106,.12);color:var(--rosa)}
+.sep{width:1px;height:16px;background:var(--linha);margin:0 3px;flex:none}
+.linha-item.espera{border-left:3px solid #4A6FA5;background:rgba(74,111,165,.04)}
+.linha-item.recusou{opacity:.5}
+.tag.ambos{background:rgba(190,135,36,.14);color:#8A6212}
+.tag.esp{background:rgba(74,111,165,.15);color:#3B5C8A}
+.kid{display:inline-block;font-size:9px;letter-spacing:.07em;text-transform:uppercase;font-weight:600;padding:2px 6px;border-radius:5px;background:rgba(74,111,165,.14);color:#3B5C8A;vertical-align:1px;margin-right:2px}
+.chip.lim{border-style:dashed;color:var(--rosa);border-color:rgba(180,86,106,.4)}
 .cats-chips{display:flex;flex-wrap:wrap;gap:7px}
 .cat-chip{display:inline-flex;align-items:center;gap:3px;background:var(--papel);border:1px solid var(--linha);border-radius:99px;padding:6px 6px 6px 13px;font-size:13px;font-weight:500}
 .cat-chip button{border:0;background:transparent;color:var(--cinza);font-size:16px;line-height:1;cursor:pointer;padding:2px 5px;border-radius:99px;font-family:var(--texto)}
@@ -255,7 +280,7 @@ const SALA = "casamento";   // nó onde os dados ficam guardados
 /* ========================================================== */
 
 /* ==================== CONSTANTES ==================== */
-const VERSAO = '1.4';
+const VERSAO = '1.5';
 const CHAVE = 'app-casamento-v1';
 const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 const M3=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
@@ -264,6 +289,7 @@ const COR_FORMA={credito:'#B4566A',debito:'#1D4A3E',pix:'#BE8724',dinheiro:'#6E7
 const CATS_PADRAO=['Mercado','Alimentação','Assinaturas','Transporte','Casa','Saúde','Lazer','Vestuário','Educação','Beleza','Impostos','Outros'];
 const FONTES_PADRAO=['Salário','Honorários','Freelance','13º / Férias','Outros'];
 const ONDE={conta:'Conta',pix:'Pix',dinheiro:'Dinheiro'};
+const LISTA_INICIAL=[{"nome": "Denis", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Thaise", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Suellen", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Harlem", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Letice", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Tinho (marido Letice)", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Livia", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Michel", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Deco", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Barbara", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Ju", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Raquel", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Sarita", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Aninha", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Juninho", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Leonel", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Márcia", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Carol", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Thiago", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Marquinhos", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Esposa Marquinhos", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Deva", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Chiarini", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "Luiza", "grupo": "UNIQUE", "lado": "ambos", "crianca": false}, {"nome": "João", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Bruna", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Gabiru", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Ju", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Enio", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Letícia", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Ricardo", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Ingrid", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Digo", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Júlia Soria", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Amorim", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Marina", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Thiago", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Giulia", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Raphinha", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Camila", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Cayan", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Nath", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Vitao", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Bárbara", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Hadrian", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Milena", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Negrelli", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Maíra", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Vinicius", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Fernanda", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Matias", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "João Gordinho", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Vitor Rola", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Saci", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Nigth", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Bianca", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Gabriel", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Roberio", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Chapa", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Jessica", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Andressa", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Lucas Otávio", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Léo", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Paloma", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Tinho", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Ana", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Bode", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Luna", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Gabriel (marido Luna)", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Pedro", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Laura", "grupo": "105", "lado": "ambos", "crianca": false}, {"nome": "Jordana", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Matheus", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Alana", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Rodrigo", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Larissa", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Flávio", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Gabrielle", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Stephany", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Laura", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Sofia", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Priscila", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Amanda Stephany", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Júlio (namorado Amanda)", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Amanda Araújo", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Luiz Henrique", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Ana Luiza", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Marido Ana", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Amanda Rigotto", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Gustavo", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Amanda Vilas Boas", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Nath Leal", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "João Nath", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Karina Magiore", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Marido Karina", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Neydoca", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Marido Neydoca", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Thisa", "grupo": "Amigas Gabi", "lado": "noiva", "crianca": false}, {"nome": "Maria Paula", "grupo": "Futevôlei", "lado": "noiva", "crianca": false}, {"nome": "Tiago", "grupo": "Futevôlei", "lado": "noiva", "crianca": false}, {"nome": "Sol", "grupo": "Futevôlei", "lado": "noiva", "crianca": false}, {"nome": "Fabi", "grupo": "Futevôlei", "lado": "noiva", "crianca": false}, {"nome": "Letícia", "grupo": "Futevôlei", "lado": "noiva", "crianca": false}, {"nome": "Namorado Letícia", "grupo": "Futevôlei", "lado": "noiva", "crianca": false}, {"nome": "Drielle", "grupo": "Futevôlei", "lado": "noiva", "crianca": false}, {"nome": "Namorado Drielle", "grupo": "Futevôlei", "lado": "noiva", "crianca": false}, {"nome": "Ana Carla", "grupo": "Futevôlei", "lado": "noiva", "crianca": false}, {"nome": "Marido Ana Carla", "grupo": "Futevôlei", "lado": "noiva", "crianca": false}, {"nome": "Giovana", "grupo": "Futevôlei", "lado": "noiva", "crianca": false}, {"nome": "Namorado Giovana", "grupo": "Futevôlei", "lado": "noiva", "crianca": false}, {"nome": "Ju David", "grupo": "Futevôlei", "lado": "noiva", "crianca": false}, {"nome": "Saga", "grupo": "Futebol", "lado": "noivo", "crianca": false}, {"nome": "Ceci", "grupo": "Futebol", "lado": "noivo", "crianca": false}, {"nome": "Lucas Farias", "grupo": "Futebol", "lado": "noivo", "crianca": false}, {"nome": "Renan", "grupo": "Futebol", "lado": "noivo", "crianca": false}, {"nome": "Janaína", "grupo": "Futebol", "lado": "noivo", "crianca": false}, {"nome": "Leandro Chu", "grupo": "Futebol", "lado": "noivo", "crianca": false}, {"nome": "Rafaela", "grupo": "Futebol", "lado": "noivo", "crianca": false}, {"nome": "Julin", "grupo": "Futebol", "lado": "noivo", "crianca": false}, {"nome": "Dani", "grupo": "Futebol", "lado": "noivo", "crianca": false}, {"nome": "Rafael", "grupo": "Futebol", "lado": "noivo", "crianca": false}, {"nome": "Nat", "grupo": "Futebol", "lado": "noivo", "crianca": false}, {"nome": "Igor", "grupo": "Futebol", "lado": "noivo", "crianca": false}, {"nome": "Renata", "grupo": "Futebol", "lado": "noivo", "crianca": false}, {"nome": "Beto", "grupo": "Futebol", "lado": "noivo", "crianca": false}, {"nome": "Isabelle", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Nayane", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Graça", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Xandi", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Maithe", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Davi", "grupo": "Família Felipe", "lado": "noivo", "crianca": true}, {"nome": "Sophia", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Martinha", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Elias", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Elisa", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Heloísa", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Melinda", "grupo": "Família Felipe", "lado": "noivo", "crianca": true}, {"nome": "Márcia", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Paulo", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Júnior", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Aline", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Túlio", "grupo": "Família Felipe", "lado": "noivo", "crianca": true}, {"nome": "Gustavo", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Tio Danilo", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Elione", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Juliana", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Daniel", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Maria Flor", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Arthur", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Ana Terra", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Tacida", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Landinha", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Gabriel", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Ingrid", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Rafael", "grupo": "Família Felipe", "lado": "noivo", "crianca": true}, {"nome": "Goreth", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Neo", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Edileusa", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Júnior", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Alessandra", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Marquinho", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Filha Neo", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Bruna", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Matheus", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Ana Maria", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Nayara", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Éric", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Jessica", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Luiz", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Melinda", "grupo": "Família Felipe", "lado": "noivo", "crianca": true}, {"nome": "Lucas", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Namorada Lucas", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Maria Eduarda", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Valentina", "grupo": "Família Felipe", "lado": "noivo", "crianca": true}, {"nome": "Ana", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Vitor Hugo (filho Ana)", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Cris", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Manu", "grupo": "Família Felipe", "lado": "noivo", "crianca": false}, {"nome": "Izinei", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Paulinho", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Pedro", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Isabela", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Rafael", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Júlia", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Alice", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Ribeiro", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Marília", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Júlio", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Luís Paulo", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Paula", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Iza", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Maria Ineide", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "César", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Aparecida", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Julinho", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Eunice", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Vitor", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Esposa Vitor", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Filho Vitor", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Filha Vitor", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Inaldo", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Lucia", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Aline", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Stanley", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Gabi", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Rafael", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Inaldinho", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Natália", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Vinicius", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Irmã Vinicius", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Isaías", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Neuza", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Gildete", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Gilsane", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Rocha", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Lucas", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Namorado Lucas", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Nayara", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Édson", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Filho Nayara", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Filho Nayara", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Filho Nayara", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Jonatas", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Mulher Jonatas", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Filha Jonatas", "grupo": "Família Gabriela", "lado": "noiva", "crianca": false}, {"nome": "Tejima", "grupo": "Trabalho Felipe", "lado": "noivo", "crianca": false}, {"nome": "Amanda", "grupo": "Trabalho Felipe", "lado": "noivo", "crianca": false}, {"nome": "Marido Amanda", "grupo": "Trabalho Felipe", "lado": "noivo", "crianca": false}, {"nome": "Natália", "grupo": "Trabalho Felipe", "lado": "noivo", "crianca": false}, {"nome": "Flávia", "grupo": "Trabalho Felipe", "lado": "noivo", "crianca": false}, {"nome": "Janaína", "grupo": "Trabalho Felipe", "lado": "noivo", "crianca": false}, {"nome": "Liliana", "grupo": "Trabalho Felipe", "lado": "noivo", "crianca": false}, {"nome": "Marido Liliana", "grupo": "Trabalho Felipe", "lado": "noivo", "crianca": false}, {"nome": "Bispo", "grupo": "Trabalho Felipe", "lado": "noivo", "crianca": false}, {"nome": "Mulher Bispo", "grupo": "Trabalho Felipe", "lado": "noivo", "crianca": false}];
 const FIXAS_PADRAO=[
   ['Apple','credito',5,'Assinaturas'],
   ['Spotify','credito',8,'Assinaturas'],
@@ -302,12 +328,14 @@ function estadoInicial(){
     fixasPagas:[],
     parcelasPagas:[],
     convidados:[],
+    listaImportada:false,
     categorias:CATS_CASAMENTO.map((n,i)=>({id:1000+i,nome:n,cotacoes:[]}))
   };
 }
 let D = estadoInicial();
 const UI = { aba:'inicio', subCas:'convidados', filtroGasto:'mes', filtroGanho:'mes', filtroCot:'todas',
-             mesRef:null, catAberta:null, editando:null, editandoG:null, editandoF:null, vistaGraf:'mes', anoRef:null };
+             mesRef:null, catAberta:null, editando:null, editandoG:null, editandoF:null, vistaGraf:'mes', anoRef:null,
+             filtroConv:'todos', buscaConv:'' };
 let seq = Date.now()%1000000;
 const novoId = () => ++seq;
 
@@ -384,7 +412,7 @@ function iniciarFirebase(){
       const v=snap.val();
       if(v && v.versao){
         const meu=D.atualizadoEm||0, dele=v.atualizadoEm||0;
-        if(dele>=meu){ D=normalizar(v); gravarLocal(); render(); }
+        if(dele>=meu){ D=normalizar(v); if(importarLista()) salvar(); gravarLocal(); render(); }
         else enviar();                       // o do aparelho é mais novo
       } else {
         enviar();                            // primeira vez: sobe o que existe aqui
@@ -401,6 +429,8 @@ function normalizar(v){
   const r=Object.assign(padrao,v);
   r.gastos=Array.isArray(v.gastos)?v.gastos:[];
   r.convidados=Array.isArray(v.convidados)?v.convidados:[];
+  r.convidados.forEach(c=>{ if(c.crianca===undefined) c.crianca=false; if(!c.lado) c.lado='noiva'; if(!c.status) c.status='pendente'; if(c.acomp===undefined) c.acomp=0; });
+  r.listaImportada=!!v.listaImportada;
   r.categorias=(Array.isArray(v.categorias)&&v.categorias.length)?v.categorias:catsPadrao;
   r.categorias.forEach(c=>{ if(!Array.isArray(c.cotacoes)) c.cotacoes=[]; });
   r.parcelasPagas=Array.isArray(v.parcelasPagas)?v.parcelasPagas:[];
@@ -431,6 +461,27 @@ function marcar(e){
   if(topo){ topo.className='selo-sinc '+s[0]; topo.title=s[1]; }
   const aj=document.getElementById('seloSinc');
   if(aj) aj.innerHTML='<em class="'+s[0]+'"></em>'+s[1];
+}
+
+/* ---------- importação única da lista de convidados ---------- */
+function chaveConv(c){
+  return String(c.nome||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim()
+    +'|'+String(c.grupo||'').toLowerCase().trim();
+}
+function importarLista(){
+  if(D.listaImportada) return 0;
+  if(!Array.isArray(D.convidados)) D.convidados=[];
+  const jaTem={};
+  D.convidados.forEach(c=>{ jaTem[chaveConv(c)]=1; });
+  let n=0;
+  LISTA_INICIAL.forEach(c=>{
+    if(jaTem[chaveConv(c)]) return;
+    D.convidados.push({id:novoId(),nome:c.nome,grupo:c.grupo,lado:c.lado,
+      acomp:0,status:'pendente',crianca:!!c.crianca});
+    n++;
+  });
+  D.listaImportada=true;
+  return n;
 }
 
 /* ==================== CÁLCULOS ==================== */
@@ -507,9 +558,15 @@ function agregaAno(a,fn,campo){
 function totaisCasamento(){
   let contratado=0,pago=0;
   D.categorias.forEach(c=>{ const e=c.cotacoes.find(q=>q.escolhida); if(e){ contratado+=e.valor; pago+=(e.pago||0); } });
-  const pessoas=D.convidados.filter(c=>c.status!=='recusou').reduce((s,c)=>s+1+(c.acomp||0),0);
+  const dentro=D.convidados.filter(c=>c.status!=='recusou'&&c.status!=='espera');
+  const pessoas=dentro.reduce((s,c)=>s+1+(c.acomp||0),0);
   const confirmadas=D.convidados.filter(c=>c.status==='confirmado').reduce((s,c)=>s+1+(c.acomp||0),0);
-  return {contratado,pago,falta:Math.max(contratado-pago,0),pessoas,confirmadas};
+  const espera=D.convidados.filter(c=>c.status==='espera').reduce((s,c)=>s+1+(c.acomp||0),0);
+  return {contratado,pago,falta:Math.max(contratado-pago,0),pessoas,confirmadas,espera,
+    esperaN:D.convidados.filter(c=>c.status==='espera').length,
+    pendentes:D.convidados.filter(c=>c.status==='pendente').length,
+    recusaram:D.convidados.filter(c=>c.status==='recusou').length,
+    criancas:dentro.filter(c=>c.crianca).length};
 }
 
 /* ==================== TELAS: FINANCEIRO ==================== */
@@ -1257,39 +1314,124 @@ function telaCasamento(){
     + (UI.subCas==='convidados'?subConvidados():UI.subCas==='cotacoes'?subCotacoes():subTotal());
 }
 
+const TIT_CONV={confirmado:'Confirmados',pendente:'Pendentes',recusou:'Não vão',espera:'Lista de espera',criancas:'Crianças'};
+const ROT_CONV={pendente:'pendente',confirmado:'confirmado',recusou:'não vai',espera:'espera'};
+const semAcento = s => String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+const IC_CHECK='<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>';
+const IC_XIS='<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg>';
+const IC_AMP='<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8M6 17h8M7 3c0 3.5 3 4.6 3 7s-3 3.5-3 7M13 3c0 3.5-3 4.6-3 7s3 3.5 3 7"/></svg>';
+const IC_LIXO='<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 5.5h13M8 5.5V4h4v1.5M5.5 5.5l.8 10a1 1 0 001 .9h5.4a1 1 0 001-.9l.8-10M8.5 8.5v5M11.5 8.5v5"/></svg>';
+
+function linhaConv(c){
+  const e=c.status==='espera';
+  const b=(st,tit,svg)=>`<button class="st ${st} ${c.status===st?'on':''}" title="${tit}" aria-label="${tit}" onclick="setStatusConv(${c.id},'${st}')">${svg}</button>`;
+  return `<div class="linha-item ${e?'espera':''} ${c.status==='recusou'?'recusou':''}">
+    <div class="corpo">
+      <div class="nome">${c.crianca?'<span class="kid">criança</span> ':''}${esc(c.nome)}${c.acomp?` <span style="color:var(--cinza);font-weight:400">+${c.acomp}</span>`:''}</div>
+      <div class="sub">
+        <span class="tag ${c.lado}">${c.lado==='ambos'?'os dois':c.lado}</span>
+        <span class="tag ${c.status==='confirmado'?'ok':e?'esp':''}">${ROT_CONV[c.status]||c.status}</span>
+      </div>
+    </div>
+    <div class="acoes">
+      ${b('confirmado','Confirmado',IC_CHECK)}
+      ${b('recusou','Não vai',IC_XIS)}
+      ${b('espera','Lista de espera',IC_AMP)}
+      <span class="sep"></span>
+      <button class="st del" title="Excluir" aria-label="Excluir" onclick="apagarConv(${c.id})">${IC_LIXO}</button>
+    </div>
+  </div>`;
+}
+
 function subConvidados(){
   const t=totaisCasamento();
-  const grupos=[]; D.convidados.forEach(c=>{ if(grupos.indexOf(c.grupo)<0) grupos.push(c.grupo); });
+  const f=UI.filtroConv, q=semAcento(UI.buscaConv.trim());
+  const bate=c=>!q||semAcento(c.nome).indexOf(q)>=0||semAcento(c.grupo).indexOf(q)>=0;
+  const vis=D.convidados.filter(c=>{
+    if(!bate(c)) return false;
+    if(f==='todos') return c.status!=='espera';
+    if(f==='espera') return c.status==='espera';
+    if(f==='criancas') return c.crianca && c.status!=='recusou' && c.status!=='espera';
+    return c.status===f;
+  });
+  const grupos=[]; vis.forEach(c=>{ if(grupos.indexOf(c.grupo)<0) grupos.push(c.grupo); });
+  const todosGrupos=[]; D.convidados.forEach(c=>{ if(todosGrupos.indexOf(c.grupo)<0) todosGrupos.push(c.grupo); });
+
   return `
-  <div class="grade">
-    <div class="mini"><div class="rot">Na lista</div><div class="num">${t.pessoas}</div><div class="pe">com acompanhantes</div></div>
-    <div class="mini"><div class="rot">Confirmadas</div><div class="num">${t.confirmadas}</div><div class="pe">${D.convidados.filter(c=>c.status==='pendente').length} pendente(s)</div></div>
+  <div class="grade4">
+    <button class="mini ${f==='todos'?'sel':''}" onclick="UI.filtroConv='todos';render()">
+      <div class="num">${t.pessoas}</div><div class="pe">na lista</div></button>
+    <button class="mini v ${f==='confirmado'?'sel':''}" onclick="UI.filtroConv='confirmado';render()">
+      <div class="num" style="color:var(--verde)">${t.confirmadas}</div><div class="pe">confirmadas</div></button>
+    <button class="mini o ${f==='criancas'?'sel':''}" onclick="UI.filtroConv='criancas';render()">
+      <div class="num" style="color:#8A6212">${t.criancas}</div><div class="pe">crianças</div></button>
+    <button class="mini esp ${f==='espera'?'sel':''}" onclick="UI.filtroConv='espera';render()">
+      <div class="num" style="color:#3B5C8A">${t.espera}</div><div class="pe">na espera</div></button>
   </div>
-  <div class="form" style="margin-top:14px">
-    <div class="campo"><label>Nome</label><input id="cNome" placeholder="Quem vocês querem convidar"></div>
-    <div class="dupla">
-      <div class="campo"><label>Lado</label><select id="cLado"><option value="noiva">Noiva</option><option value="noivo">Noivo</option></select></div>
-      <div class="campo"><label>Acompanhantes</label><input id="cAcomp" type="number" min="0" max="20" value="0"></div>
-    </div>
-    <div class="dupla">
-      <div class="campo"><label>Grupo</label><input id="cGrupo" list="grp" placeholder="Família">
-        <datalist id="grp">${['Família','Amigos','Trabalho','Vizinhos','Igreja'].concat(grupos).map(g=>`<option value="${esc(g)}">`).join('')}</datalist></div>
-      <div class="campo"><label>Status</label><select id="cStatus">
-        <option value="pendente">Pendente</option><option value="confirmado">Confirmado</option><option value="recusou">Não vai</option></select></div>
-    </div>
-    <button class="btn rosa" onclick="addConv()">Adicionar à lista</button>
+
+  <div class="busca"><span class="lupa">⌕</span>
+    <input id="qConv" value="${esc(UI.buscaConv)}" placeholder="Buscar por nome ou grupo" oninput="buscarConv(this)"></div>
+
+  <div class="chips">
+    ${[['pendente','Pendentes ('+t.pendentes+')'],['recusou','Não vão ('+t.recusaram+')']].map(a=>
+      `<button class="chip" aria-pressed="${f===a[0]}" onclick="UI.filtroConv='${a[0]}';render()">${a[1]}</button>`).join('')}
+    ${(f!=='todos'||UI.buscaConv)?`<button class="chip lim" onclick="UI.filtroConv='todos';UI.buscaConv='';render()">limpar filtro ×</button>`:''}
   </div>
-  ${D.convidados.length?grupos.map(g=>`
-    <div class="secao-titulo">${esc(g)} · ${D.convidados.filter(c=>c.grupo===g).length}</div>
-    ${D.convidados.filter(c=>c.grupo===g).map(c=>`
-      <div class="linha-item">
-        <div class="corpo"><div class="nome">${esc(c.nome)}${c.acomp?` <span style="color:var(--cinza);font-weight:400">+${c.acomp}</span>`:''}</div>
-        <div class="sub"><span class="tag ${c.lado}">${c.lado}</span> <span class="tag ${c.status==='confirmado'?'ok':''}">${c.status==='recusou'?'não vai':c.status}</span></div></div>
-        <button class="x" onclick="ciclarStatus(${c.id})" aria-label="Mudar status" style="font-size:15px">⟳</button>
-        <button class="x" onclick="apagarConv(${c.id})" aria-label="Excluir">×</button>
-      </div>`).join('')}`).join('')
-    :'<div class="vazio">A lista de convidados começa vazia. Adicione o primeiro nome acima.</div>'}
+
+  <details class="cat" style="margin-bottom:14px">
+    <summary><span class="seta">›</span><span class="cnome">Adicionar convidado</span></summary>
+    <div class="cot">
+      <div class="campo"><label>Nome</label><input id="cNome" placeholder="Quem vocês querem convidar"></div>
+      <div class="dupla">
+        <div class="campo"><label>Lado</label><select id="cLado">
+          <option value="noiva">Noiva</option><option value="noivo">Noivo</option><option value="ambos">Os dois</option></select></div>
+        <div class="campo"><label>É criança?</label><select id="cKid">
+          <option value="0">Não</option><option value="1">Sim</option></select></div>
+      </div>
+      <div class="dupla">
+        <div class="campo"><label>Grupo</label><input id="cGrupo" list="grp" placeholder="Família">
+          <datalist id="grp">${todosGrupos.map(g=>`<option value="${esc(g)}">`).join('')}</datalist></div>
+        <div class="campo"><label>Situação</label><select id="cStatus">
+          <option value="pendente">Pendente</option><option value="confirmado">Confirmado</option>
+          <option value="recusou">Não vai</option><option value="espera">Lista de espera</option></select></div>
+      </div>
+      <button class="btn rosa" onclick="addConv()">Adicionar</button>
+    </div>
+  </details>
+
+  ${f==='todos'
+    ? (grupos.length?grupos.map(g=>{
+        const lista=vis.filter(c=>c.grupo===g);
+        return `<details class="cat" ${q?'open':''}>
+          <summary><span class="seta">›</span><span class="cnome">${esc(g)}</span><span class="tag">${lista.length}</span></summary>
+          <div style="padding:0 10px 10px">${lista.map(linhaConv).join('')}</div></details>`;
+      }).join('')
+      :'<div class="vazio">A lista de convidados está vazia.</div>')
+    : `<div class="secao-titulo">${TIT_CONV[f]} · ${vis.length}</div>`
+      + (vis.length?vis.map(linhaConv).join('')
+        : `<div class="vazio">${f==='espera'
+          ?'A lista de espera está vazia.<br><span style="font-size:12px">Para incluir alguém, toque na ampulheta ao lado do nome.</span>'
+          :'Ninguém nesta lista ainda.'}</div>`)}
   `;
+}
+
+function buscarConv(el){
+  UI.buscaConv=el.value;
+  const p=el.selectionStart;
+  render();
+  const novo=document.getElementById('qConv');
+  if(novo){ novo.focus(); novo.setSelectionRange(p,p); }
+}
+function setStatusConv(id,st){
+  const c=D.convidados.find(x=>x.id===id);
+  if(!c) return;
+  c.status=(c.status===st)?'pendente':st;
+  salvar(); render();
+  toast(c.status==='pendente'?c.nome+': pendente'
+    :c.status==='confirmado'?c.nome+' confirmado'
+    :c.status==='recusou'?c.nome+' não vai'
+    :c.nome+' foi para a espera');
 }
 
 function subCotacoes(){
@@ -1471,17 +1613,14 @@ function addConv(){
   if(!n) return toast('Escreva o nome');
   D.convidados.push({id:novoId(),nome:n,lado:document.getElementById('cLado').value,
     grupo:document.getElementById('cGrupo').value.trim()||'Outros',
-    acomp:+document.getElementById('cAcomp').value||0,
+    acomp:0,
+    crianca:document.getElementById('cKid').value==='1',
     status:document.getElementById('cStatus').value});
   salvar(); render(); toast('Convidado adicionado');
 }
 function apagarConv(id){
   if(!confirm('Remover da lista de convidados?')) return;
   D.convidados=D.convidados.filter(c=>c.id!==id); salvar(); render();
-}
-function ciclarStatus(id){
-  const o=['pendente','confirmado','recusou'], c=D.convidados.find(x=>x.id===id);
-  c.status=o[(o.indexOf(c.status)+1)%3]; salvar(); render();
 }
 function escolher(catId,cotId){
   const c=D.categorias.find(x=>x.id===catId);
@@ -1620,6 +1759,7 @@ function ir(a){ UI.aba=a; UI.editando=null; UI.editandoG=null; UI.editandoF=null
 /* boot */
 const salvo=lerLocal();
 if(salvo && salvo.versao) D=normalizar(salvo);
+if(importarLista()) salvar();
 render();
 carregarFirebase();
 
