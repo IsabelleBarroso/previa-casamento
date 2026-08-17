@@ -162,6 +162,9 @@ main{padding:16px 16px 8px}
 .tag.esp{background:rgba(74,111,165,.15);color:#3B5C8A}
 .kid{display:inline-block;font-size:9px;letter-spacing:.07em;text-transform:uppercase;font-weight:600;padding:2px 6px;border-radius:5px;background:rgba(74,111,165,.14);color:#3B5C8A;vertical-align:1px;margin-right:2px}
 .chip.lim{border-style:dashed;color:var(--rosa);border-color:rgba(180,86,106,.4)}
+.edt{color:#C3C9C5;font-size:12px;margin-left:2px}
+.nome:hover .edt{color:var(--vinho)}
+.linha-item.edit-conv{display:block;border-color:var(--vinho);border-left:3px solid var(--vinho);border-radius:0;padding:13px}
 .cats-chips{display:flex;flex-wrap:wrap;gap:7px}
 .cat-chip{display:inline-flex;align-items:center;gap:3px;background:var(--papel);border:1px solid var(--linha);border-radius:99px;padding:6px 6px 6px 13px;font-size:13px;font-weight:500}
 .cat-chip button{border:0;background:transparent;color:var(--cinza);font-size:16px;line-height:1;cursor:pointer;padding:2px 5px;border-radius:99px;font-family:var(--texto)}
@@ -280,7 +283,7 @@ const SALA = "casamento";   // nó onde os dados ficam guardados
 /* ========================================================== */
 
 /* ==================== CONSTANTES ==================== */
-const VERSAO = '1.5';
+const VERSAO = '1.6';
 const CHAVE = 'app-casamento-v1';
 const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 const M3=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
@@ -335,7 +338,7 @@ function estadoInicial(){
 let D = estadoInicial();
 const UI = { aba:'inicio', subCas:'convidados', filtroGasto:'mes', filtroGanho:'mes', filtroCot:'todas',
              mesRef:null, catAberta:null, editando:null, editandoG:null, editandoF:null, vistaGraf:'mes', anoRef:null,
-             filtroConv:'todos', buscaConv:'' };
+             filtroConv:'todos', buscaConv:'', editandoConv:null };
 let seq = Date.now()%1000000;
 const novoId = () => ++seq;
 
@@ -1323,12 +1326,51 @@ const IC_XIS='<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke
 const IC_AMP='<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8M6 17h8M7 3c0 3.5 3 4.6 3 7s-3 3.5-3 7M13 3c0 3.5-3 4.6-3 7s3 3.5 3 7"/></svg>';
 const IC_LIXO='<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 5.5h13M8 5.5V4h4v1.5M5.5 5.5l.8 10a1 1 0 001 .9h5.4a1 1 0 001-.9l.8-10M8.5 8.5v5M11.5 8.5v5"/></svg>';
 
+function formEditConv(c){
+  const gr=[]; D.convidados.forEach(x=>{ if(gr.indexOf(x.grupo)<0) gr.push(x.grupo); });
+  return `<div class="linha-item edit-conv">
+    <div class="edit-tit" style="color:var(--vinho)">Editando convidado</div>
+    <div class="campo"><label>Nome</label><input id="eNome" value="${esc(c.nome)}"></div>
+    <div class="dupla">
+      <div class="campo"><label>Grupo</label><input id="eGrupo" value="${esc(c.grupo)}" list="gEdit">
+        <datalist id="gEdit">${gr.map(g=>`<option value="${esc(g)}">`).join('')}</datalist></div>
+      <div class="campo"><label>Lado</label><select id="eLado">
+        <option value="noiva" ${c.lado==='noiva'?'selected':''}>Noiva</option>
+        <option value="noivo" ${c.lado==='noivo'?'selected':''}>Noivo</option>
+        <option value="ambos" ${c.lado==='ambos'?'selected':''}>Os dois</option></select></div>
+    </div>
+    <div class="dupla">
+      <div class="campo"><label>É criança?</label><select id="eKid">
+        <option value="0" ${!c.crianca?'selected':''}>Não</option>
+        <option value="1" ${c.crianca?'selected':''}>Sim</option></select></div>
+      <div class="campo"><label>Acompanhantes</label><input id="eAcomp" type="number" min="0" max="20" value="${c.acomp||0}"></div>
+    </div>
+    <div class="dupla" style="margin-top:2px">
+      <button class="btn claro" onclick="UI.editandoConv=null;render()">Cancelar</button>
+      <button class="btn rosa" onclick="salvarConv(${c.id})">Salvar</button>
+    </div>
+  </div>`;
+}
+function editarConv(id){ UI.editandoConv=id; render(); }
+function salvarConv(id){
+  const n=document.getElementById('eNome').value.trim();
+  if(!n) return toast('Escreva o nome');
+  const c=D.convidados.find(x=>x.id===id);
+  if(!c){ UI.editandoConv=null; return render(); }
+  c.nome=n;
+  c.grupo=document.getElementById('eGrupo').value.trim()||'Outros';
+  c.lado=document.getElementById('eLado').value;
+  c.crianca=document.getElementById('eKid').value==='1';
+  c.acomp=Math.min(Math.max(0,+document.getElementById('eAcomp').value||0),20);
+  UI.editandoConv=null; salvar(); render(); toast('Convidado atualizado');
+}
 function linhaConv(c){
+  if(UI.editandoConv===c.id) return formEditConv(c);
   const e=c.status==='espera';
   const b=(st,tit,svg)=>`<button class="st ${st} ${c.status===st?'on':''}" title="${tit}" aria-label="${tit}" onclick="setStatusConv(${c.id},'${st}')">${svg}</button>`;
   return `<div class="linha-item ${e?'espera':''} ${c.status==='recusou'?'recusou':''}">
     <div class="corpo">
-      <div class="nome">${c.crianca?'<span class="kid">criança</span> ':''}${esc(c.nome)}${c.acomp?` <span style="color:var(--cinza);font-weight:400">+${c.acomp}</span>`:''}</div>
+      <div class="nome" onclick="editarConv(${c.id})" style="cursor:pointer">${c.crianca?'<span class="kid">criança</span> ':''}${esc(c.nome)}${c.acomp?` <span style="color:var(--cinza);font-weight:400">+${c.acomp}</span>`:''} <span class="edt">✎</span></div>
       <div class="sub">
         <span class="tag ${c.lado}">${c.lado==='ambos'?'os dois':c.lado}</span>
         <span class="tag ${c.status==='confirmado'?'ok':e?'esp':''}">${ROT_CONV[c.status]||c.status}</span>
@@ -1754,7 +1796,7 @@ function render(){
     }
   }
 }
-function ir(a){ UI.aba=a; UI.editando=null; UI.editandoG=null; UI.editandoF=null; render(); window.scrollTo(0,0); }
+function ir(a){ UI.aba=a; UI.editando=null; UI.editandoG=null; UI.editandoF=null; UI.editandoConv=null; render(); window.scrollTo(0,0); }
 
 /* boot */
 const salvo=lerLocal();
