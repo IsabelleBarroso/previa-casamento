@@ -16,6 +16,32 @@ header{background:var(--vinho);color:var(--papel);padding:18px 20px 20px}
 .eyebrow{font-size:10.5px;letter-spacing:.19em;text-transform:uppercase;color:rgba(242,238,228,.6);margin:0 0 6px;font-weight:500}
 header h1{font-family:var(--display);font-weight:500;font-size:24px;margin:0}
 .headline{margin-top:12px;border-top:1px solid rgba(242,238,228,.18);padding-top:11px;font-size:12px;color:rgba(242,238,228,.75)}
+.barra-conv{margin:14px 16px 0;background:var(--carta);border:1px solid var(--linha);border-radius:14px;padding:14px}
+.barra-conv label{display:block;margin-bottom:8px}
+.bc-campo{display:flex;align-items:baseline;gap:9px;margin-bottom:12px}
+.bc-campo input{width:104px;text-align:center;font-family:var(--display);font-size:26px;font-weight:500;
+padding:8px 6px;border:1px solid var(--linha);border-radius:12px;background:var(--papel);color:var(--tinta);
+font-variant-numeric:tabular-nums;-moz-appearance:textfield}
+.bc-campo input::-webkit-outer-spin-button,.bc-campo input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.bc-campo input:focus{outline:2px solid var(--vinho);outline-offset:1px}
+.bc-un{font-size:13px;color:var(--cinza)}
+.bc-lab{font-size:11.5px;color:var(--cinza);align-self:center;margin-right:2px}
+.bc-btn{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.bc-btn button{border:1px solid var(--linha);background:transparent;color:var(--cinza);padding:5px 9px;border-radius:99px;
+font-size:11.5px;font-weight:600;cursor:pointer;font-family:var(--texto)}
+.bc-btn button.on{background:var(--vinho);color:var(--papel);border-color:var(--vinho)}
+
+.bc-nota{font-size:11.5px;color:var(--cinza);margin-top:9px;line-height:1.45}
+.bc-alerta{font-size:12px;color:var(--rosa);background:rgba(180,86,106,.08);padding:8px 10px;border-radius:8px;margin-top:9px;line-height:1.4}
+.sim-box{background:rgba(74,111,165,.06);border:1px dashed rgba(74,111,165,.4);border-radius:12px;padding:12px 13px;margin-top:14px}
+.sb-tit{font-size:12px;font-weight:600;color:#3B5C8A;margin-bottom:9px;line-height:1.4}
+.sb-linha{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;gap:10px}
+.sb-linha b{font-variant-numeric:tabular-nums;font-weight:600}
+.sb-nota{font-size:11.5px;color:var(--cinza);margin-top:8px;line-height:1.45}
+.sb-alerta{font-size:12.5px;color:var(--rosa);line-height:1.4}
+.orc.fora{opacity:.55}
+.orc.fora .oc-val{color:var(--rosa)}
+.faixa{font-size:11px;color:var(--cinza)}
 .modelos{display:flex;gap:6px;padding:14px 16px 0}
 .modelos button{flex:1;border:1px solid var(--linha);background:var(--carta);color:var(--cinza);padding:9px 4px;border-radius:10px;
 font-family:var(--texto);font-size:11.5px;font-weight:600;cursor:pointer;line-height:1.25}
@@ -83,18 +109,65 @@ table.cmp .nao{color:var(--rosa)}
     <div class="headline">Tres modelos para organizar os orcamentos. Toque para trocar.</div>
   </header>
   <div class="modelos" id="mods"></div>
+  <div id="barra"></div>
   <main id="tela"></main>
 </div>
 <script>
-const O=[{"id": 1, "cat": "Pacote completo", "fornecedor": "Recanto Oásis", "pessoas": 170, "local": "Vicente Pires", "duracao": "5 horas", "validade": "tabela 2026", "pagamento": "Parcelado até o evento", "contato": "(61) 3397-1553 · Erick", "itens": [["Buffet jantar (170 × R$ 179)", 30430], ["Salão, mobiliário e serviços", 13999], ["Decoração e flores", 17196], ["Desconto concedido", -625]], "inclui": ["Salão para 170 convidados", "ECAD, 3 seguranças e limpeza", "18 toalhas, mesa do bolo, mesas de buffet", "Flores da estação para salão e cerimônia", "Buffet completo com jantar", "Coquetel volante durante todo o evento"], "naoInclui": ["Bolo e doces", "Bebida alcoólica", "Manobrista", "Cadeiras Tiffany"], "adicionais": [["Bolo e doces (170 × R$ 24,50)", 4165], ["170 cadeiras Tiffany transparente", 2340], ["Passarela de madeira para cerimônia", 1500], ["Porta na cerimônia", 650], ["Ilha de puff com árvore", 600], ["Manobrista", 2000], ["Cerveja Antártica (170 × R$ 12)", 2040]], "alerta": "Tabela de 2026 — datas de 2027 têm reajuste de 10%"}, {"id": 2, "cat": "Pacote completo", "fornecedor": "Espaço Panorama", "pessoas": 250, "local": "Brasília", "duracao": "—", "validade": "30/08/2026", "pagamento": "—", "contato": "(61) 9 9403-1540 · Ginnê", "itens": [["Espaço, mobiliário, buffet e doces (250 pessoas, sábado, com cerimônia)", 129581]], "inclui": ["Salão, limpeza, gerente, gerador e eletricista", "5 orientadores de trânsito e 5 seguranças", "2 brigadistas", "Mobiliário completo e 240 cadeiras Dior", "Mobiliário da cerimônia, altar e arco", "Coquetel volante com jantar", "1.000 doces finos, 250 bem-casados e bolo de 12 kg"], "naoInclui": ["Bebida alcoólica", "Som e iluminação", "Decoração floral"], "adicionais": [], "alerta": "Proposta válida até 30/08/2026"}, {"id": 3, "cat": "Pacote completo", "fornecedor": "Porto Real Beira Lago", "pessoas": 150, "local": "Lago Paranoá", "duracao": "5h recepção + 2h cerimônia", "validade": "10 dias", "pagamento": "Sinal 20% + parcelado", "contato": "(61) 3346-9117 · Weslley/Bianca", "itens": [["Espaço, buffet Imperador, decoração Criart's e som Sogni (sábado)", 103250]], "inclui": ["Até 700 convidados, cerimônia às margens do lago", "Gerador 260 KVA, ECAD, cozinha industrial", "Buffet do Chef com 2 ilhas, medalhão e robalo", "Coquetel volante full time com frutos do mar", "Decoração completa da recepção e mesa do bolo", "Som, iluminação e DJ profissional"], "naoInclui": ["Decoração da cerimônia", "Bebida alcoólica", "Manobrista e orientador de trânsito"], "adicionais": [["Decoração da cerimônia", 7900], ["After party no deck (2h)", 11000], ["Manobrista (150 convidados)", 2500], ["Orientador de trânsito", 750], ["Backline para banda", 2000], ["Painel de led no teto", 2500], ["Piso Gold", 1800], ["Cerveja Heineken (150 × R$ 25)", 3750]], "alerta": "Decoração e buffet são exclusivos da casa"}, {"id": 4, "cat": "Espaço", "fornecedor": "Lacustre Hall", "pessoas": 600, "local": "Asa Sul", "duracao": "5 horas", "validade": "15 dias", "pagamento": "30% no contrato + parcelado", "contato": "(61) 9 9949-7879", "itens": [["Locação 6ª ou sábado (jan e nov/27)", 28000]], "inclui": ["Salão climatizado com acessibilidade", "30 mesas redondas de 8 lugares", "Suíte VIP", "Estacionamento amplo gratuito", "Gerente, segurança, brigadistas e limpeza", "Gerador em stand-by"], "naoInclui": ["Buffet", "Decoração", "Som"], "adicionais": [["Gerador, se precisar ligar", 2300]], "alerta": "Buffet e decoração só de fornecedores cadastrados"}, {"id": 5, "cat": "Espaço", "fornecedor": "Villa Bé", "pessoas": 450, "local": "Gama", "duracao": "7 horas", "validade": "7 dias", "pagamento": "10% entrada + boleto", "contato": "—", "itens": [["Locação sábado ou feriado", 48000]], "inclui": ["Salão para até 450 convidados", "Gerador 170 kva e taxa de ECAD", "20 mesas de 8 lugares e 200 cadeiras", "Suíte da noiva e chalé do noivo", "160 vagas de estacionamento", "2 ensaios fotográficos"], "naoInclui": ["Buffet", "Decoração", "Brigadistas"], "adicionais": [], "alerta": "Proposta válida por 7 dias"}, {"id": 6, "cat": "Espaço", "fornecedor": "Green Park", "pessoas": 150, "local": "Park Way", "duracao": "6 horas", "validade": "—", "pagamento": "—", "contato": "(61) 99982-7981 · Wilson", "itens": [["Locação até 100 convidados", 10900], ["50 convidados adicionais (× R$ 50)", 2500]], "inclui": ["Salão, cozinha, churrasqueira e bar", "Gazebo e área gramada para cerimônia", "Mobiliário rústico completo", "Passarela e porta de madeira para cerimônia", "Sala para maquiagem da noiva"], "naoInclui": ["Buffet", "Decoração", "Gerador"], "adicionais": [["Taxa de ECAD", 750]], "alerta": "Limite máximo de 150 convidados"}, {"id": 7, "cat": "Espaço + decoração", "fornecedor": "Maison Daniela", "pessoas": 130, "local": "—", "duracao": "6 horas", "validade": "3 dias úteis", "pagamento": "Pix ou boleto · 50% + 50%", "contato": "(61) 99183-4477", "itens": [["Pacote Espaço + Decoração (até 130)", 18980]], "inclui": ["Espaço coberto e ao ar livre", "Lago, praia artificial e jardins", "250 cadeiras e 30 mesas", "Decoração da cerimônia e da recepção", "Camarim e sala de making of", "Cozinha industrial"], "naoInclui": ["Buffet", "Som", "Taxa de staff"], "adicionais": [["Taxa de staff", 800]], "alerta": "Até 40% de desconto de 2ª a 5ª · 10% às 6ª e domingos"}, {"id": 8, "cat": "Buffet", "fornecedor": "Castro's Buffet", "pessoas": 180, "local": "Vicente Pires", "duracao": "5 horas", "validade": "tabela 2026", "pagamento": "Parcelado até o evento", "contato": "(61) 4141-3086 · Erick", "itens": [["Coquetel volante (180 × R$ 134)", 24120]], "inclui": ["Coquetel volante durante todo o evento", "15 sabores de salgados", "Bebidas não alcoólicas", "1 garçom para cada 14 convidados", "Louça, prataria e material completo", "3 cortesias à escolha"], "naoInclui": ["Jantar (é ilha adicional)", "Bolo e doces", "Bebida alcoólica"], "adicionais": [["Ilha de jantar (180 × R$ 44)", 7920], ["Bolo e doces (180 × R$ 26,50)", 4770], ["Ilha de grelhados (180 × R$ 46)", 8280], ["Cerveja Antártica (180 × R$ 14)", 2520]], "alerta": "Tabela 2026 — reajuste de 10% para 2027 · crianças até 8 anos não pagam"}];
-const S={modelo:1,adicionais:{},escolhida:{}};
+const O=[{"id": 1, "cat": "Pacote completo", "fornecedor": "Recanto Oásis", "pessoas": 170, "local": "Vicente Pires", "duracao": "5 horas", "validade": "tabela 2026", "pagamento": "Parcelado até o evento", "contato": "(61) 3397-1553 · Erick", "itens": [["Buffet jantar (170 × R$ 179)", 30430], ["Salão, mobiliário e serviços", 13999], ["Decoração e flores", 17196], ["Desconto concedido", -625]], "inclui": ["Salão para 170 convidados", "ECAD, 3 seguranças e limpeza", "18 toalhas, mesa do bolo, mesas de buffet", "Flores da estação para salão e cerimônia", "Buffet completo com jantar", "Coquetel volante durante todo o evento"], "naoInclui": ["Bolo e doces", "Bebida alcoólica", "Manobrista", "Cadeiras Tiffany"], "adicionais": [["Bolo e doces (170 × R$ 24,50)", 4165], ["170 cadeiras Tiffany transparente", 2340], ["Passarela de madeira para cerimônia", 1500], ["Porta na cerimônia", 650], ["Ilha de puff com árvore", 600], ["Manobrista", 2000], ["Cerveja Antártica (170 × R$ 12)", 2040]], "alerta": "Tabela de 2026 — datas de 2027 têm reajuste de 10%", "cap": 250, "porPessoa": [["Buffet jantar", 179], ["Bolo e doces", 24.5], ["Cerveja Antártica", 12]], "fixo": 31195, "desc": 625, "cotado": 61000}, {"id": 2, "cat": "Pacote completo", "fornecedor": "Espaço Panorama", "pessoas": 150, "local": "Brasília", "duracao": "—", "validade": "30/08/2026", "pagamento": "—", "contato": "(61) 9 9403-1540 · Ginnê", "itens": [["Espaço, mobiliário, buffet e doces (250 pessoas, sábado, com cerimônia)", 129581]], "inclui": ["Salão, limpeza, gerente, gerador e eletricista", "5 orientadores de trânsito e 5 seguranças", "2 brigadistas", "Mobiliário completo e 240 cadeiras Dior", "Mobiliário da cerimônia, altar e arco", "Coquetel volante com jantar", "1.000 doces finos, 250 bem-casados e bolo de 12 kg"], "naoInclui": ["Bebida alcoólica", "Som e iluminação", "Decoração floral"], "adicionais": [], "alerta": "Proposta válida até 30/08/2026", "cap": 300, "porPessoa": [], "fixo": 0, "desc": 0, "tabela": {"100": 70524, "150": 89247, "200": 110372, "250": 129581, "300": 148963}, "cotado": 89247}, {"id": 3, "cat": "Pacote completo", "fornecedor": "Porto Real Beira Lago", "pessoas": 150, "local": "Lago Paranoá", "duracao": "5h recepção + 2h cerimônia", "validade": "10 dias", "pagamento": "Sinal 20% + parcelado", "contato": "(61) 3346-9117 · Weslley/Bianca", "itens": [["Espaço, buffet Imperador, decoração Criart's e som Sogni (sábado)", 103250]], "inclui": ["Até 700 convidados, cerimônia às margens do lago", "Gerador 260 KVA, ECAD, cozinha industrial", "Buffet do Chef com 2 ilhas, medalhão e robalo", "Coquetel volante full time com frutos do mar", "Decoração completa da recepção e mesa do bolo", "Som, iluminação e DJ profissional"], "naoInclui": ["Decoração da cerimônia", "Bebida alcoólica", "Manobrista e orientador de trânsito"], "adicionais": [["Decoração da cerimônia", 7900], ["After party no deck (2h)", 11000], ["Manobrista (150 convidados)", 2500], ["Orientador de trânsito", 750], ["Backline para banda", 2000], ["Painel de led no teto", 2500], ["Piso Gold", 1800], ["Cerveja Heineken (150 × R$ 25)", 3750]], "alerta": "Decoração e buffet são exclusivos da casa", "cap": 700, "porPessoa": [["Cerveja Heineken", 25]], "fixo": 0, "desc": 0, "tabela": {"150": 103250}, "cotado": 103250}, {"id": 4, "cat": "Espaço", "fornecedor": "Lacustre Hall", "pessoas": 600, "local": "Asa Sul", "duracao": "5 horas", "validade": "15 dias", "pagamento": "30% no contrato + parcelado", "contato": "(61) 9 9949-7879", "itens": [["Locação 6ª ou sábado (jan e nov/27)", 28000]], "inclui": ["Salão climatizado com acessibilidade", "30 mesas redondas de 8 lugares", "Suíte VIP", "Estacionamento amplo gratuito", "Gerente, segurança, brigadistas e limpeza", "Gerador em stand-by"], "naoInclui": ["Buffet", "Decoração", "Som"], "adicionais": [["Gerador, se precisar ligar", 2300]], "alerta": "Buffet e decoração só de fornecedores cadastrados", "cap": 600, "porPessoa": [], "fixo": 28000, "desc": 0, "cotado": 28000}, {"id": 5, "cat": "Espaço", "fornecedor": "Villa Bé", "pessoas": 450, "local": "Gama", "duracao": "7 horas", "validade": "7 dias", "pagamento": "10% entrada + boleto", "contato": "—", "itens": [["Locação sábado ou feriado", 48000]], "inclui": ["Salão para até 450 convidados", "Gerador 170 kva e taxa de ECAD", "20 mesas de 8 lugares e 200 cadeiras", "Suíte da noiva e chalé do noivo", "160 vagas de estacionamento", "2 ensaios fotográficos"], "naoInclui": ["Buffet", "Decoração", "Brigadistas"], "adicionais": [], "alerta": "Proposta válida por 7 dias", "cap": 450, "porPessoa": [], "fixo": 48000, "desc": 0, "cotado": 48000}, {"id": 6, "cat": "Espaço", "fornecedor": "Green Park", "pessoas": 150, "local": "Park Way", "duracao": "6 horas", "validade": "—", "pagamento": "—", "contato": "(61) 99982-7981 · Wilson", "itens": [["Locação até 100 convidados", 10900], ["50 convidados adicionais (× R$ 50)", 2500]], "inclui": ["Salão, cozinha, churrasqueira e bar", "Gazebo e área gramada para cerimônia", "Mobiliário rústico completo", "Passarela e porta de madeira para cerimônia", "Sala para maquiagem da noiva"], "naoInclui": ["Buffet", "Decoração", "Gerador"], "adicionais": [["Taxa de ECAD", 750]], "alerta": "Limite máximo de 150 convidados", "cap": 150, "porPessoa": [], "fixo": 10900, "desc": 0, "adicPessoa": 50, "incluso": 100, "cotado": 13400}, {"id": 7, "cat": "Espaço + decoração", "fornecedor": "Maison Daniela", "pessoas": 130, "local": "—", "duracao": "6 horas", "validade": "3 dias úteis", "pagamento": "Pix ou boleto · 50% + 50%", "contato": "(61) 99183-4477", "itens": [["Pacote Espaço + Decoração (até 130)", 18980]], "inclui": ["Espaço coberto e ao ar livre", "Lago, praia artificial e jardins", "250 cadeiras e 30 mesas", "Decoração da cerimônia e da recepção", "Camarim e sala de making of", "Cozinha industrial"], "naoInclui": ["Buffet", "Som", "Taxa de staff"], "adicionais": [["Taxa de staff", 800]], "alerta": "Até 40% de desconto de 2ª a 5ª · 10% às 6ª e domingos", "cap": 130, "porPessoa": [], "fixo": 18980, "desc": 0, "cotado": 18980}, {"id": 8, "cat": "Buffet", "fornecedor": "Castro's Buffet", "pessoas": 180, "local": "Vicente Pires", "duracao": "5 horas", "validade": "tabela 2026", "pagamento": "Parcelado até o evento", "contato": "(61) 4141-3086 · Erick", "itens": [["Coquetel volante (180 × R$ 134)", 24120]], "inclui": ["Coquetel volante durante todo o evento", "15 sabores de salgados", "Bebidas não alcoólicas", "1 garçom para cada 14 convidados", "Louça, prataria e material completo", "3 cortesias à escolha"], "naoInclui": ["Jantar (é ilha adicional)", "Bolo e doces", "Bebida alcoólica"], "adicionais": [["Ilha de jantar (180 × R$ 44)", 7920], ["Bolo e doces (180 × R$ 26,50)", 4770], ["Ilha de grelhados (180 × R$ 46)", 8280], ["Cerveja Antártica (180 × R$ 14)", 2520]], "alerta": "Tabela 2026 — reajuste de 10% para 2027 · crianças até 8 anos não pagam", "cap": 500, "porPessoa": [["Coquetel volante", 134], ["Ilha de jantar", 44], ["Bolo e doces", 26.5], ["Ilha de grelhados", 46], ["Cerveja Antártica", 14]], "fixo": 0, "desc": 0, "cotado": 24120}];
+const S={modelo:1,adicionais:{},escolhida:{},pessoas:235};
 O.forEach(o=>{S.adicionais[o.id]={};});
 const R$=v=>(Number(v)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const base=o=>o.itens.reduce((s,i)=>s+i[1],0);
+const N=()=>S.pessoas;
+/* valor que o fornecedor efetivamente cotou, para a quantidade que ele cotou */
+const cotado=o=>o.cotado;
+const ppCotado=o=>o.cotado/o.pessoas;
+const simulando=o=>N()!==o.pessoas;
+/* estimativa nossa, quando ela quer ver outra quantidade */
+function estimativa(o){
+  const n=N();
+  if(o.tabela){                      // pacote com tabela por faixa
+    const fx=Object.keys(o.tabela).map(Number).sort((a,b)=>a-b);
+    let f=fx[fx.length-1];
+    for(const x of fx){ if(n<=x){ f=x; break; } }
+    return o.tabela[f];
+  }
+  if(o.adicPessoa){                  // valor fixo + por convidado extra
+    return o.fixo + Math.max(0,n-o.incluso)*o.adicPessoa;
+  }
+  const pp=(o.porPessoa||[]).length?o.porPessoa[0][1]*n:0;
+  return o.fixo + pp - (o.desc||0);
+}
+function precisaRecotar(o){ return o.soConsulta && N()>o.soConsulta; }
+function faixa(o){
+  if(!o.tabela) return null;
+  const fx=Object.keys(o.tabela).map(Number).sort((a,b)=>a-b);
+  let f=fx[fx.length-1];
+  for(const x of fx){ if(N()<=x){ f=x; break; } }
+  return f;
+}
+const cabe=o=>N()<=o.cap;
+const valorAdic=(o,i)=>o.adicionais[i][1];
+const rotAdic=(o,i)=>o.adicionais[i][0];
 const extras=o=>o.adicionais.reduce((s,a,i)=>s+(S.adicionais[o.id][i]?a[1]:0),0);
-const total=o=>base(o)+extras(o);
+const total=o=>cotado(o)+extras(o);
 const porPessoa=o=>o.pessoas?total(o)/o.pessoas:0;
+
+function blocoSim(o){
+  const est=estimativa(o), n=N();
+  const naoCabe=!cabe(o);
+  const temTabela=!!o.tabela, faixaOk=temTabela&&faixa(o);
+  return `<div class="sim-box">
+    <div class="sb-tit">Voce quer ${n} convidados &mdash; a proposta e para ${o.pessoas}</div>
+    ${naoCabe
+      ? `<div class="sb-alerta">Este local comporta no maximo ${o.cap} pessoas. Nao da para ${n}.</div>`
+      : (o.porPessoa&&o.porPessoa.length)||o.adicPessoa||faixaOk
+        ? `<div class="sb-linha"><span>Estimativa para ${n} pessoas</span><b>${R$(est)}</b></div>
+           <div class="sb-linha"><span>Ficaria por pessoa</span><b>${R$(est/n)}</b></div>
+           <div class="sb-nota">Conta feita por mim com base na tabela da proposta. <b>Nao e o valor oficial</b> &mdash; peca um orcamento novo para ${n} pessoas.</div>`
+        : `<div class="sb-nota">A proposta e um valor fechado para ${o.pessoas} pessoas, entao nao da para estimar ${n}. Peca um orcamento novo.</div>`}
+  </div>`;
+}
 
 /* ---------- MODELO 1 ---------- */
 function m1(){
@@ -103,21 +176,35 @@ function m1(){
       const lista=O.filter(o=>o.cat.replace('ç','c').replace('ã','a')===c||o.cat===c);
       if(!lista.length) return '';
       return `<div class="secao-titulo">${esc(lista[0].cat)}</div>`+lista.map(o=>`
-      <details class="orc">
+      <details class="orc ${cabe(o)?'':'fora'}">
         <summary>
           <div class="oc-topo">
             <div style="min-width:0">
               <div class="oc-nome">${esc(o.fornecedor)}</div>
-              <div class="oc-sub"><span class="tag pp">${o.pessoas} pessoas</span>${o.local!=='—'?'<span>'+esc(o.local)+'</span>':''}</div>
+              <div class="oc-sub">
+                <span class="tag pp">cotado p/ ${o.pessoas}</span>
+                <span>ate ${o.cap}</span>
+                ${faixa(o)&&!precisaRecotar(o)?`<span class="faixa">faixa de ${faixa(o)}</span>`:''}
+                ${precisaRecotar(o)?'<span class="tag" style="background:rgba(190,135,36,.16);color:#8A6212">precisa recotar</span>':''}
+              </div>
             </div>
-            <div><div class="oc-val">${R$(base(o))}</div>
-              <div class="oc-pp">${R$(base(o)/o.pessoas)} por pessoa</div></div>
+            <div><div class="oc-val">${R$(cotado(o))}</div>
+              <div class="oc-pp">${R$(ppCotado(o))} por pessoa</div></div>
           </div>
         </summary>
         <div class="corpo">
-          ${o.itens.length>1?`<div class="bloco"><div class="bt">Composicao</div>
-            ${o.itens.map(i=>`<div class="linhav"><span>${esc(i[0])}</span><b>${R$(i[1])}</b></div>`).join('')}
-            <div class="total"><span>Total</span><b>${R$(base(o))}</b></div></div>`:''}
+          ${o.porPessoa&&o.porPessoa.length?`<div class="bloco"><div class="bt">Como a proposta se forma</div>
+            <div class="linhav"><span>${esc(o.porPessoa[0][0])} &mdash; ${o.pessoas} &times; ${R$(o.porPessoa[0][1])}</span><b>${R$(o.porPessoa[0][1]*o.pessoas)}</b></div>
+            ${o.fixo?`<div class="linhav"><span>Valor fixo (salao, decoracao, servicos)</span><b>${R$(o.fixo)}</b></div>`:''}
+            ${o.desc?`<div class="linhav"><span>Desconto concedido</span><b>-${R$(o.desc)}</b></div>`:''}
+            <div class="total"><span>Total cotado</span><b>${R$(cotado(o))}</b></div></div>`
+           :o.adicPessoa?`<div class="bloco"><div class="bt">Como a proposta se forma</div>
+            <div class="linhav"><span>Locacao ate ${o.incluso} convidados</span><b>${R$(o.fixo)}</b></div>
+            <div class="linhav"><span>${o.pessoas-o.incluso} convidados adicionais &times; ${R$(o.adicPessoa)}</span><b>${R$((o.pessoas-o.incluso)*o.adicPessoa)}</b></div>
+            <div class="total"><span>Total cotado</span><b>${R$(cotado(o))}</b></div></div>`
+           :o.tabela?`<div class="bloco"><div class="bt">Tabela do fornecedor</div>
+            ${Object.keys(o.tabela).map(k=>`<div class="linhav" style="${+k===o.pessoas?'font-weight:600':'color:var(--cinza)'}"><span>${k} pessoas</span><b>${R$(o.tabela[k])}</b></div>`).join('')}</div>`:''}
+          ${simulando(o)?blocoSim(o):''}
           <div class="bloco"><div class="bt">O que inclui</div>
             ${o.inclui.map(t=>`<div class="li"><span class="mk">&#10003;</span><span>${esc(t)}</span></div>`).join('')}</div>
           ${o.naoInclui.length?`<div class="bloco"><div class="bt">Nao incluso</div>
@@ -142,26 +229,26 @@ function m2(){
   return `<div class="nota"><b>Modelo 2 &mdash; simulador.</b> Os adicionais tem chave liga/desliga. O total do orcamento e o valor por pessoa recalculam na hora, entao da pra montar cenarios antes de decidir.</div>`
   + O.filter(o=>o.adicionais.length).map(o=>{
     const lig=o.adicionais.filter((a,i)=>S.adicionais[o.id][i]).length;
-    return `<details class="orc" ${o.id===1?'open':''}>
+    return `<details class="orc ${cabe(o)?'':'fora'}" ${o.id===1?'open':''}>
       <summary>
         <div class="oc-topo">
           <div style="min-width:0">
             <div class="oc-nome">${esc(o.fornecedor)}</div>
-            <div class="oc-sub"><span class="tag pp">${o.pessoas} pessoas</span>
-              ${lig?`<span class="tag ok">+${lig} adicional(is)</span>`:'<span>so o pacote base</span>'}</div>
+            <div class="oc-sub"><span class="tag pp">cotado p/ ${o.pessoas}</span>
+              ${lig?`<span class="tag ok">+${lig} adicional(is)</span>`:''}</div>
           </div>
           <div><div class="oc-val">${R$(total(o))}</div>
             <div class="oc-pp">${R$(porPessoa(o))} por pessoa</div></div>
         </div>
       </summary>
       <div class="corpo">
-        <div class="bloco"><div class="bt">Pacote base</div>
+        <div class="bloco"><div class="bt">Proposta como foi cotada &mdash; ${o.pessoas} pessoas</div>
           ${o.itens.map(i=>`<div class="linhav"><span>${esc(i[0])}</span><b>${R$(i[1])}</b></div>`).join('')}
-          <div class="total"><span>Subtotal</span><b>${R$(base(o))}</b></div></div>
+          <div class="total"><span>Subtotal</span><b>${R$(cotado(o))}</b></div></div>
         <div class="bloco"><div class="bt">Adicionais &mdash; ligue o que quiser somar</div>
           ${o.adicionais.map((a,i)=>`<div class="add">
             <button class="sw ${S.adicionais[o.id][i]?'on':''}" onclick="tog(${o.id},${i})" aria-label="${esc(a[0])}"></button>
-            <span class="nm">${esc(a[0])}</span><b>${R$(a[1])}</b></div>`).join('')}
+            <span class="nm">${esc(rotAdic(o,i))}</span><b>${R$(valorAdic(o,i))}</b></div>`).join('')}
           ${extras(o)?`<div class="total"><span>Somado</span><b>${R$(extras(o))}</b></div>`:''}</div>
         <div class="cartao" style="margin:0;background:var(--papel);border-style:dashed">
           <div style="display:flex;justify-content:space-between;align-items:flex-end">
@@ -170,6 +257,7 @@ function m2(){
               <b class="val" style="font-size:16px;color:var(--cinza)">${R$(porPessoa(o))}</b></div>
           </div>
         </div>
+        ${simulando(o)?blocoSim(o):''}
         <button class="btn ${S.escolhida[o.id]?'on':''}" onclick="escolher(${o.id})">
           ${S.escolhida[o.id]?'&#10003; Escolhido':'Marcar como escolhido'}</button>
       </div>
@@ -179,7 +267,7 @@ function m2(){
 /* ---------- MODELO 3 ---------- */
 function m3(){
   const c=[O[0],O[1],O[2]];
-  const menor=Math.min.apply(null,c.map(o=>porPessoa(o)));
+  const menor=Math.min.apply(null,c.map(o=>ppCotado(o)));
   const lin=(rot,fn)=>`<tr><td>${rot}</td>${c.map(o=>`<td>${fn(o)}</td>`).join('')}</tr>`;
   const temItem=(o,t)=>o.inclui.concat(o.itens.map(i=>i[0])).join(' ').toLowerCase().indexOf(t)>=0
     ? '<span class="sim">&#10003;</span>' : '<span class="nao">&times;</span>';
@@ -188,9 +276,10 @@ function m3(){
     <table class="cmp">
       <thead><tr><th></th>${c.map(o=>`<th>${esc(o.fornecedor)}</th>`).join('')}</tr></thead>
       <tbody>
-        ${lin('Pessoas',o=>'<span class="num">'+o.pessoas+'</span>')}
-        ${lin('Valor',o=>'<span class="num">'+R$(base(o))+'</span>')}
-        ${lin('Por pessoa',o=>'<span class="num '+(porPessoa(o)===menor?'best':'')+'">'+R$(porPessoa(o))+'</span>')}
+        ${lin('Cotado para',o=>'<span class="num">'+o.pessoas+' pessoas</span>')}
+        ${lin('Valor cotado',o=>'<span class="num">'+R$(cotado(o))+'</span>')}
+        ${lin('Por pessoa',o=>'<span class="num '+(ppCotado(o)===menor?'best':'')+'">'+R$(ppCotado(o))+'</span>')}
+        ${lin('Estimativa p/ '+N(),o=>!cabe(o)?'<span class="nao">nao cabe</span>':(simulando(o)?'<span class="num" style="color:var(--cinza)">'+R$(estimativa(o))+'</span>':'<span class="num">&mdash;</span>'))}
         ${lin('Buffet',o=>temItem(o,'buffet'))}
         ${lin('Decoracao',o=>temItem(o,'decora'))}
         ${lin('Som e DJ',o=>temItem(o,'som'))}
@@ -201,7 +290,7 @@ function m3(){
       </tbody>
     </table>
     <div class="rodape" style="border-top:1px solid var(--linha);margin-top:10px;padding-top:10px">
-      Em verde, o menor custo por pessoa. Os valores nao sao diretamente comparaveis porque cobrem quantidades diferentes de convidados.
+      Em verde, o menor custo por pessoa entre os valores <b>cotados</b>. A linha de estimativa e conta minha, nao vale como proposta &mdash; serve so para ter ideia.
     </div>
   </div>
   <div class="secao-titulo">Falta somar em cada um</div>
@@ -215,9 +304,44 @@ function m3(){
 
 function tog(id,i){S.adicionais[id][i]=!S.adicionais[id][i];render();}
 function escolher(id){S.escolhida[id]=!S.escolhida[id];render();}
+function barra(){
+  const n=N();
+  const fora=O.filter(o=>!cabe(o));
+  return `<div class="barra-conv">
+    <label class="rot" for="qtd">Quantos convidados?</label>
+    <div class="bc-campo">
+      <input id="qtd" type="number" inputmode="numeric" min="1" max="999" value="${n}"
+             oninput="digitou(this)" onblur="ajusta(this)">
+      <span class="bc-un">convidados</span>
+    </div>
+    <div class="bc-btn">
+      <span class="bc-lab">Cotados:</span>
+      ${[[130,'Maison'],[150,'Panorama, Porto Real, Green Park'],[170,'Recanto'],[180,'Castro\'s'],[235,'lista de hoje']]
+        .map(v=>`<button class="${n===v[0]?'on':''}" onclick="setN(${v[0]})" title="${v[1]}">${v[0]}</button>`).join('')}
+    </div>
+    <div class="bc-nota">Os orcamentos aparecem <b>com o valor e a quantidade que cada fornecedor cotou</b>. Escreva aqui outra quantidade e eu mostro uma estimativa em cada um &mdash; util para saber se vale pedir um orcamento novo.</div>
+    ${fora.length?`<div class="bc-alerta">Nao comporta ${n} convidados: <b>${fora.map(o=>o.fornecedor).join(', ')}</b></div>`:''}
+  </div>`;
+}
+function setN(v){
+  S.pessoas=Math.min(Math.max(1,v||1),999);
+  render();
+}
+function digitou(el){
+  const v=parseInt(el.value,10);
+  if(!el.value){ return; }
+  if(isNaN(v)||v<1) return;
+  S.pessoas=Math.min(v,999);
+  const pos=el.selectionStart;
+  render();
+  const novo=document.getElementById('qtd');
+  if(novo){ novo.focus(); try{ novo.setSelectionRange(pos,pos); }catch(e){} }
+}
+function ajusta(el){ if(!el.value||+el.value<1) setN(S.pessoas); }
 function render(){
   document.getElementById('mods').innerHTML=[[1,'Ficha completa'],[2,'Simulador'],[3,'Comparador']].map(m=>
     `<button aria-pressed="${S.modelo===m[0]}" onclick="S.modelo=${m[0]};render();window.scrollTo(0,0)">${m[1]}</button>`).join('');
+  document.getElementById('barra').innerHTML=barra();
   document.getElementById('tela').innerHTML=S.modelo===1?m1():S.modelo===2?m2():m3();
 }
 render();
