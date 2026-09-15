@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="G">
-<title>Felipe & Gabriela</title>
+<title>Minhas finanças</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -189,6 +189,39 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--tinta2);outline-
 .navmes button{border:0;background:transparent;font-size:19px;color:var(--tinta);cursor:pointer;padding:3px 12px;border-radius:8px;line-height:1}
 .navmes span{font-weight:600;font-size:14px}
 
+/* régua de 12 meses */
+.regua{background:var(--carta);border:1px solid var(--linha);border-radius:14px;padding:10px 10px 11px;margin-bottom:12px}
+.regua-cab{display:flex;align-items:center;justify-content:space-between;padding:1px 2px 9px;border-bottom:1px solid var(--linha);margin-bottom:9px}
+.regua-cab button{border:0;background:transparent;font-size:19px;color:var(--tinta);cursor:pointer;padding:2px 12px;border-radius:8px;line-height:1}
+.regua-cab span{font-family:var(--display);font-weight:500;font-size:16px;font-variant-numeric:tabular-nums}
+.regua-grade{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.mb{border:1px solid transparent;background:rgba(18,50,42,.045);border-radius:9px;padding:7px 2px 6px;cursor:pointer;font-family:var(--texto);text-align:center;color:var(--tinta);line-height:1.2}
+.mb .m{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.mb .v{font-size:10px;color:var(--cinza);font-variant-numeric:tabular-nums;margin-top:2px}
+.mb.sem{opacity:.42}
+.mb.hoje{border-color:rgba(190,135,36,.55)}
+.mb[aria-pressed="true"]{background:var(--tinta);border-color:var(--tinta);color:var(--papel)}
+.mb[aria-pressed="true"] .v{color:rgba(242,238,228,.72)}
+
+/* total por categoria */
+.catbloco{background:var(--carta);border:1px solid var(--linha);border-radius:14px;padding:6px 15px 13px;margin-bottom:11px}
+.catlinha{border-top:1px solid var(--linha);padding:11px 0 10px;cursor:pointer}
+.catbloco .catlinha:first-child{border-top:0}
+.catl-topo{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.catl-topo .n{font-weight:600;font-size:13.5px;display:flex;align-items:center;gap:7px;min-width:0}
+.catl-topo .n em{width:9px;height:9px;border-radius:99px;flex:none;font-style:normal}
+.catl-topo .vv{font-family:var(--display);font-size:15.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.catl-pe{display:flex;justify-content:space-between;font-size:11px;color:var(--cinza);margin-top:3px}
+.catl-barra{height:7px;border-radius:99px;background:rgba(18,50,42,.07);overflow:hidden;margin-top:6px}
+.catl-barra i{display:block;height:100%;border-radius:99px}
+.catdet{margin-top:9px;padding:9px 11px;background:var(--papel);border-radius:10px}
+.catdet .d{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:4px 0}
+.catdet .d span{color:var(--cinza);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.catdet .d b{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.cattot{display:flex;justify-content:space-between;border-top:1px solid var(--linha);padding-top:11px;margin-top:4px;font-weight:600;font-size:13.5px}
+.cattot span:last-child{font-family:var(--display);font-variant-numeric:tabular-nums}
+.linha-item.zero{opacity:.45}
+
 .mes{font-family:var(--display);font-size:15px;font-weight:500;margin:18px 2px 8px;display:flex;justify-content:space-between;align-items:baseline}
 .mes span{font-family:var(--texto);font-size:12px;color:var(--cinza);font-variant-numeric:tabular-nums}
 .vazio{text-align:center;color:var(--cinza);font-size:13.5px;padding:26px 14px;border:1px dashed var(--linha);border-radius:14px;margin-bottom:11px}
@@ -283,7 +316,7 @@ const SALA = "casamento";   // nó onde os dados ficam guardados
 /* ========================================================== */
 
 /* ==================== CONSTANTES ==================== */
-const VERSAO = '1.6';
+const VERSAO = '1.7';
 const CHAVE = 'app-casamento-v1';
 const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 const M3=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
@@ -337,7 +370,7 @@ function estadoInicial(){
 }
 let D = estadoInicial();
 const UI = { aba:'inicio', subCas:'convidados', filtroGasto:'mes', filtroGanho:'mes', filtroCot:'todas',
-             mesRef:null, catAberta:null, editando:null, editandoG:null, editandoF:null, vistaGraf:'mes', anoRef:null,
+             mesRef:null, catAberta:null, catGasto:null, editando:null, editandoG:null, editandoF:null, vistaGraf:'mes', anoRef:null,
              filtroConv:'todos', buscaConv:'', editandoConv:null };
 let seq = Date.now()%1000000;
 const novoId = () => ++seq;
@@ -658,7 +691,7 @@ function telaInicio(){
 
 function chipsGastos(){
   return `<div class="chips">${[['dia','Hoje'],['mes','Mês'],['ano','Ano'],['parcelas','Parcelas'],['fixas','Fixas']].map(a=>
-    `<button class="chip" aria-pressed="${UI.filtroGasto===a[0]}" onclick="UI.filtroGasto='${a[0]}';UI.editandoF=null;render()">${a[1]}</button>`).join('')}</div>`;
+    `<button class="chip" aria-pressed="${UI.filtroGasto===a[0]}" onclick="UI.filtroGasto='${a[0]}';UI.editandoF=null;UI.catGasto=null;render()">${a[1]}</button>`).join('')}</div>`;
 }
 
 function linhaItem(i,k){
@@ -707,6 +740,81 @@ function cartaoResumo(itens,k){
   </div>`;
 }
 
+/* ---------- régua de 12 meses ---------- */
+const MESC=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const abrevV=v=>v>=1000?(v/1000).toFixed(1).replace('.',',')+'k':(v>0?Math.round(v):'—');
+
+function reguaMeses(){
+  const ano=+UI.mesRef.slice(0,4), atual=chaveMes(agora());
+  return `<div class="regua">
+    <div class="regua-cab">
+      <button onclick="mudarAnoGasto(-1)" aria-label="Ano anterior">‹</button>
+      <span>${ano}</span>
+      <button onclick="mudarAnoGasto(1)" aria-label="Próximo ano">›</button>
+    </div>
+    <div class="regua-grade">
+      ${mesesDoAno(ano).map((k,mi)=>{
+        const v=fluxoMes(k);
+        return `<button class="mb ${v?'':'sem'} ${k===atual?'hoje':''}" aria-pressed="${k===UI.mesRef}"
+          onclick="irMes('${k}')" aria-label="${MESES[mi]}">
+          <div class="m">${MESC[mi]}</div><div class="v">${abrevV(v)}</div></button>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+function irMes(k){ UI.mesRef=k; UI.catGasto=null; UI.editando=null; render(); }
+
+/* ---------- total por categoria ---------- */
+const CORCAT={Mercado:'#2E7D52',Alimentação:'#B4566A',Assinaturas:'#4A6FA5',Transporte:'#BE8724',
+  Casa:'#8A5FA8',Saúde:'#3E9B96',Lazer:'#D2743C',Vestuário:'#C2477C',Educação:'#5B7BB4',
+  Beleza:'#A8577E',Impostos:'#6E7C74',Outros:'#94A19A'};
+function corCat(n){
+  if(CORCAT[n]) return CORCAT[n];
+  let h=0; for(let i=0;i<n.length;i++) h=(h*31+n.charCodeAt(i))%360;
+  return 'hsl('+h+',38%,45%)';
+}
+
+function totalPorCategoria(itens,rotulo,porMes){
+  const por={};
+  itens.forEach(i=>{ const c=i.cat||'Outros'; (por[c]=por[c]||[]).push(i); });
+  const linhas=Object.keys(por).map(c=>({cat:c,total:por[c].reduce((s,i)=>s+i.valor,0),itens:por[c]}))
+    .sort((a,b)=>b.total-a.total);
+  if(!linhas.length) return '<div class="vazio">Nenhum gasto neste período.</div>';
+  const total=linhas.reduce((s,l)=>s+l.total,0), maior=linhas[0].total||1;
+
+  return `<div class="catbloco">
+    ${linhas.map(l=>{
+      const ab=UI.catGasto===l.cat, cor=corCat(l.cat);
+      return `<div class="catlinha" data-cat="${esc(l.cat)}" onclick="abrirCatGasto(this.dataset.cat)">
+        <div class="catl-topo">
+          <div class="n"><em style="background:${cor}"></em>${esc(l.cat)}</div>
+          <div class="vv">${R$(l.total)}</div>
+        </div>
+        <div class="catl-barra"><i style="width:${(l.total/maior)*100}%;background:${cor}"></i></div>
+        <div class="catl-pe">
+          <span>${l.itens.length} lançamento(s)</span>
+          <span>${((l.total/(total||1))*100).toFixed(0)}% do total</span>
+        </div>
+        ${ab?`<div class="catdet">${detalheCat(l,porMes)}</div>`:''}
+      </div>`;
+    }).join('')}
+    <div class="cattot"><span>Total ${rotulo}</span><span>${R$(total)}</span></div>
+  </div>`;
+}
+function abrirCatGasto(c){ UI.catGasto=(UI.catGasto===c)?null:c; render(); }
+function detalheCat(l,porMes){
+  if(porMes){
+    const m={};
+    l.itens.forEach(i=>{ const k=+String(i.data||'').slice(5,7)-1; if(k>=0) m[k]=(m[k]||0)+i.valor; });
+    const ks=Object.keys(m).sort((a,b)=>a-b);
+    return ks.length?ks.map(k=>`<div class="d"><span>${MESES[k]}</span><b>${R$(m[k])}</b></div>`).join('')
+      :'<div class="d"><span>sem lançamentos</span></div>';
+  }
+  return l.itens.slice().sort((a,b)=>b.valor-a.valor).map(i=>`<div class="d">
+    <span>${esc(i.desc)}${i.tipo==='fixa'?' · fixa':i.tipo==='parcela'?' · '+i.n+'/'+i.de:''}</span>
+    <b>${R$(i.valor)}</b></div>`).join('');
+}
+
 function telaGastos(){
   const f=UI.filtroGasto;
   if(f==='parcelas') return chipsGastos()+listaParcelas()+formGasto();
@@ -724,14 +832,15 @@ function telaGastos(){
           <button onclick="mudarAnoGasto(1)" aria-label="Próximo ano">›</button>
         </div>`
       + cartaoResumo(todos,false)
+      + `<div class="secao-titulo">Total por categoria · ${ano}</div>`
+      + totalPorCategoria(todos,'do ano',true)
       + `<div class="secao-titulo">Mês a mês</div>`
       + meses.map((k,mi)=>{
-          const v=fluxoMes(k);
-          if(!v) return '';
-          return `<div class="linha-item" onclick="UI.mesRef='${k}';UI.filtroGasto='mes';render()" style="cursor:pointer">
-            <div class="corpo"><div class="nome">${MESES[mi]}</div>
-            <div class="sub">${itensDoMes(k).length} lançamento(s)</div></div>
-            <div class="valor">${R$(v)}</div>
+          const v=fluxoMes(k), n=itensDoMes(k).length;
+          return `<div class="linha-item ${v?'':'zero'}" onclick="UI.mesRef='${k}';UI.catGasto=null;UI.filtroGasto='mes';render()" style="cursor:pointer">
+            <div class="corpo"><div class="nome">${MESES[mi].charAt(0).toUpperCase()+MESES[mi].slice(1)}</div>
+            <div class="sub">${n?n+' lançamento(s)':'nenhum lançamento'}</div></div>
+            <div class="valor">${v?R$(v):'—'}</div>
           </div>`;
         }).join('')
       + (UI.editando===null?formGasto():'');
@@ -742,8 +851,10 @@ function telaGastos(){
   if(f==='dia'){ const hj=hojeISO(); itens=itens.filter(i=>i.data===hj); }
 
   return chipsGastos()
-    + (f==='mes'?navMes():'')
+    + (f==='mes'?reguaMeses():'')
     + cartaoResumo(itens,f==='mes')
+    + (f==='mes'&&itens.length?`<div class="secao-titulo">Total por categoria · ${rotuloMes(k).split(' de ')[0]}</div>`
+        +totalPorCategoria(itens,'do mês',false):'')
     + (UI.editando===null?formGasto():'')
     + `<div class="secao-titulo">${f==='dia'?'Hoje':'Tudo que cai em '+rotuloMes(k).split(' de ')[0]}</div>`
     + (itens.length
