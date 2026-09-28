@@ -222,6 +222,51 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--tinta2);outline-
 .cattot span:last-child{font-family:var(--display);font-variant-numeric:tabular-nums}
 .linha-item.zero{opacity:.45}
 
+/* padrinhos e madrinhas */
+.selo{display:inline-block;font-size:9px;letter-spacing:.07em;text-transform:uppercase;font-weight:600;padding:2px 6px;border-radius:5px;vertical-align:1px;margin-right:3px}
+.selo.p{background:rgba(190,135,36,.18);color:#8A6212}
+.selo.m{background:rgba(180,86,106,.15);color:var(--rosa)}
+.par{background:var(--carta);border:1px solid var(--linha);border-radius:14px;margin-bottom:9px;overflow:hidden}
+.par.incompleto{border-left:3px solid var(--ouro)}
+.par-cab{display:flex;align-items:center;gap:8px;padding:9px 10px 9px 13px;border-bottom:1px solid var(--linha);background:rgba(59,27,39,.028)}
+.par-n{font-family:var(--display);font-size:13.5px;font-weight:500;color:var(--vinho);flex:1}
+.par-cab .st{width:27px;height:27px}
+.par-corpo{padding:4px 13px 11px}
+.vaga{display:flex;align-items:center;gap:9px;padding:8px 0;border-top:1px solid var(--linha)}
+.par-corpo .vaga:first-child{border-top:0}
+.vaga em{width:22px;height:22px;border-radius:99px;flex:none;font-style:normal;font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.vaga em.p{background:rgba(190,135,36,.18);color:#8A6212}
+.vaga em.m{background:rgba(180,86,106,.15);color:var(--rosa)}
+.vaga .qn{flex:1;min-width:0}
+.vaga .qn b{font-weight:600;font-size:14px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vaga .qn i{font-style:normal;font-size:11.5px;color:var(--cinza)}
+.vaga .qn .livre{color:var(--ouro);font-weight:600;font-size:13.5px}
+.achado{background:var(--carta);border:1px solid var(--linha);border-radius:12px;padding:9px 11px;margin-bottom:7px;display:flex;align-items:center;gap:9px}
+.achado .qn{flex:1;min-width:0}
+.achado .qn b{font-weight:600;font-size:14px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.achado .qn i{font-style:normal;font-size:11.5px;color:var(--cinza)}
+.mk{border:1px solid var(--linha);background:transparent;border-radius:9px;padding:7px 10px;font-size:11.5px;font-weight:600;font-family:var(--texto);cursor:pointer;color:var(--cinza);flex:none}
+.mk.p{border-color:rgba(190,135,36,.45);color:#8A6212}
+.mk.p.on{background:var(--ouro);border-color:var(--ouro);color:#fff}
+.mk.m{border-color:rgba(180,86,106,.45);color:var(--rosa)}
+.mk.m.on{background:var(--rosa);border-color:var(--rosa);color:#fff}
+.papelbox{display:flex;gap:7px}
+.papelbox button{flex:1;border:1px solid var(--linha);background:transparent;border-radius:10px;padding:10px 4px;font-size:12.5px;font-weight:600;font-family:var(--texto);cursor:pointer;color:var(--cinza)}
+.papelbox button.on{background:var(--vinho);border-color:var(--vinho);color:var(--papel)}
+
+/* fornecedores */
+.forn{background:var(--carta);border:1px solid var(--linha);border-radius:12px;padding:11px 12px;margin-bottom:8px}
+.forn.contratado{border-left:3px solid var(--verde)}
+.forn-topo{display:flex;align-items:flex-start;gap:8px}
+.forn-topo .qn{flex:1;min-width:0}
+.forn-topo .qn b{font-weight:600;font-size:14.5px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.forn-topo .qn i{font-style:normal;font-size:12px;color:var(--cinza)}
+.forn-obs{font-size:12.5px;color:var(--cinza);margin-top:7px;padding-top:7px;border-top:1px solid var(--linha)}
+.forn-pe{display:flex;gap:7px;margin-top:9px;align-items:center;flex-wrap:wrap}
+.lig{border:1px solid var(--linha);background:transparent;border-radius:9px;padding:7px 11px;font-size:12px;font-weight:600;font-family:var(--texto);cursor:pointer;color:var(--tinta2);text-decoration:none;display:inline-flex;align-items:center;gap:5px}
+.lig.zap{border-color:rgba(46,125,82,.4);color:var(--verde)}
+.forn-pe .st{margin-left:auto}
+
 .mes{font-family:var(--display);font-size:15px;font-weight:500;margin:18px 2px 8px;display:flex;justify-content:space-between;align-items:baseline}
 .mes span{font-family:var(--texto);font-size:12px;color:var(--cinza);font-variant-numeric:tabular-nums}
 .vazio{text-align:center;color:var(--cinza);font-size:13.5px;padding:26px 14px;border:1px dashed var(--linha);border-radius:14px;margin-bottom:11px}
@@ -316,7 +361,7 @@ const SALA = "casamento";   // nó onde os dados ficam guardados
 /* ========================================================== */
 
 /* ==================== CONSTANTES ==================== */
-const VERSAO = '1.7';
+const VERSAO = '1.8';
 const CHAVE = 'app-casamento-v1';
 const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 const M3=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
@@ -365,13 +410,16 @@ function estadoInicial(){
     parcelasPagas:[],
     convidados:[],
     listaImportada:false,
+    pares:[],
+    fornecedores:[],
     categorias:CATS_CASAMENTO.map((n,i)=>({id:1000+i,nome:n,cotacoes:[]}))
   };
 }
 let D = estadoInicial();
 const UI = { aba:'inicio', subCas:'convidados', filtroGasto:'mes', filtroGanho:'mes', filtroCot:'todas',
              mesRef:null, catAberta:null, catGasto:null, editando:null, editandoG:null, editandoF:null, vistaGraf:'mes', anoRef:null,
-             filtroConv:'todos', buscaConv:'', editandoConv:null };
+             filtroConv:'todos', buscaConv:'', editandoConv:null,
+             buscaPad:'', parEdit:null, buscaForn:'', filtroForn:'todos', editandoForn:null };
 let seq = Date.now()%1000000;
 const novoId = () => ++seq;
 
@@ -465,8 +513,15 @@ function normalizar(v){
   const r=Object.assign(padrao,v);
   r.gastos=Array.isArray(v.gastos)?v.gastos:[];
   r.convidados=Array.isArray(v.convidados)?v.convidados:[];
-  r.convidados.forEach(c=>{ if(c.crianca===undefined) c.crianca=false; if(!c.lado) c.lado='noiva'; if(!c.status) c.status='pendente'; if(c.acomp===undefined) c.acomp=0; });
+  r.convidados.forEach(c=>{ if(c.crianca===undefined) c.crianca=false; if(!c.lado) c.lado='noiva'; if(!c.status) c.status='pendente'; if(c.acomp===undefined) c.acomp=0; if(c.papel!=='padrinho'&&c.papel!=='madrinha') c.papel=''; });
   r.listaImportada=!!v.listaImportada;
+  r.pares=Array.isArray(v.pares)?v.pares:[];
+  r.pares.forEach(p=>{ if(p.ele===undefined) p.ele=null; if(p.ela===undefined) p.ela=null; });
+  /* um par só vale se as pessoas ainda existem e continuam marcadas */
+  const marcado=id=>{ const c=r.convidados.find(x=>x.id===id); return c&&c.papel?id:null; };
+  r.pares.forEach(p=>{ p.ele=marcado(p.ele); p.ela=marcado(p.ela); });
+  r.fornecedores=Array.isArray(v.fornecedores)?v.fornecedores:[];
+  r.fornecedores.forEach(f=>{ if(!f.servico) f.servico=''; if(!f.tel) f.tel=''; if(!f.obs) f.obs=''; f.contratado=!!f.contratado; });
   r.categorias=(Array.isArray(v.categorias)&&v.categorias.length)?v.categorias:catsPadrao;
   r.categorias.forEach(c=>{ if(!Array.isArray(c.cotacoes)) c.cotacoes=[]; });
   r.parcelasPagas=Array.isArray(v.parcelasPagas)?v.parcelasPagas:[];
@@ -1422,10 +1477,18 @@ function apagarFonte(i){
 }
 
 /* ==================== TELAS: CASAMENTO ==================== */
+const SUBS_CAS=[['convidados','Convidados'],['padrinhos','Padrinhos'],['fornecedores','Fornecedores'],['cotacoes','Cotações'],['total','Total']];
 function telaCasamento(){
-  return `<div class="chips">${[['convidados','Convidados'],['cotacoes','Cotações'],['total','Total']].map(a=>
-    `<button class="chip rosa" aria-pressed="${UI.subCas===a[0]}" onclick="UI.subCas='${a[0]}';render();window.scrollTo(0,0)">${a[1]}</button>`).join('')}</div>`
-    + (UI.subCas==='convidados'?subConvidados():UI.subCas==='cotacoes'?subCotacoes():subTotal());
+  return `<div class="chips">${SUBS_CAS.map(a=>
+    `<button class="chip rosa" aria-pressed="${UI.subCas===a[0]}" onclick="irSubCas('${a[0]}')">${a[1]}</button>`).join('')}</div>`
+    + (UI.subCas==='convidados'?subConvidados()
+      :UI.subCas==='padrinhos'?subPadrinhos()
+      :UI.subCas==='fornecedores'?subFornecedores()
+      :UI.subCas==='cotacoes'?subCotacoes():subTotal());
+}
+function irSubCas(s){
+  UI.subCas=s; UI.parEdit=null; UI.editandoConv=null; UI.editandoForn=null;
+  render(); window.scrollTo(0,0);
 }
 
 const TIT_CONV={confirmado:'Confirmados',pendente:'Pendentes',recusou:'Não vão',espera:'Lista de espera',criancas:'Crianças'};
@@ -1436,6 +1499,9 @@ const IC_CHECK='<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stro
 const IC_XIS='<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg>';
 const IC_AMP='<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8M6 17h8M7 3c0 3.5 3 4.6 3 7s-3 3.5-3 7M13 3c0 3.5-3 4.6-3 7s3 3.5 3 7"/></svg>';
 const IC_LIXO='<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 5.5h13M8 5.5V4h4v1.5M5.5 5.5l.8 10a1 1 0 001 .9h5.4a1 1 0 001-.9l.8-10M8.5 8.5v5M11.5 8.5v5"/></svg>';
+const IC_LAPIS='<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 3.5l3 3-9 9H4.5v-3z"/></svg>';
+const IC_SOBE='<svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15.5V5M5.5 9.5L10 5l4.5 4.5"/></svg>';
+const IC_DESCE='<svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4.5V15M14.5 10.5L10 15l-4.5-4.5"/></svg>';
 
 function formEditConv(c){
   const gr=[]; D.convidados.forEach(x=>{ if(gr.indexOf(x.grupo)<0) gr.push(x.grupo); });
@@ -1456,6 +1522,12 @@ function formEditConv(c){
         <option value="1" ${c.crianca?'selected':''}>Sim</option></select></div>
       <div class="campo"><label>Acompanhantes</label><input id="eAcomp" type="number" min="0" max="20" value="${c.acomp||0}"></div>
     </div>
+    <div class="campo"><label>No altar</label>
+      <div class="papelbox">
+        <button class="${!c.papel?'on':''}" onclick="marcarPapelEdit(${c.id},'')">Convidado</button>
+        <button class="${c.papel==='padrinho'?'on':''}" onclick="marcarPapelEdit(${c.id},'padrinho')">Padrinho</button>
+        <button class="${c.papel==='madrinha'?'on':''}" onclick="marcarPapelEdit(${c.id},'madrinha')">Madrinha</button>
+      </div></div>
     <div class="dupla" style="margin-top:2px">
       <button class="btn claro" onclick="UI.editandoConv=null;render()">Cancelar</button>
       <button class="btn rosa" onclick="salvarConv(${c.id})">Salvar</button>
@@ -1463,6 +1535,20 @@ function formEditConv(c){
   </div>`;
 }
 function editarConv(id){ UI.editandoConv=id; render(); }
+/* guarda o que já foi digitado antes de redesenhar por causa do botão do altar */
+function marcarPapelEdit(id,papel){
+  const c=D.convidados.find(x=>x.id===id); if(!c) return;
+  const n=document.getElementById('eNome');
+  if(n){
+    if(n.value.trim()) c.nome=n.value.trim();
+    c.grupo=document.getElementById('eGrupo').value.trim()||c.grupo;
+    c.lado=document.getElementById('eLado').value;
+    c.crianca=document.getElementById('eKid').value==='1';
+    c.acomp=Math.min(Math.max(0,+document.getElementById('eAcomp').value||0),20);
+  }
+  if(!papel) (D.pares||[]).forEach(p=>{ if(p.ele===id)p.ele=null; if(p.ela===id)p.ela=null; });
+  c.papel=papel; salvar(); render();
+}
 function salvarConv(id){
   const n=document.getElementById('eNome').value.trim();
   if(!n) return toast('Escreva o nome');
@@ -1481,7 +1567,7 @@ function linhaConv(c){
   const b=(st,tit,svg)=>`<button class="st ${st} ${c.status===st?'on':''}" title="${tit}" aria-label="${tit}" onclick="setStatusConv(${c.id},'${st}')">${svg}</button>`;
   return `<div class="linha-item ${e?'espera':''} ${c.status==='recusou'?'recusou':''}">
     <div class="corpo">
-      <div class="nome" onclick="editarConv(${c.id})" style="cursor:pointer">${c.crianca?'<span class="kid">criança</span> ':''}${esc(c.nome)}${c.acomp?` <span style="color:var(--cinza);font-weight:400">+${c.acomp}</span>`:''} <span class="edt">✎</span></div>
+      <div class="nome" onclick="editarConv(${c.id})" style="cursor:pointer">${c.papel?`<span class="selo ${c.papel==='padrinho'?'p':'m'}">${c.papel}</span>`:''}${c.crianca?'<span class="kid">criança</span> ':''}${esc(c.nome)}${c.acomp?` <span style="color:var(--cinza);font-weight:400">+${c.acomp}</span>`:''} <span class="edt">✎</span></div>
       <div class="sub">
         <span class="tag ${c.lado}">${c.lado==='ambos'?'os dois':c.lado}</span>
         <span class="tag ${c.status==='confirmado'?'ok':e?'esp':''}">${ROT_CONV[c.status]||c.status}</span>
@@ -1585,6 +1671,253 @@ function setStatusConv(id,st){
     :c.status==='confirmado'?c.nome+' confirmado'
     :c.status==='recusou'?c.nome+' não vai'
     :c.nome+' foi para a espera');
+}
+
+/* ==================== PADRINHOS E MADRINHAS ==================== */
+function totaisPad(){
+  const padrinhos=D.convidados.filter(c=>c.papel==='padrinho');
+  const madrinhas=D.convidados.filter(c=>c.papel==='madrinha');
+  const emPar=new Set();
+  (D.pares||[]).forEach(p=>{ if(p.ele)emPar.add(p.ele); if(p.ela)emPar.add(p.ela); });
+  const semPar=D.convidados.filter(c=>c.papel&&!emPar.has(c.id));
+  const completos=(D.pares||[]).filter(p=>p.ele&&p.ela).length;
+  return {padrinhos,madrinhas,semPar,completos,emPar};
+}
+
+function subPadrinhos(){
+  const t=totaisPad(), q=semAcento(UI.buscaPad.trim());
+  const pares=D.pares||[];
+  const disponiveis=(papel,atual)=>D.convidados.filter(c=>c.papel===papel&&(!t.emPar.has(c.id)||c.id===atual));
+
+  const vaga=(p,papel)=>{
+    const id=papel==='padrinho'?p.ele:p.ela;
+    const c=D.convidados.find(x=>x.id===id)||null;
+    const sigla=papel==='padrinho'?'P':'M', cls=papel==='padrinho'?'p':'m';
+    if(UI.parEdit===p.id){
+      const opts=disponiveis(papel,id);
+      return `<div class="vaga"><em class="${cls}">${sigla}</em>
+        <div class="qn"><select onchange="setVaga(${p.id},'${papel}',this.value)">
+          <option value="">— vaga aberta —</option>
+          ${opts.map(o=>`<option value="${o.id}" ${o.id===id?'selected':''}>${esc(o.nome)} · ${esc(o.grupo)}</option>`).join('')}
+        </select></div></div>`;
+    }
+    return `<div class="vaga"><em class="${cls}">${sigla}</em>
+      <div class="qn">${c
+        ?`<b>${esc(c.nome)}</b><i>${esc(c.grupo)} · ${ROT_CONV[c.status]||c.status}</i>`
+        :`<span class="livre">${papel==='padrinho'?'escolher padrinho':'escolher madrinha'}</span>`}</div></div>`;
+  };
+
+  const achados=q?D.convidados.filter(c=>semAcento(c.nome).indexOf(q)>=0||semAcento(c.grupo).indexOf(q)>=0).slice(0,8):[];
+
+  return `
+  <div class="grade4">
+    <div class="mini"><div class="num">${t.completos}</div><div class="pe">casais</div></div>
+    <div class="mini"><div class="num" style="color:#8A6212">${t.padrinhos.length}</div><div class="pe">padrinhos</div></div>
+    <div class="mini"><div class="num" style="color:var(--rosa)">${t.madrinhas.length}</div><div class="pe">madrinhas</div></div>
+    <div class="mini"><div class="num" style="color:var(--cinza)">${t.semPar.length}</div><div class="pe">sem par</div></div>
+  </div>
+
+  <div class="secao-titulo">Ordem de entrada</div>
+  ${pares.length?pares.map((p,i)=>{
+    const compl=p.ele&&p.ela, ed=UI.parEdit===p.id;
+    return `<div class="par ${compl?'':'incompleto'}">
+      <div class="par-cab">
+        <span class="par-n">${i+1}º casal${compl?'':' · incompleto'}</span>
+        <button class="st" title="Subir" aria-label="Subir" onclick="moverPar(${p.id},-1)" ${i===0?'disabled style="opacity:.3"':''}>${IC_SOBE}</button>
+        <button class="st" title="Descer" aria-label="Descer" onclick="moverPar(${p.id},1)" ${i===pares.length-1?'disabled style="opacity:.3"':''}>${IC_DESCE}</button>
+        <span class="sep"></span>
+        <button class="st" title="${ed?'Concluir':'Trocar quem está no par'}" aria-label="Editar par" onclick="UI.parEdit=${ed?'null':p.id};render()"
+          style="${ed?'background:rgba(59,27,39,.1);color:var(--vinho)':''}">${IC_LAPIS}</button>
+        <button class="st del" title="Desfazer casal" aria-label="Desfazer casal" onclick="apagarPar(${p.id})">${IC_LIXO}</button>
+      </div>
+      <div class="par-corpo">${vaga(p,'padrinho')}${vaga(p,'madrinha')}</div>
+    </div>`;
+  }).join(''):'<div class="vazio">Nenhum casal formado ainda.</div>'}
+
+  <button class="btn claro" style="margin-bottom:6px" onclick="novoPar()">+ Formar casal</button>
+
+  ${t.semPar.length?`<div class="secao-titulo">Marcados, mas sem par</div>
+    ${t.semPar.map(c=>`<div class="linha-item">
+      <div class="corpo">
+        <div class="nome"><span class="selo ${c.papel==='padrinho'?'p':'m'}">${c.papel}</span>${esc(c.nome)}</div>
+        <div class="sub"><span class="tag ${c.lado}">${c.lado==='ambos'?'os dois':c.lado}</span> ${esc(c.grupo)}</div>
+      </div>
+      <div class="acoes">
+        <button class="st del" title="Tirar de padrinhos" aria-label="Tirar de padrinhos" onclick="desmarcarPapel(${c.id})">${IC_LIXO}</button>
+      </div></div>`).join('')}
+    <div style="font-size:12px;color:var(--cinza);margin:-2px 2px 14px">Toque no lápis de um casal para encaixar quem está aqui numa vaga aberta.</div>`:''}
+
+  <div class="secao-titulo">Marcar padrinho ou madrinha</div>
+  <div class="busca"><span class="lupa">⌕</span>
+    <input id="qPad" value="${esc(UI.buscaPad)}" placeholder="Buscar na lista de convidados" oninput="buscarPad(this)"></div>
+  ${q
+    ? (achados.length?achados.map(c=>`<div class="achado">
+        <div class="qn"><b>${esc(c.nome)}</b><i>${esc(c.grupo)}${c.crianca?' · criança':''}</i></div>
+        <button class="mk p ${c.papel==='padrinho'?'on':''}" onclick="marcarPapel(${c.id},'padrinho')">Padrinho</button>
+        <button class="mk m ${c.papel==='madrinha'?'on':''}" onclick="marcarPapel(${c.id},'madrinha')">Madrinha</button>
+      </div>`).join('')
+      :'<div class="vazio">Ninguém com esse nome na lista.</div>')
+    : `<div style="font-size:12.5px;color:var(--cinza);padding:2px 2px 10px">Escreva o nome de quem já está na lista de convidados. Se a pessoa não for convidada, cadastre em <b>Convidados</b> primeiro.</div>`}
+  `;
+}
+
+function buscarPad(el){
+  UI.buscaPad=el.value; const p=el.selectionStart; render();
+  const n=document.getElementById('qPad'); if(n){ n.focus(); n.setSelectionRange(p,p); }
+}
+function marcarPapel(id,papel){
+  const c=D.convidados.find(x=>x.id===id); if(!c) return;
+  if(c.papel===papel) return desmarcarPapel(id);
+  c.papel=papel; salvar(); render(); toast(c.nome+' agora é '+papel);
+}
+function desmarcarPapel(id){
+  const c=D.convidados.find(x=>x.id===id); if(!c) return;
+  (D.pares||[]).forEach(p=>{ if(p.ele===id)p.ele=null; if(p.ela===id)p.ela=null; });
+  c.papel=''; salvar(); render(); toast(c.nome+' saiu dos padrinhos');
+}
+function novoPar(){
+  if(!Array.isArray(D.pares)) D.pares=[];
+  const p={id:novoId(),ele:null,ela:null};
+  D.pares.push(p); UI.parEdit=p.id; salvar(); render();
+}
+function apagarPar(id){
+  if(!confirm('Desfazer este casal? As pessoas continuam marcadas como padrinho e madrinha.')) return;
+  D.pares=(D.pares||[]).filter(p=>p.id!==id);
+  if(UI.parEdit===id) UI.parEdit=null;
+  salvar(); render(); toast('Casal desfeito');
+}
+function setVaga(parId,papel,valor){
+  const p=(D.pares||[]).find(x=>x.id===parId); if(!p) return;
+  const id=valor?+valor:null;
+  if(id) D.pares.forEach(o=>{ if(o.ele===id)o.ele=null; if(o.ela===id)o.ela=null; });
+  if(papel==='padrinho') p.ele=id; else p.ela=id;
+  salvar(); render();
+}
+function moverPar(id,d){
+  const ps=D.pares||[], i=ps.findIndex(p=>p.id===id), j=i+d;
+  if(i<0||j<0||j>=ps.length) return;
+  const t=ps[i]; ps[i]=ps[j]; ps[j]=t; salvar(); render();
+}
+
+/* ==================== FORNECEDORES ==================== */
+function subFornecedores(){
+  const q=semAcento(UI.buscaForn.trim()), f=UI.filtroForn;
+  const todos=D.fornecedores||[];
+  const vis=todos.filter(x=>{
+    if(q && semAcento(x.nome).indexOf(q)<0 && semAcento(x.servico).indexOf(q)<0) return false;
+    if(f==='contratados') return x.contratado;
+    if(f==='conversa') return !x.contratado;
+    return true;
+  });
+  const contratados=todos.filter(x=>x.contratado).length;
+
+  return `
+  <div class="grade4" style="grid-template-columns:1fr 1fr">
+    <div class="mini"><div class="num">${todos.length}</div><div class="pe">cadastrados</div></div>
+    <div class="mini"><div class="num" style="color:var(--verde)">${contratados}</div><div class="pe">contratados</div></div>
+  </div>
+
+  <div class="busca"><span class="lupa">⌕</span>
+    <input id="qForn" value="${esc(UI.buscaForn)}" placeholder="Buscar por nome ou serviço" oninput="buscarForn(this)"></div>
+
+  <div class="chips">${[['todos','Todos ('+todos.length+')'],['contratados','Contratados ('+contratados+')'],['conversa','Em conversa ('+(todos.length-contratados)+')']].map(a=>
+    `<button class="chip rosa" aria-pressed="${f===a[0]}" onclick="UI.filtroForn='${a[0]}';UI.editandoForn=null;render()">${a[1]}</button>`).join('')}</div>
+
+  <details class="cat" style="margin-bottom:14px">
+    <summary><span class="seta">›</span><span class="cnome">Adicionar fornecedor</span></summary>
+    <div class="cot">
+      <div class="campo"><label>Nome</label><input id="nNome" placeholder="Nome da empresa ou da pessoa"></div>
+      <div class="dupla">
+        <div class="campo"><label>Serviço</label><input id="nServ" list="servs" placeholder="Buffet, foto...">
+          <datalist id="servs">${CATS_CASAMENTO.map(x=>`<option value="${esc(x)}">`).join('')}</datalist></div>
+        <div class="campo"><label>Telefone</label><input id="nTel" inputmode="tel" placeholder="(62) 99999-0000"></div>
+      </div>
+      <div class="campo"><label>Observação</label><input id="nObs" placeholder="com quem falar, prazo, o que ficou combinado"></div>
+      <button class="btn rosa" onclick="addForn()">Adicionar</button>
+    </div>
+  </details>
+
+  ${vis.length?vis.map(x=>UI.editandoForn===x.id?formEditForn(x):linhaForn(x)).join('')
+    :`<div class="vazio">${q?'Nenhum fornecedor com esse nome.':'Nenhum fornecedor nesta lista ainda.'}</div>`}
+  `;
+}
+
+function linhaForn(x){
+  const tel=String(x.tel||'').replace(/\D/g,'');
+  return `<div class="forn ${x.contratado?'contratado':''}">
+    <div class="forn-topo">
+      <div class="qn" onclick="editarForn(${x.id})" style="cursor:pointer">
+        <b>${esc(x.nome)} <span class="edt">✎</span></b>
+        <i>${x.servico?esc(x.servico):'sem serviço definido'}${x.tel?' · '+esc(x.tel):''}</i>
+      </div>
+      <span class="tag ${x.contratado?'ok':''}">${x.contratado?'contratado':'em conversa'}</span>
+    </div>
+    ${x.obs?`<div class="forn-obs">${esc(x.obs)}</div>`:''}
+    <div class="forn-pe">
+      ${tel?`<a class="lig" href="tel:${tel}">Ligar</a>
+             <a class="lig zap" href="https://wa.me/55${tel}" target="_blank" rel="noopener">WhatsApp</a>`:''}
+      <button class="st del" title="Excluir" aria-label="Excluir" onclick="apagarForn(${x.id})">${IC_LIXO}</button>
+    </div>
+  </div>`;
+}
+
+function formEditForn(x){
+  return `<div class="linha-item edit-conv">
+    <div class="edit-tit" style="color:var(--vinho)">Editando fornecedor</div>
+    <div class="campo"><label>Nome</label><input id="fNome" value="${esc(x.nome)}"></div>
+    <div class="dupla">
+      <div class="campo"><label>Serviço</label><input id="fServ" value="${esc(x.servico)}" list="servs2">
+        <datalist id="servs2">${CATS_CASAMENTO.map(s=>`<option value="${esc(s)}">`).join('')}</datalist></div>
+      <div class="campo"><label>Telefone</label><input id="fTel" value="${esc(x.tel)}" inputmode="tel"></div>
+    </div>
+    <div class="campo"><label>Observação</label><input id="fObs" value="${esc(x.obs)}"></div>
+    <div class="campo"><label>Situação</label>
+      <div class="papelbox">
+        <button class="${!x.contratado?'on':''}" onclick="setContratado(${x.id},0)">Em conversa</button>
+        <button class="${x.contratado?'on':''}" onclick="setContratado(${x.id},1)">Contratado</button>
+      </div></div>
+    <div class="dupla" style="margin-top:2px">
+      <button class="btn claro" onclick="UI.editandoForn=null;render()">Cancelar</button>
+      <button class="btn rosa" onclick="salvarForn(${x.id})">Salvar</button>
+    </div></div>`;
+}
+
+function buscarForn(el){
+  UI.buscaForn=el.value; const p=el.selectionStart; render();
+  const n=document.getElementById('qForn'); if(n){ n.focus(); n.setSelectionRange(p,p); }
+}
+function editarForn(id){ UI.editandoForn=id; render(); }
+function addForn(){
+  const n=document.getElementById('nNome').value.trim();
+  if(!n) return toast('Escreva o nome do fornecedor');
+  if(!Array.isArray(D.fornecedores)) D.fornecedores=[];
+  D.fornecedores.unshift({id:novoId(),nome:n,
+    servico:document.getElementById('nServ').value.trim(),
+    tel:document.getElementById('nTel').value.trim(),
+    obs:document.getElementById('nObs').value.trim(),contratado:false});
+  UI.editandoForn=null; salvar(); render(); toast('Fornecedor adicionado');
+}
+function salvarForn(id){
+  const x=(D.fornecedores||[]).find(y=>y.id===id);
+  if(!x){ UI.editandoForn=null; return render(); }
+  const n=document.getElementById('fNome').value.trim();
+  if(!n) return toast('Escreva o nome do fornecedor');
+  x.nome=n;
+  x.servico=document.getElementById('fServ').value.trim();
+  x.tel=document.getElementById('fTel').value.trim();
+  x.obs=document.getElementById('fObs').value.trim();
+  UI.editandoForn=null; salvar(); render(); toast('Fornecedor atualizado');
+}
+function setContratado(id,v){
+  const x=(D.fornecedores||[]).find(y=>y.id===id);
+  if(x){ x.contratado=!!v; salvar(); render(); }
+}
+function apagarForn(id){
+  const x=(D.fornecedores||[]).find(y=>y.id===id); if(!x) return;
+  if(!confirm('Excluir "'+x.nome+'" dos fornecedores?')) return;
+  D.fornecedores=D.fornecedores.filter(y=>y.id!==id);
+  if(UI.editandoForn===id) UI.editandoForn=null;
+  salvar(); render(); toast('Fornecedor excluído');
 }
 
 function subCotacoes(){
@@ -1768,12 +2101,14 @@ function addConv(){
     grupo:document.getElementById('cGrupo').value.trim()||'Outros',
     acomp:0,
     crianca:document.getElementById('cKid').value==='1',
-    status:document.getElementById('cStatus').value});
+    status:document.getElementById('cStatus').value, papel:''});
   salvar(); render(); toast('Convidado adicionado');
 }
 function apagarConv(id){
   if(!confirm('Remover da lista de convidados?')) return;
-  D.convidados=D.convidados.filter(c=>c.id!==id); salvar(); render();
+  D.convidados=D.convidados.filter(c=>c.id!==id);
+  (D.pares||[]).forEach(p=>{ if(p.ele===id)p.ele=null; if(p.ela===id)p.ela=null; });
+  salvar(); render();
 }
 function escolher(catId,cotId){
   const c=D.categorias.find(x=>x.id===catId);
