@@ -224,8 +224,10 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--tinta2);outline-
 
 /* padrinhos e madrinhas */
 .selo{display:inline-block;font-size:9px;letter-spacing:.07em;text-transform:uppercase;font-weight:600;padding:2px 6px;border-radius:5px;vertical-align:1px;margin-right:3px}
-.selo.p{background:rgba(190,135,36,.18);color:#8A6212}
-.selo.m{background:rgba(180,86,106,.15);color:var(--rosa)}
+.selo.padrinho{background:rgba(190,135,36,.18);color:#8A6212}
+.selo.madrinha{background:rgba(180,86,106,.15);color:var(--rosa)}
+.selo.pajem{background:rgba(74,111,165,.15);color:#3B5C8A}
+.selo.daminha{background:rgba(138,95,168,.15);color:#6E4487}
 .par{background:var(--carta);border:1px solid var(--linha);border-radius:14px;margin-bottom:9px;overflow:hidden}
 .par.incompleto{border-left:3px solid var(--ouro)}
 .par-cab{display:flex;align-items:center;gap:8px;padding:9px 10px 9px 13px;border-bottom:1px solid var(--linha);background:rgba(59,27,39,.028)}
@@ -235,8 +237,10 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--tinta2);outline-
 .vaga{display:flex;align-items:center;gap:9px;padding:8px 0;border-top:1px solid var(--linha)}
 .par-corpo .vaga:first-child{border-top:0}
 .vaga em{width:22px;height:22px;border-radius:99px;flex:none;font-style:normal;font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
-.vaga em.p{background:rgba(190,135,36,.18);color:#8A6212}
-.vaga em.m{background:rgba(180,86,106,.15);color:var(--rosa)}
+.vaga em.padrinho{background:rgba(190,135,36,.18);color:#8A6212}
+.vaga em.madrinha{background:rgba(180,86,106,.15);color:var(--rosa)}
+.vaga em.pajem{background:rgba(74,111,165,.15);color:#3B5C8A}
+.vaga em.daminha{background:rgba(138,95,168,.15);color:#6E4487}
 .vaga .qn{flex:1;min-width:0}
 .vaga .qn b{font-weight:600;font-size:14px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .vaga .qn i{font-style:normal;font-size:11.5px;color:var(--cinza)}
@@ -250,9 +254,18 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--tinta2);outline-
 .mk.p.on{background:var(--ouro);border-color:var(--ouro);color:#fff}
 .mk.m{border-color:rgba(180,86,106,.45);color:var(--rosa)}
 .mk.m.on{background:var(--rosa);border-color:var(--rosa);color:#fff}
-.papelbox{display:flex;gap:7px}
-.papelbox button{flex:1;border:1px solid var(--linha);background:transparent;border-radius:10px;padding:10px 4px;font-size:12.5px;font-weight:600;font-family:var(--texto);cursor:pointer;color:var(--cinza)}
+.papelbox{display:flex;gap:6px;flex-wrap:wrap}
+.papelbox button{flex:1 1 28%;border:1px solid var(--linha);background:transparent;border-radius:9px;padding:9px 3px;font-size:11.5px;font-weight:600;font-family:var(--texto);cursor:pointer;color:var(--cinza)}
 .papelbox button.on{background:var(--vinho);border-color:var(--vinho);color:var(--papel)}
+.papelbox.mk button.on.padrinho{background:var(--ouro);border-color:var(--ouro);color:#fff}
+.papelbox.mk button.on.madrinha{background:var(--rosa);border-color:var(--rosa);color:#fff}
+.papelbox.mk button.on.pajem{background:#4A6FA5;border-color:#4A6FA5;color:#fff}
+.papelbox.mk button.on.daminha{background:#8A5FA8;border-color:#8A5FA8;color:#fff}
+.sub-cab{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:22px 2px 9px}
+.sub-cab .t{font-size:10.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--cinza);font-weight:600}
+.sub-cab .c{font-size:11.5px;color:var(--cinza)}
+.tag.est{background:rgba(190,135,36,.16);color:#8A6212}
+.editar{border:0;background:transparent;font-size:12px;font-weight:600;font-family:var(--texto);cursor:pointer;color:var(--cinza);padding:7px 4px}
 
 /* fornecedores */
 .forn{background:var(--carta);border:1px solid var(--linha);border-radius:12px;padding:11px 12px;margin-bottom:8px}
@@ -361,7 +374,7 @@ const SALA = "casamento";   // nó onde os dados ficam guardados
 /* ========================================================== */
 
 /* ==================== CONSTANTES ==================== */
-const VERSAO = '1.8';
+const VERSAO = '1.9';
 const CHAVE = 'app-casamento-v1';
 const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 const M3=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
@@ -390,6 +403,11 @@ const FIXAS_PADRAO=[
   ['Imposto de Renda','boleto',25,'Impostos'],
   ['Simples Nacional','boleto',20,'Impostos']
 ];
+/* papéis do cortejo */
+const PAPEIS=[['padrinho','Padrinho'],['madrinha','Madrinha'],['pajem','Pajem'],['daminha','Daminha']];
+const PAPEIS_VAL=['padrinho','madrinha','pajem','daminha'];
+const PAR_DE={adultos:['padrinho','madrinha'],criancas:['pajem','daminha']};
+const SIGLA_PAPEL={padrinho:'P',madrinha:'M',pajem:'P',daminha:'D'};
 const CATS_CASAMENTO=['Espaço / Local','Igreja','Buffet','Banda / DJ','Fotografia e vídeo','Decoração e flores','Vestido e traje','Bolo e doces','Convites','Cerimonial','Bebidas','Lembrancinhas'];
 
 /* ==================== ESTADO ==================== */
@@ -419,7 +437,7 @@ let D = estadoInicial();
 const UI = { aba:'inicio', subCas:'convidados', filtroGasto:'mes', filtroGanho:'mes', filtroCot:'todas',
              mesRef:null, catAberta:null, catGasto:null, editando:null, editandoG:null, editandoF:null, vistaGraf:'mes', anoRef:null,
              filtroConv:'todos', buscaConv:'', editandoConv:null,
-             buscaPad:'', parEdit:null, buscaForn:'', filtroForn:'todos', editandoForn:null };
+             buscaPad:'', parEdit:null, editandoCot:null, buscaForn:'', filtroForn:'todos', editandoForn:null };
 let seq = Date.now()%1000000;
 const novoId = () => ++seq;
 
@@ -513,17 +531,22 @@ function normalizar(v){
   const r=Object.assign(padrao,v);
   r.gastos=Array.isArray(v.gastos)?v.gastos:[];
   r.convidados=Array.isArray(v.convidados)?v.convidados:[];
-  r.convidados.forEach(c=>{ if(c.crianca===undefined) c.crianca=false; if(!c.lado) c.lado='noiva'; if(!c.status) c.status='pendente'; if(c.acomp===undefined) c.acomp=0; if(c.papel!=='padrinho'&&c.papel!=='madrinha') c.papel=''; });
+  r.convidados.forEach(c=>{ if(c.crianca===undefined) c.crianca=false; if(!c.lado) c.lado='noiva'; if(!c.status) c.status='pendente'; if(c.acomp===undefined) c.acomp=0; if(PAPEIS_VAL.indexOf(c.papel)<0) c.papel=''; });
   r.listaImportada=!!v.listaImportada;
   r.pares=Array.isArray(v.pares)?v.pares:[];
-  r.pares.forEach(p=>{ if(p.ele===undefined) p.ele=null; if(p.ela===undefined) p.ela=null; });
-  /* um par só vale se as pessoas ainda existem e continuam marcadas */
-  const marcado=id=>{ const c=r.convidados.find(x=>x.id===id); return c&&c.papel?id:null; };
-  r.pares.forEach(p=>{ p.ele=marcado(p.ele); p.ela=marcado(p.ela); });
+  r.pares.forEach(p=>{ if(p.ele===undefined) p.ele=null; if(p.ela===undefined) p.ela=null;
+    if(p.tipo!=='criancas') p.tipo='adultos'; });
+  /* uma vaga só vale se a pessoa existe e tem papel do tipo daquele par */
+  r.pares.forEach(p=>{
+    const ok=(id,papel)=>{ const c=r.convidados.find(x=>x.id===id); return (c&&c.papel===papel)?id:null; };
+    p.ele=ok(p.ele,PAR_DE[p.tipo][0]);
+    p.ela=ok(p.ela,PAR_DE[p.tipo][1]);
+  });
   r.fornecedores=Array.isArray(v.fornecedores)?v.fornecedores:[];
   r.fornecedores.forEach(f=>{ if(!f.servico) f.servico=''; if(!f.tel) f.tel=''; if(!f.obs) f.obs=''; f.contratado=!!f.contratado; });
   r.categorias=(Array.isArray(v.categorias)&&v.categorias.length)?v.categorias:catsPadrao;
-  r.categorias.forEach(c=>{ if(!Array.isArray(c.cotacoes)) c.cotacoes=[]; });
+  r.categorias.forEach(c=>{ if(!Array.isArray(c.cotacoes)) c.cotacoes=[];
+    c.cotacoes.forEach(q=>{ q.estimado=!!q.estimado; if(!(q.pago>=0)) q.pago=0; if(q.pago>q.valor) q.pago=q.valor; }); });
   r.parcelasPagas=Array.isArray(v.parcelasPagas)?v.parcelasPagas:[];
   r.catsGasto=(Array.isArray(v.catsGasto)&&v.catsGasto.length)?v.catsGasto:CATS_PADRAO.slice();
   r.gastos.forEach(g=>{ if(g.cat && r.catsGasto.indexOf(g.cat)<0) r.catsGasto.push(g.cat); });
@@ -648,7 +671,7 @@ function agregaAno(a,fn,campo){
 
 function totaisCasamento(){
   let contratado=0,pago=0;
-  D.categorias.forEach(c=>{ const e=c.cotacoes.find(q=>q.escolhida); if(e){ contratado+=e.valor; pago+=(e.pago||0); } });
+  D.categorias.forEach(c=>c.cotacoes.filter(q=>q.escolhida).forEach(e=>{ contratado+=e.valor; pago+=(e.pago||0); }));
   const dentro=D.convidados.filter(c=>c.status!=='recusou'&&c.status!=='espera');
   const pessoas=dentro.reduce((s,c)=>s+1+(c.acomp||0),0);
   const confirmadas=D.convidados.filter(c=>c.status==='confirmado').reduce((s,c)=>s+1+(c.acomp||0),0);
@@ -1477,7 +1500,7 @@ function apagarFonte(i){
 }
 
 /* ==================== TELAS: CASAMENTO ==================== */
-const SUBS_CAS=[['convidados','Convidados'],['padrinhos','Padrinhos'],['fornecedores','Fornecedores'],['cotacoes','Cotações'],['total','Total']];
+const SUBS_CAS=[['convidados','Convidados'],['padrinhos','Cortejo'],['fornecedores','Fornecedores'],['cotacoes','Cotações'],['total','Total']];
 function telaCasamento(){
   return `<div class="chips">${SUBS_CAS.map(a=>
     `<button class="chip rosa" aria-pressed="${UI.subCas===a[0]}" onclick="irSubCas('${a[0]}')">${a[1]}</button>`).join('')}</div>`
@@ -1522,11 +1545,10 @@ function formEditConv(c){
         <option value="1" ${c.crianca?'selected':''}>Sim</option></select></div>
       <div class="campo"><label>Acompanhantes</label><input id="eAcomp" type="number" min="0" max="20" value="${c.acomp||0}"></div>
     </div>
-    <div class="campo"><label>No altar</label>
+    <div class="campo"><label>No cortejo</label>
       <div class="papelbox">
-        <button class="${!c.papel?'on':''}" onclick="marcarPapelEdit(${c.id},'')">Convidado</button>
-        <button class="${c.papel==='padrinho'?'on':''}" onclick="marcarPapelEdit(${c.id},'padrinho')">Padrinho</button>
-        <button class="${c.papel==='madrinha'?'on':''}" onclick="marcarPapelEdit(${c.id},'madrinha')">Madrinha</button>
+        <button class="${!c.papel?'on':''}" onclick="marcarPapelEdit(${c.id},'')">Só convidado</button>
+        ${PAPEIS.map(p=>`<button class="${c.papel===p[0]?'on':''}" onclick="marcarPapelEdit(${c.id},'${p[0]}')">${p[1]}</button>`).join('')}
       </div></div>
     <div class="dupla" style="margin-top:2px">
       <button class="btn claro" onclick="UI.editandoConv=null;render()">Cancelar</button>
@@ -1546,7 +1568,7 @@ function marcarPapelEdit(id,papel){
     c.crianca=document.getElementById('eKid').value==='1';
     c.acomp=Math.min(Math.max(0,+document.getElementById('eAcomp').value||0),20);
   }
-  if(!papel) (D.pares||[]).forEach(p=>{ if(p.ele===id)p.ele=null; if(p.ela===id)p.ela=null; });
+  if(papel!==c.papel) (D.pares||[]).forEach(p=>{ if(p.ele===id)p.ele=null; if(p.ela===id)p.ela=null; });
   c.papel=papel; salvar(); render();
 }
 function salvarConv(id){
@@ -1567,7 +1589,7 @@ function linhaConv(c){
   const b=(st,tit,svg)=>`<button class="st ${st} ${c.status===st?'on':''}" title="${tit}" aria-label="${tit}" onclick="setStatusConv(${c.id},'${st}')">${svg}</button>`;
   return `<div class="linha-item ${e?'espera':''} ${c.status==='recusou'?'recusou':''}">
     <div class="corpo">
-      <div class="nome" onclick="editarConv(${c.id})" style="cursor:pointer">${c.papel?`<span class="selo ${c.papel==='padrinho'?'p':'m'}">${c.papel}</span>`:''}${c.crianca?'<span class="kid">criança</span> ':''}${esc(c.nome)}${c.acomp?` <span style="color:var(--cinza);font-weight:400">+${c.acomp}</span>`:''} <span class="edt">✎</span></div>
+      <div class="nome" onclick="editarConv(${c.id})" style="cursor:pointer">${c.papel?`<span class="selo ${c.papel}">${c.papel}</span>`:''}${c.crianca?'<span class="kid">criança</span> ':''}${esc(c.nome)}${c.acomp?` <span style="color:var(--cinza);font-weight:400">+${c.acomp}</span>`:''} <span class="edt">✎</span></div>
       <div class="sub">
         <span class="tag ${c.lado}">${c.lado==='ambos'?'os dois':c.lado}</span>
         <span class="tag ${c.status==='confirmado'?'ok':e?'esp':''}">${ROT_CONV[c.status]||c.status}</span>
@@ -1675,89 +1697,99 @@ function setStatusConv(id,st){
 
 /* ==================== PADRINHOS E MADRINHAS ==================== */
 function totaisPad(){
-  const padrinhos=D.convidados.filter(c=>c.papel==='padrinho');
-  const madrinhas=D.convidados.filter(c=>c.papel==='madrinha');
+  const cont=p=>D.convidados.filter(c=>c.papel===p).length;
   const emPar=new Set();
   (D.pares||[]).forEach(p=>{ if(p.ele)emPar.add(p.ele); if(p.ela)emPar.add(p.ela); });
   const semPar=D.convidados.filter(c=>c.papel&&!emPar.has(c.id));
-  const completos=(D.pares||[]).filter(p=>p.ele&&p.ela).length;
-  return {padrinhos,madrinhas,semPar,completos,emPar};
+  return {emPar,semPar,
+    padrinhos:cont('padrinho'),madrinhas:cont('madrinha'),
+    pajens:cont('pajem'),daminhas:cont('daminha'),
+    casais:(D.pares||[]).filter(p=>p.tipo==='adultos'&&p.ele&&p.ela).length,
+    duplas:(D.pares||[]).filter(p=>p.tipo==='criancas'&&p.ele&&p.ela).length};
 }
 
-function subPadrinhos(){
-  const t=totaisPad(), q=semAcento(UI.buscaPad.trim());
-  const pares=D.pares||[];
+function blocoPares(tipo,t){
+  const lista=(D.pares||[]).filter(p=>p.tipo===tipo);
+  const pa=PAR_DE[tipo][0], pb=PAR_DE[tipo][1];
+  const rotulo=tipo==='adultos'?'casal':'dupla';
   const disponiveis=(papel,atual)=>D.convidados.filter(c=>c.papel===papel&&(!t.emPar.has(c.id)||c.id===atual));
 
   const vaga=(p,papel)=>{
-    const id=papel==='padrinho'?p.ele:p.ela;
+    const id=(papel===pa)?p.ele:p.ela;
     const c=D.convidados.find(x=>x.id===id)||null;
-    const sigla=papel==='padrinho'?'P':'M', cls=papel==='padrinho'?'p':'m';
     if(UI.parEdit===p.id){
       const opts=disponiveis(papel,id);
-      return `<div class="vaga"><em class="${cls}">${sigla}</em>
+      return `<div class="vaga"><em class="${papel}">${SIGLA_PAPEL[papel]}</em>
         <div class="qn"><select onchange="setVaga(${p.id},'${papel}',this.value)">
           <option value="">— vaga aberta —</option>
           ${opts.map(o=>`<option value="${o.id}" ${o.id===id?'selected':''}>${esc(o.nome)} · ${esc(o.grupo)}</option>`).join('')}
         </select></div></div>`;
     }
-    return `<div class="vaga"><em class="${cls}">${sigla}</em>
+    return `<div class="vaga"><em class="${papel}">${SIGLA_PAPEL[papel]}</em>
       <div class="qn">${c
         ?`<b>${esc(c.nome)}</b><i>${esc(c.grupo)} · ${ROT_CONV[c.status]||c.status}</i>`
-        :`<span class="livre">${papel==='padrinho'?'escolher padrinho':'escolher madrinha'}</span>`}</div></div>`;
+        :`<span class="livre">escolher ${papel}</span>`}</div></div>`;
   };
 
+  return (lista.length?lista.map((p,i)=>{
+    const compl=p.ele&&p.ela, ed=UI.parEdit===p.id;
+    return `<div class="par ${compl?'':'incompleto'}">
+      <div class="par-cab">
+        <span class="par-n">${i+1}º ${rotulo}${compl?'':' · incompleto'}</span>
+        <button class="st" title="Subir" aria-label="Subir" onclick="moverPar(${p.id},-1)" ${i===0?'disabled style="opacity:.3"':''}>${IC_SOBE}</button>
+        <button class="st" title="Descer" aria-label="Descer" onclick="moverPar(${p.id},1)" ${i===lista.length-1?'disabled style="opacity:.3"':''}>${IC_DESCE}</button>
+        <span class="sep"></span>
+        <button class="st" title="${ed?'Concluir':'Trocar quem está'}" aria-label="Editar" onclick="UI.parEdit=${ed?'null':p.id};render()"
+          style="${ed?'background:rgba(59,27,39,.1);color:var(--vinho)':''}">${IC_LAPIS}</button>
+        <button class="st del" title="Desfazer" aria-label="Desfazer" onclick="apagarPar(${p.id})">${IC_LIXO}</button>
+      </div>
+      <div class="par-corpo">${vaga(p,pa)}${vaga(p,pb)}</div>
+    </div>`;
+  }).join(''):`<div class="vazio">Nenhum ${rotulo} formado ainda.</div>`)
+  + `<button class="btn claro" style="margin-bottom:6px" onclick="novoPar('${tipo}')">+ Formar ${rotulo}</button>`;
+}
+
+function subPadrinhos(){
+  const t=totaisPad(), q=semAcento(UI.buscaPad.trim());
   const achados=q?D.convidados.filter(c=>semAcento(c.nome).indexOf(q)>=0||semAcento(c.grupo).indexOf(q)>=0).slice(0,8):[];
 
   return `
   <div class="grade4">
-    <div class="mini"><div class="num">${t.completos}</div><div class="pe">casais</div></div>
-    <div class="mini"><div class="num" style="color:#8A6212">${t.padrinhos.length}</div><div class="pe">padrinhos</div></div>
-    <div class="mini"><div class="num" style="color:var(--rosa)">${t.madrinhas.length}</div><div class="pe">madrinhas</div></div>
+    <div class="mini"><div class="num">${t.casais}</div><div class="pe">casais</div></div>
+    <div class="mini"><div class="num" style="color:#8A6212">${t.padrinhos}</div><div class="pe">padrinhos</div></div>
+    <div class="mini"><div class="num" style="color:var(--rosa)">${t.madrinhas}</div><div class="pe">madrinhas</div></div>
     <div class="mini"><div class="num" style="color:var(--cinza)">${t.semPar.length}</div><div class="pe">sem par</div></div>
   </div>
 
-  <div class="secao-titulo">Ordem de entrada</div>
-  ${pares.length?pares.map((p,i)=>{
-    const compl=p.ele&&p.ela, ed=UI.parEdit===p.id;
-    return `<div class="par ${compl?'':'incompleto'}">
-      <div class="par-cab">
-        <span class="par-n">${i+1}º casal${compl?'':' · incompleto'}</span>
-        <button class="st" title="Subir" aria-label="Subir" onclick="moverPar(${p.id},-1)" ${i===0?'disabled style="opacity:.3"':''}>${IC_SOBE}</button>
-        <button class="st" title="Descer" aria-label="Descer" onclick="moverPar(${p.id},1)" ${i===pares.length-1?'disabled style="opacity:.3"':''}>${IC_DESCE}</button>
-        <span class="sep"></span>
-        <button class="st" title="${ed?'Concluir':'Trocar quem está no par'}" aria-label="Editar par" onclick="UI.parEdit=${ed?'null':p.id};render()"
-          style="${ed?'background:rgba(59,27,39,.1);color:var(--vinho)':''}">${IC_LAPIS}</button>
-        <button class="st del" title="Desfazer casal" aria-label="Desfazer casal" onclick="apagarPar(${p.id})">${IC_LIXO}</button>
-      </div>
-      <div class="par-corpo">${vaga(p,'padrinho')}${vaga(p,'madrinha')}</div>
-    </div>`;
-  }).join(''):'<div class="vazio">Nenhum casal formado ainda.</div>'}
+  <div class="sub-cab"><span class="t">Padrinhos e madrinhas</span><span class="c">ordem de entrada</span></div>
+  ${blocoPares('adultos',t)}
 
-  <button class="btn claro" style="margin-bottom:6px" onclick="novoPar()">+ Formar casal</button>
+  <div class="sub-cab"><span class="t">Daminhas e pajens</span>
+    <span class="c">${t.daminhas} daminha(s) · ${t.pajens} pajem(ns)</span></div>
+  ${blocoPares('criancas',t)}
 
   ${t.semPar.length?`<div class="secao-titulo">Marcados, mas sem par</div>
     ${t.semPar.map(c=>`<div class="linha-item">
       <div class="corpo">
-        <div class="nome"><span class="selo ${c.papel==='padrinho'?'p':'m'}">${c.papel}</span>${esc(c.nome)}</div>
+        <div class="nome"><span class="selo ${c.papel}">${c.papel}</span>${esc(c.nome)}</div>
         <div class="sub"><span class="tag ${c.lado}">${c.lado==='ambos'?'os dois':c.lado}</span> ${esc(c.grupo)}</div>
       </div>
       <div class="acoes">
-        <button class="st del" title="Tirar de padrinhos" aria-label="Tirar de padrinhos" onclick="desmarcarPapel(${c.id})">${IC_LIXO}</button>
+        <button class="st del" title="Tirar do cortejo" aria-label="Tirar do cortejo" onclick="marcarPapel(${c.id},'')">${IC_LIXO}</button>
       </div></div>`).join('')}
-    <div style="font-size:12px;color:var(--cinza);margin:-2px 2px 14px">Toque no lápis de um casal para encaixar quem está aqui numa vaga aberta.</div>`:''}
+    <div style="font-size:12px;color:var(--cinza);margin:-2px 2px 14px">Toque no lápis de um casal ou dupla para encaixar quem está aqui numa vaga aberta.</div>`:''}
 
-  <div class="secao-titulo">Marcar padrinho ou madrinha</div>
+  <div class="secao-titulo">Marcar quem entra no cortejo</div>
   <div class="busca"><span class="lupa">⌕</span>
     <input id="qPad" value="${esc(UI.buscaPad)}" placeholder="Buscar na lista de convidados" oninput="buscarPad(this)"></div>
   ${q
     ? (achados.length?achados.map(c=>`<div class="achado">
         <div class="qn"><b>${esc(c.nome)}</b><i>${esc(c.grupo)}${c.crianca?' · criança':''}</i></div>
-        <button class="mk p ${c.papel==='padrinho'?'on':''}" onclick="marcarPapel(${c.id},'padrinho')">Padrinho</button>
-        <button class="mk m ${c.papel==='madrinha'?'on':''}" onclick="marcarPapel(${c.id},'madrinha')">Madrinha</button>
-      </div>`).join('')
+        <div class="papelbox mk" style="margin-top:8px">
+          ${PAPEIS.map(p=>`<button class="${c.papel===p[0]?'on '+p[0]:''}" onclick="marcarPapel(${c.id},'${p[0]}')">${p[1]}</button>`).join('')}
+        </div></div>`).join('')
       :'<div class="vazio">Ninguém com esse nome na lista.</div>')
-    : `<div style="font-size:12.5px;color:var(--cinza);padding:2px 2px 10px">Escreva o nome de quem já está na lista de convidados. Se a pessoa não for convidada, cadastre em <b>Convidados</b> primeiro.</div>`}
+    : `<div style="font-size:12.5px;color:var(--cinza);padding:2px 2px 10px">Escreva o nome de quem já está na lista de convidados. Tocar de novo no mesmo botão desmarca.</div>`}
   `;
 }
 
@@ -1767,36 +1799,37 @@ function buscarPad(el){
 }
 function marcarPapel(id,papel){
   const c=D.convidados.find(x=>x.id===id); if(!c) return;
-  if(c.papel===papel) return desmarcarPapel(id);
-  c.papel=papel; salvar(); render(); toast(c.nome+' agora é '+papel);
+  const novo=(c.papel===papel)?'':papel;
+  /* mudou de papel: solta a vaga, porque o par é de outro tipo */
+  if(novo!==c.papel) (D.pares||[]).forEach(p=>{ if(p.ele===id)p.ele=null; if(p.ela===id)p.ela=null; });
+  c.papel=novo; salvar(); render();
+  toast(novo?c.nome+' agora é '+novo:c.nome+' saiu do cortejo');
 }
-function desmarcarPapel(id){
-  const c=D.convidados.find(x=>x.id===id); if(!c) return;
-  (D.pares||[]).forEach(p=>{ if(p.ele===id)p.ele=null; if(p.ela===id)p.ela=null; });
-  c.papel=''; salvar(); render(); toast(c.nome+' saiu dos padrinhos');
-}
-function novoPar(){
+function novoPar(tipo){
   if(!Array.isArray(D.pares)) D.pares=[];
-  const p={id:novoId(),ele:null,ela:null};
+  const p={id:novoId(),tipo:(tipo==='criancas'?'criancas':'adultos'),ele:null,ela:null};
   D.pares.push(p); UI.parEdit=p.id; salvar(); render();
 }
 function apagarPar(id){
-  if(!confirm('Desfazer este casal? As pessoas continuam marcadas como padrinho e madrinha.')) return;
+  if(!confirm('Desfazer? As pessoas continuam marcadas no cortejo.')) return;
   D.pares=(D.pares||[]).filter(p=>p.id!==id);
   if(UI.parEdit===id) UI.parEdit=null;
-  salvar(); render(); toast('Casal desfeito');
+  salvar(); render(); toast('Desfeito');
 }
 function setVaga(parId,papel,valor){
   const p=(D.pares||[]).find(x=>x.id===parId); if(!p) return;
   const id=valor?+valor:null;
   if(id) D.pares.forEach(o=>{ if(o.ele===id)o.ele=null; if(o.ela===id)o.ela=null; });
-  if(papel==='padrinho') p.ele=id; else p.ela=id;
+  if(papel===PAR_DE[p.tipo][0]) p.ele=id; else p.ela=id;
   salvar(); render();
 }
 function moverPar(id,d){
-  const ps=D.pares||[], i=ps.findIndex(p=>p.id===id), j=i+d;
-  if(i<0||j<0||j>=ps.length) return;
-  const t=ps[i]; ps[i]=ps[j]; ps[j]=t; salvar(); render();
+  const ps=D.pares||[], p=ps.find(x=>x.id===id); if(!p) return;
+  const irmaos=ps.filter(x=>x.tipo===p.tipo);
+  const i=irmaos.indexOf(p), j=i+d;
+  if(j<0||j>=irmaos.length) return;
+  const a=ps.indexOf(irmaos[i]), b=ps.indexOf(irmaos[j]);
+  const tmp=ps[a]; ps[a]=ps[b]; ps[b]=tmp; salvar(); render();
 }
 
 /* ==================== FORNECEDORES ==================== */
@@ -1936,7 +1969,7 @@ function subCotacoes(){
     </div>
     <div class="barra"><i style="width:${(decididas.length/(D.categorias.length||1))*100}%;background:var(--ouro)"></i></div>
     <div style="font-size:12.5px;color:var(--cinza);margin-top:11px">
-      Cadastre quantas cotações quiser em cada categoria e toque em <b style="color:var(--tinta)">Escolher</b> na que vocês decidiram fechar. Só uma por categoria.
+      Cadastre quantas cotações quiser e toque em <b style="color:var(--tinta)">Escolher</b> nas que vocês decidiram fechar. Dá para escolher mais de uma na mesma categoria — banda e DJ, por exemplo.
     </div>
   </div>
 
@@ -1946,38 +1979,48 @@ function subCotacoes(){
   </div>
 
   ${visiveis.length?visiveis.map(c=>{
-    const e=c.cotacoes.find(q=>q.escolhida);
+    const es=escolhidasDe(c);
+    const soma=es.reduce((a,q)=>a+q.valor,0);
     return `<details class="cat" ${(UI.catAberta===c.id||f!=='todas')?'open':''} ontoggle="if(this.open)UI.catAberta=${c.id}">
       <summary>
         <span class="seta">›</span>
         <span class="cnome">${esc(c.nome)}
-          <div style="font-size:11.5px;font-weight:400;color:${e?'#8A6212':'var(--cinza)'};margin-top:1px">
-            ${e?'✓ '+esc(e.fornecedor):(c.cotacoes.length?c.cotacoes.length+' cotação(ões) · a decidir':'nenhuma cotação ainda')}</div>
+          <div style="font-size:11.5px;font-weight:400;color:${es.length?'#8A6212':'var(--cinza)'};margin-top:1px">
+            ${es.length
+              ? (es.length===1?'✓ '+esc(es[0].fornecedor):'✓ '+es.length+' escolhidos')
+              : (c.cotacoes.length?c.cotacoes.length+' cotação(ões) · a decidir':'nenhuma cotação ainda')}</div>
         </span>
-        ${e?`<span class="cval">${R$(e.valor)}</span>`:''}
+        ${es.length?`<span class="cval">${R$(soma)}</span>`:''}
         <button class="x" onclick="event.preventDefault();event.stopPropagation();apagarCat(${c.id})" aria-label="Excluir categoria" style="font-size:15px">×</button>
       </summary>
-      ${c.cotacoes.map(q=>`
+      ${c.cotacoes.map(q=>UI.editandoCot===q.id?formEditCot(c,q):`
         <div class="cot ${q.escolhida?'escolhida':''}">
           <div class="cot-topo">
             <div style="min-width:0">
-              <div style="font-weight:600">${esc(q.fornecedor)}</div>
+              <div style="font-weight:600">${esc(q.fornecedor)} ${q.estimado?'<span class="tag est">estimativa</span>':''}</div>
               <div style="font-size:12px;color:var(--cinza);margin-top:2px">${q.obs?esc(q.obs):'sem observação'}</div>
             </div>
             <div style="font-family:var(--display);font-size:16px;font-variant-numeric:tabular-nums;white-space:nowrap">${R$(q.valor)}</div>
           </div>
           <div class="cot-acoes">
             <button class="escolher ${q.escolhida?'on':''}" onclick="escolher(${c.id},${q.id})">${q.escolhida?'✓ Escolhido':'Escolher'}</button>
-            ${q.escolhida?'<span style="font-size:11.5px;color:#8A6212">entra no total do casamento</span>':''}
+            <button class="editar" onclick="editarCot(${c.id},${q.id})">Editar</button>
             <button class="apagar" onclick="apagarCot(${c.id},${q.id})">Excluir</button>
           </div>
         </div>`).join('')}
+      ${es.length>1?`<div class="cot" style="background:rgba(190,135,36,.05);font-size:12.5px;color:#6A4D12">
+        <b>${es.length} escolhidos nesta categoria</b> — somam ${R$(soma)} e entram juntos no total.</div>`:''}
       <div class="cot">
         <div class="dupla">
           <div class="campo"><label>Fornecedor</label><input id="f${c.id}" placeholder="Nome"></div>
           <div class="campo"><label>Valor</label><input id="v${c.id}" type="number" inputmode="decimal" placeholder="0,00"></div>
         </div>
         <div class="campo"><label>Observação</label><input id="o${c.id}" placeholder="o que inclui, prazo, contato..."></div>
+        <div class="campo"><label>Este valor é</label>
+          <div class="papelbox">
+            <button class="${NOVO_EST[c.id]?'':'on'}" onclick="novoEstimado(${c.id},0)">Valor da proposta</button>
+            <button class="${NOVO_EST[c.id]?'on':''}" onclick="novoEstimado(${c.id},1)">Estimativa minha</button>
+          </div></div>
         <button class="btn claro" onclick="addCot(${c.id})">Adicionar cotação</button>
       </div>
     </details>`;
@@ -1986,13 +2029,20 @@ function subCotacoes(){
   <div class="secao-titulo">Resumo das decisões</div>
   ${decididas.length?`<div class="cartao">
     ${decididas.map(c=>{
-      const e=c.cotacoes.find(q=>q.escolhida);
+      const es=escolhidasDe(c);
+      const soma=es.reduce((a,q)=>a+q.valor,0);
       const outras=c.cotacoes.filter(q=>!q.escolhida);
       const min=outras.length?Math.min.apply(null,outras.map(q=>q.valor)):null;
-      return `<div style="display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--linha)">
-        <div style="min-width:0"><div style="font-weight:600;font-size:13.5px">${esc(c.nome)}</div>
-        <div style="font-size:11.5px;color:var(--cinza)">${esc(e.fornecedor)}${(min!==null&&min<e.valor)?' · '+R$(e.valor-min)+' acima da mais barata':''}</div></div>
-        <div style="font-family:var(--display);font-variant-numeric:tabular-nums;white-space:nowrap">${R$(e.valor)}</div></div>`;
+      return `<div style="padding:9px 0;border-top:1px solid var(--linha)">
+        <div style="display:flex;justify-content:space-between;gap:10px">
+          <div style="font-weight:600;font-size:13.5px;min-width:0">${esc(c.nome)}</div>
+          <div style="font-family:var(--display);font-variant-numeric:tabular-nums;white-space:nowrap">${R$(soma)}</div>
+        </div>
+        ${es.map(q=>`<div style="display:flex;justify-content:space-between;gap:10px;font-size:11.5px;color:var(--cinza);margin-top:2px">
+          <span style="min-width:0">${esc(q.fornecedor)}${q.estimado?' · estimativa':''}${(es.length===1&&min!==null&&min<q.valor)?' · '+R$(q.valor-min)+' acima da mais barata':''}</span>
+          ${es.length>1?`<span style="font-variant-numeric:tabular-nums;white-space:nowrap">${R$(q.valor)}</span>`:''}
+        </div>`).join('')}
+      </div>`;
     }).join('')}
     <div style="display:flex;justify-content:space-between;padding:11px 0 0;border-top:1px solid var(--linha);font-weight:600">
       <span>Total escolhido</span><span style="font-family:var(--display)">${R$(t.contratado)}</span></div>
@@ -2007,11 +2057,31 @@ function subCotacoes(){
   </div>`;
 }
 
+function formEditCot(c,q){
+  return `<div class="cot" style="background:rgba(59,27,39,.04);box-shadow:inset 3px 0 0 var(--vinho)">
+    <div class="edit-tit" style="color:var(--vinho)">Editando cotação</div>
+    <div class="dupla">
+      <div class="campo"><label>Fornecedor</label><input id="ecF" value="${esc(q.fornecedor)}"></div>
+      <div class="campo"><label>Valor</label><input id="ecV" type="number" inputmode="decimal" value="${q.valor}"></div>
+    </div>
+    <div class="campo"><label>Observação</label><input id="ecO" value="${esc(q.obs||'')}"></div>
+    <div class="campo"><label>Este valor é</label>
+      <div class="papelbox">
+        <button class="${!q.estimado?'on':''}" onclick="setEstimado(${c.id},${q.id},0)">Valor da proposta</button>
+        <button class="${q.estimado?'on':''}" onclick="setEstimado(${c.id},${q.id},1)">Estimativa minha</button>
+      </div></div>
+    <div class="dupla" style="margin-top:2px">
+      <button class="btn claro" onclick="UI.editandoCot=null;render()">Cancelar</button>
+      <button class="btn rosa" onclick="salvarCot(${c.id},${q.id})">Salvar</button>
+    </div></div>`;
+}
+
 function subTotal(){
   const t=totaisCasamento();
   const larg=Math.max(D.orcamento,t.contratado)||1;
-  const escolhidas=D.categorias.map(c=>({c,e:c.cotacoes.find(q=>q.escolhida)})).filter(x=>x.e);
-  const faltaFechar=D.categorias.filter(c=>!c.cotacoes.some(q=>q.escolhida));
+  const escolhidas=[];
+  D.categorias.forEach(c=>escolhidasDe(c).forEach(e=>escolhidas.push({c,e})));
+  const faltaFechar=D.categorias.filter(c=>!escolhidasDe(c).length);
 
   return `
   <div class="cartao">
@@ -2044,7 +2114,7 @@ function subTotal(){
     <table class="res">
       <tr><th>Item</th><th>Contratado</th><th>Pago</th><th>Falta</th></tr>
       ${escolhidas.map(x=>`<tr>
-        <td>${esc(x.c.nome)}<div style="font-size:11px;color:var(--cinza);font-weight:400">${esc(x.e.fornecedor)}</div></td>
+        <td>${esc(x.c.nome)}<div style="font-size:11px;color:var(--cinza);font-weight:400">${esc(x.e.fornecedor)}${x.e.estimado?' · estimativa':''}</div></td>
         <td>${R$(x.e.valor)}</td>
         <td style="color:#8A6212">${R$(x.e.pago||0)}</td>
         <td style="color:var(--rosa)">${R$(Math.max(x.e.valor-(x.e.pago||0),0))}</td></tr>`).join('')}
@@ -2055,7 +2125,7 @@ function subTotal(){
   <div class="secao-titulo">Registrar pagamento</div>
   ${escolhidas.map(x=>`
     <div class="linha-item">
-      <div class="corpo"><div class="nome">${esc(x.c.nome)}</div><div class="sub">${esc(x.e.fornecedor)} · total ${R$(x.e.valor)}</div></div>
+      <div class="corpo"><div class="nome">${esc(x.e.fornecedor)}</div><div class="sub">${esc(x.c.nome)} · total ${R$(x.e.valor)}</div></div>
       <input type="number" value="${x.e.pago||0}" style="width:108px;text-align:right" onchange="setPago(${x.c.id},${x.e.id},this.value)">
     </div>`).join('')}`
   :'<div class="vazio">Escolha as cotações na aba <b>Cotações</b> para o total aparecer aqui.</div>'}
@@ -2110,27 +2180,55 @@ function apagarConv(id){
   (D.pares||[]).forEach(p=>{ if(p.ele===id)p.ele=null; if(p.ela===id)p.ela=null; });
   salvar(); render();
 }
+const achaCot=(catId,cotId)=>{ const c=D.categorias.find(x=>x.id===catId); return c?c.cotacoes.find(q=>q.id===cotId):null; };
+const escolhidasDe=c=>c.cotacoes.filter(q=>q.escolhida);
+/* mais de uma cotação pode ficar escolhida na mesma categoria */
 function escolher(catId,cotId){
-  const c=D.categorias.find(x=>x.id===catId);
-  const era=c.cotacoes.find(q=>q.id===cotId).escolhida;
-  c.cotacoes.forEach(q=>q.escolhida=false);
-  if(!era) c.cotacoes.find(q=>q.id===cotId).escolhida=true;
+  const q=achaCot(catId,cotId); if(!q) return;
+  q.escolhida=!q.escolhida;
   UI.catAberta=catId; salvar(); render();
-  toast(era?'Escolha desfeita':'Escolhido!');
+  toast(q.escolhida?'Escolhido!':'Escolha desfeita');
 }
+function editarCot(catId,cotId){ UI.editandoCot=cotId; UI.catAberta=catId; render(); }
+function salvarCot(catId,cotId){
+  const q=achaCot(catId,cotId); if(!q){ UI.editandoCot=null; return render(); }
+  const f=document.getElementById('ecF').value.trim();
+  const v=parseFloat(document.getElementById('ecV').value);
+  if(!f) return toast('Informe o fornecedor');
+  if(!(v>=0)) return toast('Informe o valor');
+  q.fornecedor=f; q.valor=v; q.obs=document.getElementById('ecO').value.trim();
+  if((q.pago||0)>q.valor) q.pago=q.valor;
+  UI.editandoCot=null; UI.catAberta=catId; salvar(); render(); toast('Cotação atualizada');
+}
+/* guarda o que já foi digitado antes de redesenhar por causa do botão */
+function setEstimado(catId,cotId,v){
+  const q=achaCot(catId,cotId); if(!q) return;
+  const f=document.getElementById('ecF');
+  if(f){
+    if(f.value.trim()) q.fornecedor=f.value.trim();
+    const nv=parseFloat(document.getElementById('ecV').value);
+    if(nv>=0) q.valor=nv;
+    q.obs=document.getElementById('ecO').value.trim();
+    if((q.pago||0)>q.valor) q.pago=q.valor;
+  }
+  q.estimado=!!v; UI.catAberta=catId; salvar(); render();
+}
+const NOVO_EST={};
+function novoEstimado(catId,v){ NOVO_EST[catId]=!!v; UI.catAberta=catId; render(); }
 function addCot(catId){
   const f=document.getElementById('f'+catId).value.trim();
   const v=parseFloat(document.getElementById('v'+catId).value);
   if(!f) return toast('Informe o fornecedor');
   if(!(v>=0)) return toast('Informe o valor');
   D.categorias.find(x=>x.id===catId).cotacoes.push({id:novoId(),fornecedor:f,valor:v,
-    obs:document.getElementById('o'+catId).value.trim(),escolhida:false,pago:0});
-  UI.catAberta=catId; salvar(); render(); toast('Cotação adicionada');
+    obs:document.getElementById('o'+catId).value.trim(),escolhida:false,pago:0,estimado:!!NOVO_EST[catId]});
+  NOVO_EST[catId]=false; UI.catAberta=catId; salvar(); render(); toast('Cotação adicionada');
 }
 function apagarCot(catId,cotId){
   if(!confirm('Excluir esta cotação?')) return;
   const c=D.categorias.find(x=>x.id===catId);
   c.cotacoes=c.cotacoes.filter(q=>q.id!==cotId);
+  if(UI.editandoCot===cotId) UI.editandoCot=null;
   UI.catAberta=catId; salvar(); render();
 }
 function addCat(){
@@ -2144,7 +2242,7 @@ function apagarCat(id){
   D.categorias=D.categorias.filter(x=>x.id!==id); salvar(); render();
 }
 function setPago(catId,cotId,v){
-  const q=D.categorias.find(c=>c.id===catId).cotacoes.find(x=>x.id===cotId);
+  const q=achaCot(catId,cotId); if(!q) return;
   q.pago=Math.min(Math.max(+v||0,0),q.valor); salvar(); render();
 }
 
